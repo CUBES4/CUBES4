@@ -1,8 +1,8 @@
 package com.cubes4.CUBES4.services;
 
+import com.cubes4.CUBES4.exceptions.ResourceNotFoundException;
 import com.cubes4.CUBES4.models.Family;
 import com.cubes4.CUBES4.repositories.FamilyRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +24,7 @@ public class FamilyService {
 
     public Family getFamilyById(Long id) {
         return familyRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Family not found with id:" + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Family not found with id:" + id));
     }
 
     public Family createFamily(Family family) {
@@ -37,7 +37,7 @@ public class FamilyService {
                     family.setName(updatedFamily.getName());
                     family.setArticles(updatedFamily.getArticles());
                     return familyRepository.saveAndFlush(family);
-                }).orElseThrow(() -> new EntityNotFoundException("Family not found with id:" + id));
+                }).orElseThrow(() -> new ResourceNotFoundException("Family not found with id:" + id));
     }
 
     public void deleteFamily(Long id) {
