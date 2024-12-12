@@ -1,5 +1,6 @@
 package com.cubes4.CUBES4.services;
 
+import com.cubes4.CUBES4.annotation.Loggable;
 import com.cubes4.CUBES4.exceptions.ResourceNotFoundException;
 import com.cubes4.CUBES4.models.Article;
 import com.cubes4.CUBES4.repositories.ArticleRepository;
@@ -12,6 +13,7 @@ import java.util.List;
  * @author Maël NOUVEL <br>
  * 12/2024
  **/
+@Loggable
 @Service
 public class ArticleService {
 
