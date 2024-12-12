@@ -1,9 +1,8 @@
 package com.cubes4.CUBES4.controllers;
 
 import com.cubes4.CUBES4.models.Famille;
-import com.cubes4.CUBES4.repositories.FamilleRepository;
+import com.cubes4.CUBES4.services.FamilleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,43 +17,35 @@ import java.util.List;
 public class FamilleController {
 
     @Autowired
-    private FamilleRepository familleRepository;
+    private FamilleService familleService;
 
     @GetMapping
-    public List<Famille> getAllFamilles() {
-        return familleRepository.findAll();
+    public ResponseEntity<List<Famille>> getAllFamilles() {
+        List<Famille> familles = familleService.getAllFamilles();
+        return ResponseEntity.ok(familles);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Famille> getFamilleById(@PathVariable Long id) {
-        return familleRepository.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        Famille famille = familleService.getFamilleById(id);
+        return ResponseEntity.ok(famille);
     }
 
     @PostMapping
     public ResponseEntity<Famille> createFamille(@RequestBody Famille famille) {
-        Famille savedFamille = familleRepository.save(famille);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedFamille);
+        Famille savedFamille = familleService.createFamille(famille);
+        return ResponseEntity.ok(savedFamille);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Famille> updateFamille(@PathVariable Long id, @RequestBody Famille updatedFamille) {
-        return familleRepository.findById(id)
-                .map(famille -> {
-                    famille.setNom(updatedFamille.getNom());
-                    famille.setArticles(updatedFamille.getArticles());
-                    Famille saved = familleRepository.save(famille);
-                    return ResponseEntity.ok(saved);
-                }).orElse(ResponseEntity.notFound().build());
+        Famille savedFamille = familleService.updateFamille(id, updatedFamille);
+        return ResponseEntity.ok(savedFamille);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteFamille(@PathVariable Long id) {
-        return familleRepository.findById(id)
-                .map(famille -> {
-                    familleRepository.delete(famille);
-                    return ResponseEntity.noContent().build();
-                }).orElse(ResponseEntity.notFound().build());
+        familleService.deleteFamille(id);
+        return ResponseEntity.noContent().build();
     }
 }

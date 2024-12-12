@@ -19,7 +19,16 @@ public class Commande {
 
     private Date dateCommande;
     private boolean isFournisseurCommande; // true if it's a supplier order, false if client order
-    private String statut; // e.g., "EN_COURS", "LIVRE", etc.
+
+    public enum CommandeStatus {
+        PREPARATION,
+        PRET,
+        ENVOYE,
+        LIVRE,
+        RECU
+    }
+
+    private CommandeStatus statut; // e.g., "EN_COURS", "LIVRE", etc.
 
     @ManyToOne
     @JoinColumn(name = "client_id")
@@ -53,11 +62,11 @@ public class Commande {
         isFournisseurCommande = fournisseurCommande;
     }
 
-    public String getStatut() {
+    public CommandeStatus getStatut() {
         return statut;
     }
 
-    public void setStatut(String statut) {
+    public void setStatut(CommandeStatus statut) {
         this.statut = statut;
     }
 
@@ -85,3 +94,4 @@ public class Commande {
         this.elementsCommandes = elementsCommandes;
     }
 }
+
