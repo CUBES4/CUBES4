@@ -42,17 +42,17 @@ public class ArticleController {
     @Operation(summary = "Rechercher des articles par nom", description = "Récupère tous les articles avec le nom spécifié.")
     @ApiResponse(responseCode = "200", description = "Liste des articles retournée avec succès")
     @GetMapping("/recherche")
-    public ResponseEntity<List<Article>> getArticleByNom(@RequestParam("nom") String nom) {
-        List<Article> articles = articleService.getArticleByNom(nom);
+    public ResponseEntity<List<Article>> getArticleByName(@RequestParam("name") String name) {
+        List<Article> articles = articleService.getArticleByName(name);
         return ResponseEntity.ok(articles);
     }
 
     @Operation(summary = "Rechercher des articles par prix maximal", description = "Récupère tous les articles dont le prix unitaire est inférieur à la valeur spécifiée.")
     @ApiResponse(responseCode = "200", description = "Liste des articles retournée avec succès")
     @PostMapping("/recherche/prix-max")
-    public ResponseEntity<List<Article>> getArticleByPrixMax(@RequestBody Map<String, Double> criteria) {
-        double prixMax = criteria.get("prixMax");
-        List<Article> articles = articleService.getArticleByPrixLessThan(prixMax);
+    public ResponseEntity<List<Article>> getArticleByMaxPrice(@RequestBody Map<String, Double> criteria) {
+        double maxPrice = criteria.get("maxPrice");
+        List<Article> articles = articleService.getArticleByPriceLessThan(maxPrice);
         return ResponseEntity.ok(articles);
     }
 
@@ -60,8 +60,8 @@ public class ArticleController {
     @ApiResponse(responseCode = "200", description = "Liste des articles retournée avec succès")
     @PostMapping("/recherche/stock-min")
     public ResponseEntity<List<Article>> getArticlesByStockMin(@RequestBody Map<String, Integer> criteria) {
-        Integer stockMin = criteria.get("stockMin");
-        List<Article> articles = articleService.getArticleByStockGreaterThan(stockMin);
+        Integer minStock = criteria.get("minStock");
+        List<Article> articles = articleService.getArticleByStockGreaterThan(minStock);
         return ResponseEntity.ok(articles);
     }
 
@@ -70,8 +70,8 @@ public class ArticleController {
     @ApiResponse(responseCode = "200", description = "Liste des articles retournée avec succès")
     @PostMapping("/recherche/stock-max")
     public ResponseEntity<List<Article>> getArticlesByStockMax(@RequestBody Map<String, Integer> criteria) {
-        Integer stockMax = criteria.get("stockMax");
-        List<Article> articles = articleService.getArticleByStockLessThan(stockMax);
+        Integer maxStock = criteria.get("maxStock");
+        List<Article> articles = articleService.getArticleByStockLessThan(maxStock);
         return ResponseEntity.ok(articles);
     }
 

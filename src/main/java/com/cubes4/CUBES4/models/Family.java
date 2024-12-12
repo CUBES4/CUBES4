@@ -9,28 +9,28 @@ import java.util.List;
  * 12/2024
  **/
 @Entity
-@Table(name = "familles")
-public class Famille {
+@Table(name = "families")
+public class Family {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String nom;
+    private String name;
 
-    @OneToMany(mappedBy = "famille")
+    @OneToMany(mappedBy = "family")
     private List<Article> articles;
 
     public long getId() {
         return id;
     }
 
-    public String getNom() {
-        return nom;
+    public String getName() {
+        return name;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setName(String nom) {
+        this.name = nom;
     }
 
     public List<Article> getArticles() {

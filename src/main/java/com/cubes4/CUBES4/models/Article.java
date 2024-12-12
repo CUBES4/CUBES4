@@ -14,26 +14,26 @@ public class Article {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String nom;
+    private String name;
     private String description;
-    private double prixUnitaire;
+    private double unitPrice;
     private Integer stock;
     private Integer stockMin; // Minimum de stock pour un réapprovisionnement automatique si besoin
 
     @ManyToOne
-    @JoinColumn(name = "famille_id")
-    private Famille famille;
+    @JoinColumn(name = "family_id")
+    private Family family;
 
     public long getId() {
         return id;
     }
 
-    public String getNom() {
-        return nom;
+    public String getName() {
+        return name;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setName(String nom) {
+        this.name = nom;
     }
 
     public String getDescription() {
@@ -44,12 +44,12 @@ public class Article {
         this.description = description;
     }
 
-    public double getPrixUnitaire() {
-        return prixUnitaire;
+    public double getUnitPrice() {
+        return unitPrice;
     }
 
-    public void setPrixUnitaire(double prixUnitaire) {
-        this.prixUnitaire = prixUnitaire;
+    public void setUnitPrice(double prixUnitaire) {
+        this.unitPrice = prixUnitaire;
     }
 
     public Integer getStock() {
@@ -68,11 +68,11 @@ public class Article {
         this.stockMin = stockMin;
     }
 
-    public Famille getFamille() {
-        return famille;
+    public Family getFamily() {
+        return family;
     }
 
-    public void setFamille(Famille famille) {
-        this.famille = famille;
+    public void setFamily(Family family) {
+        this.family = family;
     }
 }

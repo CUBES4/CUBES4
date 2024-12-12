@@ -10,9 +10,9 @@ import java.util.List;
  * 12/2024
  **/
 public interface ArticleRepository extends JpaRepository<Article, Long> {
-    List<Article> findByNomContainingIgnoreCase(String nom);
+    List<Article> findByNameContainingIgnoreCase(String nom);
 
-    List<Article> findByPrixUnitaireLessThan(double prixUnitaire);
+    List<Article> findByUnitPriceLessThan(double unitPrice);
 
     List<Article> findByStockGreaterThanEqual(Integer stock);
 

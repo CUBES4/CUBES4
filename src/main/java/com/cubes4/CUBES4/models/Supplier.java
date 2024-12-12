@@ -9,22 +9,22 @@ import java.util.List;
  * 12/2024
  **/
 @Entity
-@Table(name = "fournisseurs")
-public class Fournisseur {
+@Table(name = "suppliers")
+public class Supplier {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String nom;
-    private String adresse;
+    private String name;
+    private String address;
     private String email;
-    private String telephone;
+    private String phoneNumber;
 
     @ManyToMany
     @JoinTable(
-            name = "fournisseur_article",
-            joinColumns = @JoinColumn(name = "fournisseur_id"),
+            name = "supplier_article",
+            joinColumns = @JoinColumn(name = "supplier_id"),
             inverseJoinColumns = @JoinColumn(name = "article_id"))
     private List<Article> articles;
 
@@ -32,20 +32,20 @@ public class Fournisseur {
         return id;
     }
 
-    public String getNom() {
-        return nom;
+    public String getName() {
+        return name;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setName(String nom) {
+        this.name = nom;
     }
 
-    public String getAdresse() {
-        return adresse;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
+    public void setAddress(String adresse) {
+        this.address = adresse;
     }
 
     public String getEmail() {
@@ -56,12 +56,12 @@ public class Fournisseur {
         this.email = email;
     }
 
-    public String getTelephone() {
-        return telephone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
+    public void setPhoneNumber(String telephone) {
+        this.phoneNumber = telephone;
     }
 
     public List<Article> getArticles() {
