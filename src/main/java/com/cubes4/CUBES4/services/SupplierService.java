@@ -1,8 +1,8 @@
 package com.cubes4.CUBES4.services;
 
+import com.cubes4.CUBES4.exceptions.ResourceNotFoundException;
 import com.cubes4.CUBES4.models.Supplier;
 import com.cubes4.CUBES4.repositories.SupplierRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +24,7 @@ public class SupplierService {
 
     public Supplier getSupplierById(Long id) {
         return supplierRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Supplier not found with id:" + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Supplier not found with id:" + id));
     }
 
     public Supplier createSupplier(Supplier supplier) {
@@ -40,7 +40,7 @@ public class SupplierService {
                     supplier.setAddress(updatedSupplier.getAddress());
                     supplier.setArticles(updatedSupplier.getArticles());
                     return supplierRepository.saveAndFlush(supplier);
-                }).orElseThrow(() -> new EntityNotFoundException("Supplier not found with id:" + id));
+                }).orElseThrow(() -> new ResourceNotFoundException("Supplier not found with id:" + id));
     }
 
     public void deleteSupplier(Long id) {

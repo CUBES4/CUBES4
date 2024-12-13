@@ -1,8 +1,8 @@
 package com.cubes4.CUBES4.services;
 
+import com.cubes4.CUBES4.exceptions.ResourceNotFoundException;
 import com.cubes4.CUBES4.models.Order;
 import com.cubes4.CUBES4.repositories.OrderRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +24,7 @@ public class OrderService {
 
     public Order getOrderById(Long id) {
         return orderRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Order not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found with id: " + id));
     }
 
     public List<Order> getOrdersByStatus(Order.OrderStatus status) {
@@ -45,7 +45,7 @@ public class OrderService {
                     order.setCustomer(updatedOrder.getCustomer());
                     order.setStatus(updatedOrder.getStatus());
                     return orderRepository.saveAndFlush(order);
-                }).orElseThrow(() -> new EntityNotFoundException("Order not found with id: " + id));
+                }).orElseThrow(() -> new ResourceNotFoundException("Order not found with id: " + id));
     }
 
     public void deleteOrder(Long id) {

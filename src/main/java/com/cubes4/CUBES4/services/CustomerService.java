@@ -1,8 +1,8 @@
 package com.cubes4.CUBES4.services;
 
+import com.cubes4.CUBES4.exceptions.ResourceNotFoundException;
 import com.cubes4.CUBES4.models.Customer;
 import com.cubes4.CUBES4.repositories.CustomerRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +24,7 @@ public class CustomerService {
 
     public Customer getCustomerById(Long id) {
         return customerRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Customer not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Customer not found with id: " + id));
     }
 
     public List<Customer> getCustomersByLastName(String lastName) {
@@ -57,7 +57,7 @@ public class CustomerService {
                     customer.setAddress(updatedCustomer.getAddress());
                     customer.setOrders(updatedCustomer.getOrders());
                     return customerRepository.saveAndFlush(customer);
-                }).orElseThrow(() -> new EntityNotFoundException("Customer not found with id: " + id));
+                }).orElseThrow(() -> new ResourceNotFoundException("Customer not found with id: " + id));
     }
 
     public void deleteCustomer(Long id) {
