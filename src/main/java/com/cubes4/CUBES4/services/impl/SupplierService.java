@@ -1,4 +1,4 @@
-package com.cubes4.CUBES4.services;
+package com.cubes4.CUBES4.services.impl;
 
 import com.cubes4.CUBES4.exceptions.ResourceNotFoundException;
 import com.cubes4.CUBES4.models.Supplier;
