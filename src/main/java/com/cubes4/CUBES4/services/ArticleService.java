@@ -27,12 +27,12 @@ public class ArticleService {
                 .orElseThrow(() -> new EntityNotFoundException("Article not found with id: " + id));
     }
 
-    public List<Article> getArticleByNom(String nom) {
-        return articleRepository.findByNomContainingIgnoreCase(nom);
+    public List<Article> getArticleByName(String name) {
+        return articleRepository.findByNameContainingIgnoreCase(name);
     }
 
-    public List<Article> getArticleByPrixLessThan(double prixUnitaire) {
-        return articleRepository.findByPrixUnitaireLessThan(prixUnitaire);
+    public List<Article> getArticleByPriceLessThan(double unitPrice) {
+        return articleRepository.findByUnitPriceLessThan(unitPrice);
     }
 
     public List<Article> getArticleByStockGreaterThan(Integer stock) {
@@ -54,12 +54,12 @@ public class ArticleService {
     public Article updateArticle(Long id, Article updatedArticle) {
         return articleRepository.findById(id)
                 .map(article -> {
-                    article.setNom(updatedArticle.getNom());
+                    article.setName(updatedArticle.getName());
                     article.setDescription(updatedArticle.getDescription());
-                    article.setPrixUnitaire(updatedArticle.getPrixUnitaire());
+                    article.setUnitPrice(updatedArticle.getUnitPrice());
                     article.setStock(updatedArticle.getStock());
                     article.setStockMin(updatedArticle.getStockMin());
-                    article.setFamille(updatedArticle.getFamille());
+                    article.setFamily(updatedArticle.getFamily());
                     return articleRepository.saveAndFlush(article);
                 }).orElseThrow(() -> new EntityNotFoundException("Article not found with id: " + id));
     }

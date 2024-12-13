@@ -7,18 +7,18 @@ import jakarta.persistence.*;
  * 12/2024
  **/
 @Entity
-@Table(name = "ligne_commandes")
-public class ElementsCommande {
+@Table(name = "order_lines")
+public class OrderItems {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer quantite;
+    private Integer quantity;
 
     @ManyToOne
-    @JoinColumn(name = "commande_id")
-    private Commande commande;
+    @JoinColumn(name = "order_id")
+    private Order order;
 
     @ManyToOne
     @JoinColumn(name = "article_id")
@@ -28,20 +28,20 @@ public class ElementsCommande {
         return id;
     }
 
-    public Integer getQuantite() {
-        return quantite;
+    public Integer getQuantity() {
+        return quantity;
     }
 
-    public void setQuantite(Integer quantite) {
-        this.quantite = quantite;
+    public void setQuantity(Integer quantite) {
+        this.quantity = quantite;
     }
 
-    public Commande getCommande() {
-        return commande;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setCommande(Commande commande) {
-        this.commande = commande;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public Article getArticle() {
