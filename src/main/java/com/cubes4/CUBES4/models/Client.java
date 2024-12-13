@@ -20,6 +20,7 @@ public class Client {
     private String prenom;
     private String email;
     private String adresse;
+    private String telephone;
 
     // A client can place multiple commandes
     @OneToMany(mappedBy = "client")
@@ -59,6 +60,14 @@ public class Client {
 
     public void setAdresse(String adresse) {
         this.adresse = adresse;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
     }
 
     public List<Commande> getCommandes() {
