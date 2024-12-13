@@ -1,6 +1,6 @@
 package com.cubes4.CUBES4.controllers;
 
-import com.cubes4.CUBES4.models.Customer;
+import com.cubes4.CUBES4.dto.CustomerDTO;
 import com.cubes4.CUBES4.services.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -24,8 +24,8 @@ public class CustomerController {
     @Operation(summary = "Récupérer tous les clients", description = "Renvoie la liste complète des clients.")
     @ApiResponse(responseCode = "200", description = "Liste des clients retournée avec succès")
     @GetMapping
-    public ResponseEntity<List<Customer>> getAllCustomers() {
-        List<Customer> customers = customerService.getAllCustomers();
+    public ResponseEntity<List<CustomerDTO>> getAllCustomers() {
+        List<CustomerDTO> customers = customerService.getAllCustomers();
         return ResponseEntity.ok(customers);
     }
 
@@ -33,19 +33,19 @@ public class CustomerController {
     @ApiResponse(responseCode = "200", description = "Customer trouvé")
     @ApiResponse(responseCode = "404", description = "Customer introuvable")
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> getCustomerById(@PathVariable Long id) {
-        Customer customer = customerService.getCustomerById(id);
+    public ResponseEntity<CustomerDTO> getCustomerById(@PathVariable Long id) {
+        CustomerDTO customer = customerService.getCustomerById(id);
         return ResponseEntity.ok(customer);
     }
 
-    @Operation(summary = "Rechercher des clients par nom ou prenom", description = "Récupère tous les clients avec le nom ou prenom spécifié.")
+    @Operation(summary = "Rechercher des clients par nom ou prénom", description = "Récupère tous les clients avec le nom ou prénom spécifié.")
     @ApiResponse(responseCode = "200", description = "Liste des clients retournée avec succès")
     @GetMapping("/recherche")
-    public ResponseEntity<List<Customer>> getCustomersByFirstOrLastName(
+    public ResponseEntity<List<CustomerDTO>> getCustomersByFirstOrLastName(
             @RequestParam(required = false) String lastName,
             @RequestParam(required = false) String firstName) {
 
-        List<Customer> customers;
+        List<CustomerDTO> customers;
 
         if (lastName != null) {
             customers = customerService.getCustomersByLastName(lastName);
@@ -59,26 +59,26 @@ public class CustomerController {
     }
 
     @Operation(summary = "Rechercher des clients par email", description = "Récupère tous les clients avec l'email spécifié.")
-    @ApiResponse(responseCode = "201", description = "Liste des clients retournée avec succès")
+    @ApiResponse(responseCode = "200", description = "Liste des clients retournée avec succès")
     @GetMapping("/recherche/email")
-    public ResponseEntity<List<Customer>> getCustomersByEmail(String email) {
-        List<Customer> customers = customerService.getCustomersByEmail(email);
+    public ResponseEntity<List<CustomerDTO>> getCustomersByEmail(@RequestParam String email) {
+        List<CustomerDTO> customers = customerService.getCustomersByEmail(email);
         return ResponseEntity.ok(customers);
     }
 
-    @Operation(summary = "Rechercher des clients par numéro de télephone", description = "Récupère tous les clients avec le numéro de téléphone spécifié.")
-    @ApiResponse(responseCode = "201", description = "Liste des clients retournée avec succès")
+    @Operation(summary = "Rechercher des clients par numéro de téléphone", description = "Récupère tous les clients avec le numéro de téléphone spécifié.")
+    @ApiResponse(responseCode = "200", description = "Liste des clients retournée avec succès")
     @GetMapping("/recherche/telephone")
-    public ResponseEntity<List<Customer>> getCustomersByPhoneNumber(String phoneNumber) {
-        List<Customer> customers = customerService.getClientByPhoneNumber(phoneNumber);
+    public ResponseEntity<List<CustomerDTO>> getCustomersByPhoneNumber(@RequestParam String phoneNumber) {
+        List<CustomerDTO> customers = customerService.getClientByPhoneNumber(phoneNumber);
         return ResponseEntity.ok(customers);
     }
 
-    @Operation(summary = "Créer un nouveau customer", description = "Ajoute un nouveau customer dans la base de données.")
+    @Operation(summary = "Créer un nouveau client", description = "Ajoute un nouveau client dans la base de données.")
     @ApiResponse(responseCode = "201", description = "Customer créé avec succès")
     @PostMapping
-    public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
-        Customer savedCustomer = customerService.createCustomer(customer);
+    public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerDTO customerDTO) {
+        CustomerDTO savedCustomer = customerService.createCustomer(customerDTO);
         return ResponseEntity.ok(savedCustomer);
     }
 
@@ -86,8 +86,8 @@ public class CustomerController {
     @ApiResponse(responseCode = "200", description = "Customer mis à jour avec succès")
     @ApiResponse(responseCode = "404", description = "Customer introuvable")
     @PutMapping("/{id}")
-    public ResponseEntity<Customer> updateCustomer(@PathVariable Long id, @RequestBody Customer updatedCustomer) {
-        Customer savedCustomer = customerService.updateCustomer(id, updatedCustomer);
+    public ResponseEntity<CustomerDTO> updateCustomer(@PathVariable Long id, @RequestBody CustomerDTO updatedCustomerDTO) {
+        CustomerDTO savedCustomer = customerService.updateCustomer(id, updatedCustomerDTO);
         return ResponseEntity.ok(savedCustomer);
     }
 
@@ -99,5 +99,4 @@ public class CustomerController {
         customerService.deleteCustomer(id);
         return ResponseEntity.noContent().build();
     }
-
 }

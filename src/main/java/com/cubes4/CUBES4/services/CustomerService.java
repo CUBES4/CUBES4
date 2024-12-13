@@ -1,67 +1,81 @@
 package com.cubes4.CUBES4.services;
 
+import com.cubes4.CUBES4.dto.CustomerDTO;
 import com.cubes4.CUBES4.exceptions.ResourceNotFoundException;
+import com.cubes4.CUBES4.mapper.CustomerMapper;
 import com.cubes4.CUBES4.models.Customer;
 import com.cubes4.CUBES4.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
- * @author Maël NOUVEL <br>
- * 12/2024
- **/
+ * Service pour la gestion des clients.
+ */
 @Service
 public class CustomerService {
 
     @Autowired
     private CustomerRepository customerRepository;
 
-    public List<Customer> getAllCustomers() {
-        return customerRepository.findAll();
+    @Autowired
+    private CustomerMapper customerMapper;
+
+    public List<CustomerDTO> getAllCustomers() {
+        return customerRepository.findAll().stream()
+                .map(customerMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
-    public Customer getCustomerById(Long id) {
-        return customerRepository.findById(id)
+    public CustomerDTO getCustomerById(Long id) {
+        Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not found with id: " + id));
+        return customerMapper.toDTO(customer);
     }
 
-    public List<Customer> getCustomersByLastName(String lastName) {
-        return customerRepository.findByLastNameContainingIgnoreCase(lastName);
+    public List<CustomerDTO> getCustomersByLastName(String lastName) {
+        return customerRepository.findByLastNameContainingIgnoreCase(lastName).stream()
+                .map(customerMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
-    public List<Customer> getCustomersByFirstName(String firstName) {
-        return customerRepository.findByFirstNameContainingIgnoreCase(firstName);
+    public List<CustomerDTO> getCustomersByFirstName(String firstName) {
+        return customerRepository.findByFirstNameContainingIgnoreCase(firstName).stream()
+                .map(customerMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
-    public List<Customer> getCustomersByEmail(String email) {
-        return customerRepository.findByEmailContainingIgnoreCase(email);
+    public List<CustomerDTO> getCustomersByEmail(String email) {
+        return customerRepository.findByEmailContainingIgnoreCase(email).stream()
+                .map(customerMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
-    public List<Customer> getClientByPhoneNumber(String phoneNumber) {
-        return customerRepository.findByPhoneNumberContainingIgnoreCase(phoneNumber);
+    public List<CustomerDTO> getClientByPhoneNumber(String phoneNumber) {
+        return customerRepository.findByPhoneNumberContainingIgnoreCase(phoneNumber).stream()
+                .map(customerMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
-    public Customer createCustomer(Customer customer) {
-        return customerRepository.saveAndFlush(customer);
+    public CustomerDTO createCustomer(CustomerDTO customerDTO) {
+        Customer customer = customerMapper.toEntity(customerDTO, null);
+        customerRepository.saveAndFlush(customer);
+        return customerMapper.toDTO(customer);
     }
 
-    public Customer updateCustomer(Long id, Customer updatedCustomer) {
-        return customerRepository.findById(id)
-                .map(customer -> {
-                    customer.setLastName(updatedCustomer.getLastName());
-                    customer.setFirstName(updatedCustomer.getFirstName());
-                    customer.setEmail(updatedCustomer.getEmail());
-                    customer.setPhoneNumber(updatedCustomer.getPhoneNumber());
-                    customer.setAddress(updatedCustomer.getAddress());
-                    customer.setOrders(updatedCustomer.getOrders());
-                    return customerRepository.saveAndFlush(customer);
-                }).orElseThrow(() -> new ResourceNotFoundException("Customer not found with id: " + id));
+    public CustomerDTO updateCustomer(Long id, CustomerDTO updatedCustomerDTO) {
+        Customer customer = customerRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Customer not found with id: " + id));
+        customer = customerMapper.toEntity(updatedCustomerDTO, customer);
+        customerRepository.saveAndFlush(customer);
+        return customerMapper.toDTO(customer);
     }
 
     public void deleteCustomer(Long id) {
-        Customer customer = getCustomerById(id);
+        Customer customer = customerRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Customer not found with id: " + id));
         customerRepository.delete(customer);
     }
 }
