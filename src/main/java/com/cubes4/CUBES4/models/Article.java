@@ -24,16 +24,22 @@ public class Article {
     @JoinColumn(name = "family_id")
     private Family family;
 
+    // Getters and Setters
     public long getId() {
         return id;
+    }
+
+    // Ajouter ce setter
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String nom) {
-        this.name = nom;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -48,8 +54,8 @@ public class Article {
         return unitPrice;
     }
 
-    public void setUnitPrice(double prixUnitaire) {
-        this.unitPrice = prixUnitaire;
+    public void setUnitPrice(double unitPrice) {
+        this.unitPrice = unitPrice;
     }
 
     public Integer getStock() {

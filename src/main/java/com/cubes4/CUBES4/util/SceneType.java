@@ -1,9 +1,5 @@
 package com.cubes4.CUBES4.util;
 
-/**
- * @author Maël NOUVEL <br>
- * 12/2024
- **/
 public enum SceneType {
     DASHBOARD("/fxml/dashboard.fxml", "Dashboard"),
     MANAGE_ARTICLES("/fxml/articles.fxml", "Manage Articles"),

@@ -8,10 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * @author Maël NOUVEL <br>
- * 12/2024
- **/
 @Service
 public class FamilyService {
 

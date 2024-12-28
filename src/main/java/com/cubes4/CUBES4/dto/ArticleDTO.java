@@ -1,89 +1,98 @@
 package com.cubes4.CUBES4.dto;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import javafx.beans.property.*;
 
-/**
- * @author Maël NOUVEL <br>
- * 12/2024
- **/
 public class ArticleDTO {
 
-    private Long id;
+    private final LongProperty id = new SimpleLongProperty();
+    private final StringProperty name = new SimpleStringProperty();
+    private final StringProperty description = new SimpleStringProperty();
+    private final DoubleProperty unitPrice = new SimpleDoubleProperty();
+    private final IntegerProperty stock = new SimpleIntegerProperty();
+    private final IntegerProperty stockMin = new SimpleIntegerProperty();
+    private final LongProperty familyId = new SimpleLongProperty();
 
-    @NotNull(message = "Le nom de l'article ne peut pas être nul")
-    @Size(min = 1, max = 255, message = "Le nom de l'article doit être compris entre 1 et 255 caractères")
-    private String name;
-
-
-    @Size(max = 1000, message = "La description ne doit pas dépasser 1000 caractères")
-    private String description;
-
-    @Positive(message = "Le prix unitaire doit être positif")
-    private double unitPrice;
-
-    @Positive(message = "Le stock doit être positif")
-    private Integer stock;
-
-    @Positive(message = "Le stock minimum doit être positif")
-    private Integer stockMin;
-    
-    private Long familyId;
-    
-    public Long getId() {
+    public LongProperty idProperty() {
         return id;
     }
-    
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    public String getName() {
+    public StringProperty nameProperty() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
+    public StringProperty descriptionProperty() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public double getUnitPrice() {
+    public DoubleProperty unitPriceProperty() {
         return unitPrice;
     }
 
-    public void setUnitPrice(double unitPrice) {
-        this.unitPrice = unitPrice;
-    }
-
-    public Integer getStock() {
+    public IntegerProperty stockProperty() {
         return stock;
     }
 
-    public void setStock(Integer stock) {
-        this.stock = stock;
-    }
-
-    public Integer getStockMin() {
+    public IntegerProperty stockMinProperty() {
         return stockMin;
     }
 
-    public void setStockMin(Integer stockMin) {
-        this.stockMin = stockMin;
-    }
-
-    public Long getFamilyId() {
+    public LongProperty familyIdProperty() {
         return familyId;
     }
 
-    public void setFamilyId(Long familyId) {
-        this.familyId = familyId;
+    public long getId() {
+        return id.get();
+    }
+
+    public void setId(long id) {
+        this.id.set(id);
+    }
+
+    public String getName() {
+        return name.get();
+    }
+
+    public void setName(String name) {
+        this.name.set(name);
+    }
+
+    public String getDescription() {
+        return description.get();
+    }
+
+    public void setDescription(String description) {
+        this.description.set(description);
+    }
+
+    public double getUnitPrice() {
+        return unitPrice.get();
+    }
+
+    public void setUnitPrice(double unitPrice) {
+        this.unitPrice.set(unitPrice);
+    }
+
+    public int getStock() {
+        return stock.get();
+    }
+
+    public void setStock(int stock) {
+        this.stock.set(stock);
+    }
+
+    public int getStockMin() {
+        return stockMin.get();
+    }
+
+    public void setStockMin(int stockMin) {
+        this.stockMin.set(stockMin);
+    }
+
+    public long getFamilyId() {
+        return familyId.get();
+    }
+
+    public void setFamilyId(long familyId) {
+        this.familyId.set(familyId);
     }
 }

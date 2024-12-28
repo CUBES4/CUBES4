@@ -12,10 +12,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * @author Maël NOUVEL <br>
- * 12/2024
- **/
 @Service
 public class RemoteArticleService implements ArticleService {
 

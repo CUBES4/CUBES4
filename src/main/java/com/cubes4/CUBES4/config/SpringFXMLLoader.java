@@ -8,28 +8,17 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * @author Maël NOUVEL <br>
- * 12/2024
- **/
 @Component
 public class SpringFXMLLoader {
 
     private final ApplicationContext applicationContext;
 
-    public SpringFXMLLoader(ApplicationContext context) {
-        this.applicationContext = context;
+    public SpringFXMLLoader(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
     }
 
-    /**
-     * Loads an FXML file and returns the root node.
-     *
-     * @param fxmlPath The path to the FXML file.
-     * @return The root node of the loaded FXML.
-     * @throws IOException If the FXML file cannot be loaded.
-     */
     public Parent load(String fxmlPath) throws IOException {
-        try (InputStream fxmlStream =  getClass().getResourceAsStream(fxmlPath)){
+        try (InputStream fxmlStream = getClass().getResourceAsStream(fxmlPath)) {
             FXMLLoader loader = new FXMLLoader();
             loader.setControllerFactory(applicationContext::getBean);
             loader.setLocation(getClass().getResource(fxmlPath));

@@ -10,10 +10,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author Maël NOUVEL <br>
- * 12/2024
- **/
 @Component
 public class SceneManager {
 
@@ -25,21 +21,13 @@ public class SceneManager {
         this.fxmlLoader = fxmlLoader;
     }
 
-    /**
-     * Sets the primary stage. Must be called before switching scenes.
-     *
-     * @param stage The primary stage of the application.
-     */
     public void setPrimaryStage(Stage stage) {
+        if (stage == null) {
+            throw new IllegalArgumentException("Primary stage cannot be null.");
+        }
         this.primaryStage = stage;
     }
 
-    /**
-     * Loads a scene based on the provided SceneType.
-     * If the scene is already loaded, it reuses the existing one.
-     *
-     * @param sceneType The type of the scene to load.
-     */
     public void switchScene(SceneType sceneType) {
         if (primaryStage == null) {
             throw new IllegalStateException("Primary stage not set. Call setPrimaryStage() before switching scenes.");
@@ -50,6 +38,7 @@ public class SceneManager {
             try {
                 Parent root = fxmlLoader.load(sceneType.getFxmlPath());
                 scene = new Scene(root, 800, 600);
+                scene.getStylesheets().add(getClass().getResource("/styles/styles.css").toExternalForm());
                 scenes.put(sceneType, scene);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -58,7 +47,10 @@ public class SceneManager {
         }
         primaryStage.setScene(scene);
         primaryStage.setTitle(sceneType.getTitle());
-        primaryStage.setResizable(false);
         primaryStage.show();
+    }
+
+    public void registerScene(SceneType sceneType, Scene scene) {
+        scenes.put(sceneType, scene);
     }
 }

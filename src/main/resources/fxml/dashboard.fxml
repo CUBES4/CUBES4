@@ -1,16 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
-<VBox xmlns:fx="http://javafx.com/fxml"
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.cubes4.CUBES4.controllers.DashboardFXController"
-      spacing="20"
-      alignment="CENTER">
+      spacing="20" alignment="CENTER" prefWidth="800" prefHeight="600">
 
-    <Text text="Dashboard" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+    <Label text="Tableau de Bord" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
 
-    <Button fx:id="manageArticlesButton" text="Manage Articles"/>
-    <Button fx:id="manageCustomersButton" text="Manage Customers"/>
-    <Button fx:id="manageOrdersButton" text="Manage Orders"/>
+    <!-- GridPane pour organiser les boutons -->
+    <GridPane hgap="20" vgap="20" alignment="CENTER">
+        <!-- Gérer les Articles -->
+        <VBox spacing="10" alignment="CENTER" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="dashboard-card">
+            <ImageView fx:id="articlesIcon" fitWidth="50" fitHeight="50" preserveRatio="true" />
+            <Button fx:id="manageArticlesButton" text="Gérer les Articles" styleClass="dashboard-button" />
+        </VBox>
+
+        <!-- Gérer les Clients -->
+        <VBox spacing="10" alignment="CENTER" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="dashboard-card">
+            <ImageView fx:id="customersIcon" fitWidth="50" fitHeight="50" preserveRatio="true" />
+            <Button fx:id="manageCustomersButton" text="Gérer les Clients" styleClass="dashboard-button" />
+        </VBox>
+
+        <!-- Gérer les Commandes -->
+        <VBox spacing="10" alignment="CENTER" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="dashboard-card">
+            <ImageView fx:id="ordersIcon" fitWidth="50" fitHeight="50" preserveRatio="true" />
+            <Button fx:id="manageOrdersButton" text="Gérer les Commandes" styleClass="dashboard-button" />
+        </VBox>
+
+        <!-- Configuration -->
+        <VBox spacing="10" alignment="CENTER" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="dashboard-card">
+            <ImageView fx:id="settingsIcon" fitWidth="50" fitHeight="50" preserveRatio="true" />
+            <Button fx:id="settingsButton" text="Paramètres" styleClass="dashboard-button" />
+        </VBox>
+    </GridPane>
 </VBox>

@@ -4,20 +4,24 @@ import com.cubes4.CUBES4.annotation.FXMLController;
 import com.cubes4.CUBES4.util.SceneManager;
 import com.cubes4.CUBES4.util.SceneType;
 import javafx.fxml.FXML;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
 
-/**
- * @author Maël NOUVEL <br>
- * 12/2024
- **/
 @FXMLController
 public class DashboardFXController {
 
-    private final SceneManager sceneManager;
+    @FXML
+    private ImageView articlesIcon;
 
-    public DashboardFXController(SceneManager sceneManager) {
-        this.sceneManager = sceneManager;
-    }
+    @FXML
+    private ImageView customersIcon;
+
+    @FXML
+    private ImageView ordersIcon;
+
+    @FXML
+    private ImageView settingsIcon;
 
     @FXML
     private Button manageArticlesButton;
@@ -29,22 +33,26 @@ public class DashboardFXController {
     private Button manageOrdersButton;
 
     @FXML
+    private Button settingsButton;
+
+    private final SceneManager sceneManager;
+
+    public DashboardFXController(SceneManager sceneManager) {
+        this.sceneManager = sceneManager;
+    }
+
+    @FXML
     public void initialize() {
-        manageArticlesButton.setOnAction(event -> handleManageArticles());
-        manageCustomersButton.setOnAction(event -> handleManageCustomers());
-        manageOrdersButton.setOnAction(event -> handleManageOrders());
-    }
+        // Charger les icônes
+        articlesIcon.setImage(new Image(getClass().getResourceAsStream("/images/icon-articles.png")));
+        customersIcon.setImage(new Image(getClass().getResourceAsStream("/images/icon-customers.png")));
+        ordersIcon.setImage(new Image(getClass().getResourceAsStream("/images/icon-orders.png")));
+        settingsIcon.setImage(new Image(getClass().getResourceAsStream("/images/icon-settings.png")));
 
-    private void handleManageArticles() {
-        sceneManager.switchScene(SceneType.MANAGE_ARTICLES);
+        // Actions des boutons
+        manageArticlesButton.setOnAction(event -> sceneManager.switchScene(SceneType.MANAGE_ARTICLES));
+        manageCustomersButton.setOnAction(event -> sceneManager.switchScene(SceneType.MANAGE_CUSTOMERS));
+        manageOrdersButton.setOnAction(event -> sceneManager.switchScene(SceneType.MANAGE_ORDERS));
+        settingsButton.setOnAction(event -> System.out.println("Ouverture des paramètres"));
     }
-
-    private void handleManageCustomers() {
-        sceneManager.switchScene(SceneType.MANAGE_CUSTOMERS);
-    }
-
-    private void handleManageOrders() {
-        sceneManager.switchScene(SceneType.MANAGE_ORDERS);
-    }
-
 }

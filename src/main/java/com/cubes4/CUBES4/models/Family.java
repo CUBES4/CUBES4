@@ -1,13 +1,8 @@
 package com.cubes4.CUBES4.models;
 
 import jakarta.persistence.*;
-
 import java.util.List;
 
-/**
- * @author Maël NOUVEL <br>
- * 12/2024
- **/
 @Entity
 @Table(name = "families")
 public class Family {
@@ -18,19 +13,23 @@ public class Family {
 
     private String name;
 
-    @OneToMany(mappedBy = "family")
+    @OneToMany(mappedBy = "family", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Article> articles;
 
     public long getId() {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
 
-    public void setName(String nom) {
-        this.name = nom;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Article> getArticles() {
