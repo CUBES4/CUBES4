@@ -130,14 +130,14 @@ public class CustomerFXController {
         // Vérification du numéro de téléphone
         String phone = phoneNumberField.getText();
         if (!phone.matches("\\d{10}")) {
-            showAlert("Erreur", "Le numéro de téléphone est incomplet");
+            showAlert("Erreur", "Le numéro de téléphone doit contenir exactement 10 chiffres.");
             return false;
         }
 
         // Vérification de l'adresse email
         String email = emailField.getText();
-        if (!email.contains("@")) {
-            showAlert("Erreur", "Le format de l'adresse mail est invalide.");
+        if (!email.matches("^[^@\\s]+@[^@\\s]+\\.[a-zA-Z]{2,6}$")) {
+            showAlert("Erreur", "L'adresse email doit être valide et se terminer par un domaine comme .com, .fr, .net, etc.");
             return false;
         }
 

@@ -4,7 +4,8 @@ public enum SceneType {
     DASHBOARD("/fxml/dashboard.fxml", "Dashboard"),
     MANAGE_ARTICLES("/fxml/articles.fxml", "Manage Articles"),
     MANAGE_CUSTOMERS("/fxml/customers.fxml", "Manage Customers"),
-    MANAGE_ORDERS("/fxml/orders.fxml", "Manage Orders");
+    MANAGE_ORDERS("/fxml/orders.fxml", "Manage Orders"),
+    MANAGE_SUPPLIERS("/fxml/suppliers.fxml", "Gérer les Fournisseurs");
 
     private final String fxmlPath;
     private final String title;

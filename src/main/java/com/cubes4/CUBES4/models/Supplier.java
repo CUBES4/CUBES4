@@ -1,12 +1,10 @@
 package com.cubes4.CUBES4.models;
 
 import jakarta.persistence.*;
-
 import java.util.List;
 
 /**
- * @author Maël NOUVEL <br>
- * 12/2024
+ * @author
  **/
 @Entity
 @Table(name = "suppliers")
@@ -16,7 +14,7 @@ public class Supplier {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String name;
+    private String supplierName; // Nom du fournisseur (entreprise ou individu)
     private String address;
     private String email;
     private String phoneNumber;
@@ -32,20 +30,20 @@ public class Supplier {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getSupplierName() {
+        return supplierName;
     }
 
-    public void setName(String nom) {
-        this.name = nom;
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
     }
 
     public String getAddress() {
         return address;
     }
 
-    public void setAddress(String adresse) {
-        this.address = adresse;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getEmail() {
@@ -60,8 +58,8 @@ public class Supplier {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String telephone) {
-        this.phoneNumber = telephone;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public List<Article> getArticles() {

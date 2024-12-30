@@ -21,6 +21,9 @@ public class DashboardFXController {
     private ImageView ordersIcon;
 
     @FXML
+    private ImageView suppliersIcon;
+
+    @FXML
     private ImageView settingsIcon;
 
     @FXML
@@ -35,6 +38,9 @@ public class DashboardFXController {
     @FXML
     private Button settingsButton;
 
+    @FXML
+    private Button manageSuppliersButton;
+
     private final SceneManager sceneManager;
 
     public DashboardFXController(SceneManager sceneManager) {
@@ -47,12 +53,14 @@ public class DashboardFXController {
         articlesIcon.setImage(new Image(getClass().getResourceAsStream("/images/icon-articles.png")));
         customersIcon.setImage(new Image(getClass().getResourceAsStream("/images/icon-customers.png")));
         ordersIcon.setImage(new Image(getClass().getResourceAsStream("/images/icon-orders.png")));
+        suppliersIcon.setImage(new Image(getClass().getResourceAsStream("/images/icon-suppliers.png")));
         settingsIcon.setImage(new Image(getClass().getResourceAsStream("/images/icon-settings.png")));
 
         // Actions des boutons
         manageArticlesButton.setOnAction(event -> sceneManager.switchScene(SceneType.MANAGE_ARTICLES));
         manageCustomersButton.setOnAction(event -> sceneManager.switchScene(SceneType.MANAGE_CUSTOMERS));
         manageOrdersButton.setOnAction(event -> sceneManager.switchScene(SceneType.MANAGE_ORDERS));
+        manageSuppliersButton.setOnAction(event -> sceneManager.switchScene(SceneType.MANAGE_SUPPLIERS));
         settingsButton.setOnAction(event -> System.out.println("Ouverture des paramètres"));
     }
 }

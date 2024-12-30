@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cubes4.CUBES4.controllers.OrderFXController"
+      spacing="10" alignment="CENTER" prefWidth="800" prefHeight="600">
+
+    <Label text="Gestion des Commandes" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+    <TableView fx:id="orderTable" prefWidth="600" prefHeight="400">
+        <columns>
+            <TableColumn fx:id="orderDateColumn" text="Date de commande" />
+            <TableColumn fx:id="supplierOrderColumn" text="Type (Client/Fournisseur)" />
+            <TableColumn fx:id="statusColumn" text="Statut" />
+        </columns>
+    </TableView>
+
+    <HBox spacing="10">
+        <Button fx:id="addButton" text="Ajouter" />
+        <Button fx:id="deleteButton" text="Supprimer" />
+        <Button fx:id="backButton" text="Retour" />
+    </HBox>
+</VBox>

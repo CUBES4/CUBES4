@@ -1,57 +1,53 @@
 package com.cubes4.CUBES4.models;
 
 import jakarta.persistence.*;
-
 import java.util.Date;
 import java.util.List;
 
-/**
- * @author Maël NOUVEL <br>
- * 12/2024
- **/
 @Entity
 @Table(name = "orders")
 public class Order {
+
+    public enum OrderStatus {
+        PENDING, CONFIRMED, SHIPPED, DELIVERED, CANCELLED
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Date orderDate;
-    private boolean isSupplierOrder; // true if it's a supplier order, false if customer order
+    private boolean isSupplierOrder;
 
-    public enum OrderStatus {
-        PREPARATION,
-        READY,
-        SENT,
-        DELIVERED,
-        RECEIVED
-    }
-
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    // If it's a fournisseur order, we may store a reference to the fournisseur
     @ManyToOne
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderItems> orderItems;
+    private List<OrderItem> items;
 
+    // Getters et setters
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Date getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(Date dateCommande) {
-        this.orderDate = dateCommande;
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
     }
 
     public boolean isSupplierOrder() {
@@ -66,8 +62,8 @@ public class Order {
         return status;
     }
 
-    public void setStatus(OrderStatus statut) {
-        this.status = statut;
+    public void setStatus(OrderStatus status) {
+        this.status = status;
     }
 
     public Customer getCustomer() {
@@ -86,12 +82,11 @@ public class Order {
         this.supplier = supplier;
     }
 
-    public List<OrderItems> getOrderItems() {
-        return orderItems;
+    public List<OrderItem> getItems() {
+        return items;
     }
 
-    public void setOrderItems(List<OrderItems> orderItems) {
-        this.orderItems = orderItems;
+    public void setItems(List<OrderItem> items) {
+        this.items = items;
     }
 }
-

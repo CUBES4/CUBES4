@@ -4,8 +4,7 @@ import com.cubes4.CUBES4.models.Supplier;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * @author Maël NOUVEL <br>
- * 12/2024
+ * Repository pour les fournisseurs
  **/
 public interface SupplierRepository extends JpaRepository<Supplier, Long> {
 }

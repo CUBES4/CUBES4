@@ -42,6 +42,12 @@ public class ArticleFXController {
     private TextField stockField;
 
     @FXML
+    private TextField searchField;
+
+    @FXML
+    private Button searchButton;
+
+    @FXML
     private Button addButton;
 
     @FXML
@@ -70,6 +76,7 @@ public class ArticleFXController {
         refreshButton.setOnAction(event -> loadArticles());
         addButton.setOnAction(event -> addArticle());
         backButton.setOnAction(event -> sceneManager.switchScene(SceneType.DASHBOARD));
+        searchButton.setOnAction(event -> searchArticles());
 
         // Appliquer une RowFactory pour personnaliser les lignes en fonction du stock
         articleTable.setRowFactory(tv -> new TableRow<>() {
@@ -98,8 +105,21 @@ public class ArticleFXController {
         resetForm();
     }
 
+    private void searchArticles() {
+        String query = searchField.getText().trim().toLowerCase();
+        if (query.isEmpty()) {
+            loadArticles();
+        } else {
+            List<ArticleDTO> filteredArticles = articleService.getAllArticles().stream()
+                    .filter(article -> article.getName().toLowerCase().contains(query))
+                    .toList();
+            articleTable.getItems().setAll(filteredArticles);
+        }
+    }
+
     private void addArticle() {
         if (!areFieldsValid()) {
+            showAlert("Erreur", "Tous les champs doivent être remplis !");
             return;
         }
 
@@ -175,6 +195,7 @@ public class ArticleFXController {
 
     private void updateArticle(ArticleDTO article) {
         if (!areFieldsValid()) {
+            showAlert("Erreur", "Tous les champs doivent être remplis !");
             return;
         }
 
@@ -202,5 +223,13 @@ public class ArticleFXController {
         stockField.clear();
         addButton.setText("Ajouter");
         addButton.setOnAction(event -> addArticle());
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

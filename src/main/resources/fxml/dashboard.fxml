@@ -30,8 +30,14 @@
             <Button fx:id="manageOrdersButton" text="Gérer les Commandes" styleClass="dashboard-button" />
         </VBox>
 
-        <!-- Configuration -->
+        <!-- Gérer les Fournisseurs -->
         <VBox spacing="10" alignment="CENTER" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="dashboard-card">
+            <ImageView fx:id="suppliersIcon" fitWidth="50" fitHeight="50" preserveRatio="true" />
+            <Button fx:id="manageSuppliersButton" text="Gérer les Fournisseurs" styleClass="dashboard-button" />
+        </VBox>
+
+        <!-- Paramètres -->
+        <VBox spacing="10" alignment="CENTER" GridPane.rowIndex="2" GridPane.columnIndex="0" styleClass="dashboard-card">
             <ImageView fx:id="settingsIcon" fitWidth="50" fitHeight="50" preserveRatio="true" />
             <Button fx:id="settingsButton" text="Paramètres" styleClass="dashboard-button" />
         </VBox>
