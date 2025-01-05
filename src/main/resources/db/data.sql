@@ -1,32 +1,32 @@
-INSERT INTO FAMILIES (NAME) VALUES ('Famille 1'), ('Famille 2');
+-- Ajout de familles
+INSERT INTO families (id, name) VALUES (1, 'Famille A'), (2, 'Famille B');
 
--- Ajouter des articles
-INSERT INTO ARTICLES (ID, NAME, DESCRIPTION, UNIT_PRICE, STOCK, STOCK_MIN, FAMILY_ID) VALUES
-                                                                                          (1, 'Article 1', 'Description article 1', 10.5, 50, 5, 1),
-                                                                                          (2, 'Article 2', 'Description article 2', 20.0, 30, 10, 2);
+-- Ajout d'articles
+INSERT INTO articles (id, name, description, stock, stock_min, unit_price, family_id)
+VALUES
+    (1, 'Article 1', 'Description Article 1', 50, 10, 10.99, 1),
+    (2, 'Article 2', 'Description Article 2', 30, 5, 20.50, 2);
 
--- Ajouter des fournisseurs
-INSERT INTO SUPPLIERS (ID, SUPPLIER_NAME, ADDRESS, EMAIL, PHONE_NUMBER) VALUES
-                                                                            (1, 'Fournisseur 1', 'Adresse 1', 'fournisseur1@example.com', '0102030405'),
-                                                                            (2, 'Fournisseur 2', 'Adresse 2', 'fournisseur2@example.com', '0607080910');
+-- Ajout de clients
+INSERT INTO customers (id, first_name, last_name, email, phone_number, address)
+VALUES
+    (1, 'Jean', 'Dupont', 'jean.dupont@example.com', '0102030405', '1 Rue Exemple'),
+    (2, 'Marie', 'Curie', 'marie.curie@example.com', '0607080910', '2 Rue Exemple');
 
--- Associer des articles aux fournisseurs
-INSERT INTO SUPPLIER_ARTICLE (SUPPLIER_ID, ARTICLE_ID) VALUES
-                                                           (1, 1),
-                                                           (1, 2),
-                                                           (2, 2);
+-- Ajout de fournisseurs
+INSERT INTO suppliers (id, supplier_name, phone_number, email, address)
+VALUES
+    (1, 'Fournisseur A', '0708091011', 'fournisseurA@example.com', '5 Rue Fournisseur'),
+    (2, 'Fournisseur B', '0809101112', 'fournisseurB@example.com', '6 Rue Fournisseur');
 
--- Ajouter des clients
-INSERT INTO CUSTOMERS (ID, FIRST_NAME, LAST_NAME, EMAIL, ADDRESS, PHONE_NUMBER) VALUES
-                                                                                    (1, 'Jean', 'Dupont', 'jean.dupont@example.com', 'Rue 1', '0101010101'),
-                                                                                    (2, 'Marie', 'Curie', 'marie.curie@example.com', 'Rue 2', '0202020202');
+-- Ajout de commandes
+INSERT INTO orders (id, order_date, is_supplier_order, status, customer_id, supplier_id)
+VALUES
+    (1, '2025-01-01 10:00:00', FALSE, 'CONFIRMED', 1, NULL),
+    (2, '2025-01-02 11:30:00', TRUE, 'PENDING', NULL, 2);
 
--- Ajouter des commandes
-INSERT INTO ORDERS (ID, IS_SUPPLIER_ORDER, ORDER_DATE, STATUS, CUSTOMER_ID, SUPPLIER_ID) VALUES
-                                                                                             (1, FALSE, '2024-01-01 10:00:00', 'PENDING', 1, NULL),
-                                                                                             (2, TRUE, '2024-01-02 15:30:00', 'DELIVERED', NULL, 1);
-
--- Ajouter des lignes de commande
-INSERT INTO ORDER_LINES (ID, QUANTITY, ORDER_ID, ARTICLE_ID) VALUES
-                                                                 (1, 2, 1, 1),
-                                                                 (2, 5, 2, 2);
+-- Ajout de lignes de commande
+INSERT INTO order_lines (id, quantity, order_id, article_id)
+VALUES
+    (1, 2, 1, 1),
+    (2, 5, 2, 2);

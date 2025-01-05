@@ -32,8 +32,8 @@ public class OrderItem {
         return quantity;
     }
 
-    public void setQuantity(Integer quantite) {
-        this.quantity = quantite;
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public Order getOrder() {
@@ -50,5 +50,10 @@ public class OrderItem {
 
     public void setArticle(Article article) {
         this.article = article;
+    }
+
+    // Méthode pour obtenir le prix unitaire depuis l'article
+    public double getUnitPrice() {
+        return this.article.getUnitPrice(); // Assurez-vous que la classe Article a bien une méthode getUnitPrice().
     }
 }

@@ -1,76 +1,54 @@
--- Création des tables pour le projet CUBES4
+-- Création des tables
 
--- Familles
-CREATE TABLE FAMILIES (
-                          ID BIGINT AUTO_INCREMENT PRIMARY KEY,
-                          NAME VARCHAR(255) NOT NULL
+CREATE TABLE families (
+                          id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                          name VARCHAR(255) NOT NULL
 );
 
--- Articles
-CREATE TABLE ARTICLES (
-                          ID BIGINT AUTO_INCREMENT PRIMARY KEY,
-                          NAME VARCHAR(255) NOT NULL,
-                          DESCRIPTION TEXT,
-                          UNIT_PRICE FLOAT NOT NULL,
-                          STOCK INTEGER,
-                          STOCK_MIN INTEGER,
-                          FAMILY_ID BIGINT,
-                          CONSTRAINT FK_ARTICLE_FAMILY FOREIGN KEY (FAMILY_ID) REFERENCES FAMILIES (ID)
-                              ON DELETE SET NULL
+CREATE TABLE articles (
+                          id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                          name VARCHAR(255) NOT NULL,
+                          description VARCHAR(255),
+                          stock INT DEFAULT 0,
+                          stock_min INT DEFAULT 0,
+                          unit_price DOUBLE NOT NULL,
+                          family_id BIGINT,
+                          FOREIGN KEY (family_id) REFERENCES families(id)
 );
 
--- Clients
-CREATE TABLE CUSTOMERS (
-                           ID BIGINT AUTO_INCREMENT PRIMARY KEY,
-                           FIRST_NAME VARCHAR(255),
-                           LAST_NAME VARCHAR(255) NOT NULL,
-                           EMAIL VARCHAR(255),
-                           ADDRESS VARCHAR(255),
-                           PHONE_NUMBER VARCHAR(255)
+CREATE TABLE customers (
+                           id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                           first_name VARCHAR(255) NOT NULL,
+                           last_name VARCHAR(255) NOT NULL,
+                           email VARCHAR(255),
+                           phone_number VARCHAR(255),
+                           address VARCHAR(255)
 );
 
--- Fournisseurs
-CREATE TABLE SUPPLIERS (
-                           ID BIGINT AUTO_INCREMENT PRIMARY KEY,
-                           SUPPLIER_NAME VARCHAR(255) NOT NULL,
-                           ADDRESS VARCHAR(255),
-                           EMAIL VARCHAR(255),
-                           PHONE_NUMBER VARCHAR(255)
+CREATE TABLE suppliers (
+                           id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                           supplier_name VARCHAR(255) NOT NULL,
+                           phone_number VARCHAR(255),
+                           email VARCHAR(255),
+                           address VARCHAR(255)
 );
 
--- Association fournisseur-article
-CREATE TABLE SUPPLIER_ARTICLE (
-                                  SUPPLIER_ID BIGINT NOT NULL,
-                                  ARTICLE_ID BIGINT NOT NULL,
-                                  PRIMARY KEY (SUPPLIER_ID, ARTICLE_ID),
-                                  CONSTRAINT FK_SUPPLIER_ARTICLE_SUPPLIER FOREIGN KEY (SUPPLIER_ID) REFERENCES SUPPLIERS (ID)
-                                      ON DELETE CASCADE,
-                                  CONSTRAINT FK_SUPPLIER_ARTICLE_ARTICLE FOREIGN KEY (ARTICLE_ID) REFERENCES ARTICLES (ID)
-                                      ON DELETE CASCADE
+CREATE TABLE orders (
+                        id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                        order_date TIMESTAMP NOT NULL,
+                        is_supplier_order BOOLEAN NOT NULL,
+                        status VARCHAR(50) NOT NULL,
+                        customer_id BIGINT,
+                        supplier_id BIGINT,
+                        FOREIGN KEY (customer_id) REFERENCES customers(id),
+                        FOREIGN KEY (supplier_id) REFERENCES suppliers(id)
 );
 
--- Commandes
-CREATE TABLE ORDERS (
-                        ID BIGINT AUTO_INCREMENT PRIMARY KEY,
-                        ORDER_DATE TIMESTAMP,
-                        IS_SUPPLIER_ORDER BOOLEAN NOT NULL DEFAULT FALSE,
-                        STATUS ENUM('CANCELLED', 'CONFIRMED', 'DELIVERED', 'PENDING', 'SHIPPED'),
-                        CUSTOMER_ID BIGINT,
-                        SUPPLIER_ID BIGINT,
-                        CONSTRAINT FK_ORDER_CUSTOMER FOREIGN KEY (CUSTOMER_ID) REFERENCES CUSTOMERS (ID)
-                            ON DELETE SET NULL,
-                        CONSTRAINT FK_ORDER_SUPPLIER FOREIGN KEY (SUPPLIER_ID) REFERENCES SUPPLIERS (ID)
-                            ON DELETE SET NULL
-);
-
--- Lignes de commande
-CREATE TABLE ORDER_LINES (
-                             ID BIGINT AUTO_INCREMENT PRIMARY KEY,
-                             QUANTITY INTEGER NOT NULL,
-                             ORDER_ID BIGINT NOT NULL,
-                             ARTICLE_ID BIGINT NOT NULL,
-                             CONSTRAINT FK_ORDERLINE_ORDER FOREIGN KEY (ORDER_ID) REFERENCES ORDERS (ID)
-                                 ON DELETE CASCADE,
-                             CONSTRAINT FK_ORDERLINE_ARTICLE FOREIGN KEY (ARTICLE_ID) REFERENCES ARTICLES (ID)
-                                 ON DELETE CASCADE
+CREATE TABLE order_lines (
+                             id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                             quantity INT NOT NULL,
+                             order_id BIGINT,
+                             article_id BIGINT,
+                             FOREIGN KEY (order_id) REFERENCES orders(id),
+                             FOREIGN KEY (article_id) REFERENCES articles(id)
 );

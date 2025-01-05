@@ -23,7 +23,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDTO> getAllOrders() {
-        return orderRepository.findAll().stream()
+        List<Order> orders = orderRepository.findAllWithItems();
+        return orders.stream()
                 .map(orderMapper::toDTO)
                 .collect(Collectors.toList());
     }
@@ -36,19 +37,17 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDTO createOrder(OrderDTO orderDTO) {
+    public Order createOrder(OrderDTO orderDTO) {
         Order order = orderMapper.toEntity(orderDTO);
-        order = orderRepository.saveAndFlush(order);
-        return orderMapper.toDTO(order);
+        return orderRepository.save(order);
     }
 
     @Override
-    public OrderDTO updateOrder(Long id, OrderDTO orderDTO) {
-        Order existingOrder = orderRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Order not found with id: " + id));
-        orderMapper.updateEntity(existingOrder, orderDTO);
-        existingOrder = orderRepository.saveAndFlush(existingOrder);
-        return orderMapper.toDTO(existingOrder);
+    public Order updateOrder(Long orderId, OrderDTO orderDTO) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found with id: " + orderId));
+        orderMapper.updateEntity(order, orderDTO);
+        return orderRepository.save(order);
     }
 
     @Override

@@ -5,8 +5,6 @@ import com.cubes4.CUBES4.dto.OrderDTO;
 import com.cubes4.CUBES4.services.OrderService;
 import com.cubes4.CUBES4.util.SceneManager;
 import com.cubes4.CUBES4.util.SceneType;
-import javafx.beans.property.ReadOnlyStringWrapper;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -29,10 +27,19 @@ public class OrderFXController {
     private TableColumn<OrderDTO, String> statusColumn;
 
     @FXML
-    private Button addButton;
+    private TableColumn<OrderDTO, String> productColumn;
 
     @FXML
-    private Button deleteButton;
+    private TableColumn<OrderDTO, Integer> quantityColumn;
+
+    @FXML
+    private TableColumn<OrderDTO, Double> priceColumn;
+
+    @FXML
+    private TableColumn<OrderDTO, String> paymentStatusColumn;
+
+    @FXML
+    private Button refreshButton;
 
     @FXML
     private Button backButton;
@@ -47,53 +54,22 @@ public class OrderFXController {
 
     @FXML
     public void initialize() {
-        // Configure les colonnes du tableau
         orderDateColumn.setCellValueFactory(new PropertyValueFactory<>("orderDate"));
-        supplierOrderColumn.setCellValueFactory(data ->
-                new ReadOnlyStringWrapper(data.getValue().isSupplierOrder() ? "Fournisseur" : "Client"));
-
+        supplierOrderColumn.setCellValueFactory(new PropertyValueFactory<>("orderType"));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+        productColumn.setCellValueFactory(new PropertyValueFactory<>("productName"));
+        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
+        paymentStatusColumn.setCellValueFactory(new PropertyValueFactory<>("paymentStatus"));
 
-        // Actions des boutons
-        addButton.setOnAction(event -> handleAddOrder());
-        deleteButton.setOnAction(event -> handleDeleteOrder());
+        refreshButton.setOnAction(event -> loadOrders());
         backButton.setOnAction(event -> sceneManager.switchScene(SceneType.DASHBOARD));
 
-        // Charger les données des commandes
         loadOrders();
     }
 
     private void loadOrders() {
         List<OrderDTO> orders = orderService.getAllOrders();
         orderTable.getItems().setAll(orders);
-    }
-
-    private void handleAddOrder() {
-        // Ouvrir un formulaire pour ajouter une commande (non implémenté ici)
-        System.out.println("Ajouter une commande (fonctionnalité à implémenter).");
-    }
-
-    private void handleDeleteOrder() {
-        OrderDTO selectedOrder = orderTable.getSelectionModel().getSelectedItem();
-        if (selectedOrder == null) {
-            showAlert("Erreur", "Veuillez sélectionner une commande à supprimer.");
-            return;
-        }
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Voulez-vous vraiment supprimer cette commande ?", ButtonType.YES, ButtonType.NO);
-        alert.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.YES) {
-                orderService.deleteOrder(selectedOrder.getId());
-                loadOrders();
-            }
-        });
-    }
-
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

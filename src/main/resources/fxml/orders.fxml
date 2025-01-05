@@ -6,19 +6,25 @@
 <VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cubes4.CUBES4.controllers.OrderFXController"
       spacing="10" alignment="CENTER" prefWidth="800" prefHeight="600">
 
+    <!-- Titre -->
     <Label text="Gestion des Commandes" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
 
-    <TableView fx:id="orderTable" prefWidth="600" prefHeight="400">
+    <!-- Tableau des commandes -->
+    <TableView fx:id="orderTable" prefWidth="750" prefHeight="400">
         <columns>
-            <TableColumn fx:id="orderDateColumn" text="Date de commande" />
+            <TableColumn fx:id="orderDateColumn" text="Date et Heure" />
             <TableColumn fx:id="supplierOrderColumn" text="Type (Client/Fournisseur)" />
             <TableColumn fx:id="statusColumn" text="Statut" />
+            <TableColumn fx:id="productColumn" text="Produit" />
+            <TableColumn fx:id="quantityColumn" text="Quantité" />
+            <TableColumn fx:id="priceColumn" text="Prix Total" />
+            <TableColumn fx:id="paymentStatusColumn" text="État (À payer/Crédité)" />
         </columns>
     </TableView>
 
+    <!-- Boutons d'action -->
     <HBox spacing="10">
-        <Button fx:id="addButton" text="Ajouter" />
-        <Button fx:id="deleteButton" text="Supprimer" />
-        <Button fx:id="backButton" text="Retour" />
+        <Button fx:id="refreshButton" text="Rafraîchir" />
+        <Button fx:id="backButton" text="Retour au Dashboard" />
     </HBox>
 </VBox>
