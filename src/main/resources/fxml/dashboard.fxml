@@ -6,6 +6,7 @@
 
 <VBox xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.cubes4.CUBES4.controllers.DashboardFXController"
+
       spacing="20" alignment="CENTER" prefWidth="800" prefHeight="600">
 
     <Label text="Tableau de Bord" style="-fx-font-size: 24px; -fx-font-weight: bold;" />

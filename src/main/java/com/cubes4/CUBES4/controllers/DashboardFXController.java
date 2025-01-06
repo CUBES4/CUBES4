@@ -61,6 +61,6 @@ public class DashboardFXController {
         manageCustomersButton.setOnAction(event -> sceneManager.switchScene(SceneType.MANAGE_CUSTOMERS));
         manageOrdersButton.setOnAction(event -> sceneManager.switchScene(SceneType.MANAGE_ORDERS));
         manageSuppliersButton.setOnAction(event -> sceneManager.switchScene(SceneType.MANAGE_SUPPLIERS));
-        settingsButton.setOnAction(event -> System.out.println("Ouverture des paramètres"));
+        settingsButton.setOnAction(event -> sceneManager.switchScene(SceneType.SETTINGS));
     }
 }
