@@ -2,10 +2,6 @@ package com.cubes4.CUBES4.models;
 
 import jakarta.persistence.*;
 
-/**
- * @author Maël NOUVEL <br>
- * 12/2024
- **/
 @Entity
 @Table(name = "articles")
 public class Article {
@@ -29,7 +25,6 @@ public class Article {
         return id;
     }
 
-    // Ajouter ce setter
     public void setId(long id) {
         this.id = id;
     }

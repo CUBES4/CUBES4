@@ -2,12 +2,15 @@ package com.cubes4.CUBES4.controllers;
 
 import com.cubes4.CUBES4.annotation.FXMLController;
 import com.cubes4.CUBES4.dto.ArticleDTO;
+import com.cubes4.CUBES4.dto.FamilyDTO;
 import com.cubes4.CUBES4.services.ArticleService;
+import com.cubes4.CUBES4.services.FamilyService;
 import com.cubes4.CUBES4.util.SceneManager;
 import com.cubes4.CUBES4.util.SceneType;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.paint.Color;
+import javafx.util.StringConverter;
 
 import java.util.List;
 
@@ -36,13 +39,19 @@ public class ArticleFXController {
     private TextField nameField;
 
     @FXML
-    private TextField unitPriceField;
+    private TextField descriptionField;
 
     @FXML
     private TextField stockField;
 
     @FXML
-    private TextField searchField;
+    private TextField stockMinField;
+
+    @FXML
+    private TextField unitPriceField;
+
+    @FXML
+    private ComboBox<FamilyDTO> familyComboBox;
 
     @FXML
     private Button searchButton;
@@ -56,11 +65,16 @@ public class ArticleFXController {
     @FXML
     private Button backButton;
 
+    @FXML
+    private TextField searchField;
+
     private final ArticleService articleService;
+    private final FamilyService familyService;
     private final SceneManager sceneManager;
 
-    public ArticleFXController(ArticleService articleService, SceneManager sceneManager) {
+    public ArticleFXController(ArticleService articleService, FamilyService familyService, SceneManager sceneManager) {
         this.articleService = articleService;
+        this.familyService = familyService;
         this.sceneManager = sceneManager;
     }
 
@@ -72,27 +86,12 @@ public class ArticleFXController {
 
         addEditColumn();
         addDeleteColumn();
+        loadFamilies();
 
         refreshButton.setOnAction(event -> loadArticles());
         addButton.setOnAction(event -> addArticle());
         backButton.setOnAction(event -> sceneManager.switchScene(SceneType.DASHBOARD));
         searchButton.setOnAction(event -> searchArticles());
-
-        articleTable.setRowFactory(tv -> new TableRow<>() {
-            @Override
-            protected void updateItem(ArticleDTO article, boolean empty) {
-                super.updateItem(article, empty);
-                if (article == null || empty) {
-                    setStyle("");
-                } else if (article.getStock() == 0) {
-                    setStyle("-fx-background-color: red; -fx-text-fill: white;");
-                } else if (article.getStock() < 10) {
-                    setStyle("-fx-background-color: yellow; -fx-text-fill: black;");
-                } else {
-                    setStyle("");
-                }
-            }
-        });
 
         loadArticles();
     }
@@ -106,6 +105,29 @@ public class ArticleFXController {
         List<ArticleDTO> articles = articleService.getAllArticles();
         articleTable.getItems().setAll(articles);
         resetForm();
+    }
+
+    private void loadFamilies() {
+        List<FamilyDTO> families = familyService.getAllFamilies();
+        familyComboBox.setItems(FXCollections.observableArrayList(families));
+        setupFamilyComboBox();
+    }
+
+    private void setupFamilyComboBox() {
+        familyComboBox.setConverter(new StringConverter<>() {
+            @Override
+            public String toString(FamilyDTO family) {
+                return family != null ? family.getName() : "";
+            }
+
+            @Override
+            public FamilyDTO fromString(String string) {
+                return familyComboBox.getItems().stream()
+                        .filter(family -> family.getName().equals(string))
+                        .findFirst()
+                        .orElse(null);
+            }
+        });
     }
 
     private void searchArticles() {
@@ -126,10 +148,19 @@ public class ArticleFXController {
             return;
         }
 
+        FamilyDTO selectedFamily = familyComboBox.getValue();
+        if (selectedFamily == null) {
+            showAlert("Erreur", "Veuillez sélectionner une famille !");
+            return;
+        }
+
         ArticleDTO article = new ArticleDTO();
         article.setName(nameField.getText());
-        article.setUnitPrice(Double.parseDouble(unitPriceField.getText()));
+        article.setDescription(descriptionField.getText());
         article.setStock(Integer.parseInt(stockField.getText()));
+        article.setStockMin(Integer.parseInt(stockMinField.getText()));
+        article.setUnitPrice(Double.parseDouble(unitPriceField.getText()));
+        article.setFamilyId(selectedFamily.getId());
 
         articleService.createArticle(article);
         loadArticles();
@@ -137,8 +168,10 @@ public class ArticleFXController {
 
     private boolean areFieldsValid() {
         return !nameField.getText().isEmpty() &&
-                !unitPriceField.getText().isEmpty() &&
-                !stockField.getText().isEmpty();
+                !descriptionField.getText().isEmpty() &&
+                !stockField.getText().isEmpty() &&
+                !stockMinField.getText().isEmpty() &&
+                !unitPriceField.getText().isEmpty();
     }
 
     private void addEditColumn() {
@@ -155,11 +188,7 @@ public class ArticleFXController {
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(editButton);
-                }
+                setGraphic(empty ? null : editButton);
             }
         });
     }
@@ -178,19 +207,19 @@ public class ArticleFXController {
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(deleteButton);
-                }
+                setGraphic(empty ? null : deleteButton);
             }
         });
     }
 
     private void handleEditArticle(ArticleDTO article) {
         nameField.setText(article.getName());
-        unitPriceField.setText(String.valueOf(article.getUnitPrice()));
+        descriptionField.setText(article.getDescription());
         stockField.setText(String.valueOf(article.getStock()));
+        stockMinField.setText(String.valueOf(article.getStockMin()));
+        unitPriceField.setText(String.valueOf(article.getUnitPrice()));
+
+        familyComboBox.getSelectionModel().select(familyService.getFamilyById(article.getFamilyId()));
 
         addButton.setText("Modifier");
         addButton.setOnAction(event -> updateArticle(article));
@@ -203,8 +232,11 @@ public class ArticleFXController {
         }
 
         article.setName(nameField.getText());
-        article.setUnitPrice(Double.parseDouble(unitPriceField.getText()));
+        article.setDescription(descriptionField.getText());
         article.setStock(Integer.parseInt(stockField.getText()));
+        article.setStockMin(Integer.parseInt(stockMinField.getText()));
+        article.setUnitPrice(Double.parseDouble(unitPriceField.getText()));
+        article.setFamilyId(familyComboBox.getValue().getId());
 
         articleService.updateArticle(article.getId(), article);
         loadArticles();
@@ -222,8 +254,11 @@ public class ArticleFXController {
 
     private void resetForm() {
         nameField.clear();
-        unitPriceField.clear();
+        descriptionField.clear();
         stockField.clear();
+        stockMinField.clear();
+        unitPriceField.clear();
+        familyComboBox.getSelectionModel().clearSelection();
         addButton.setText("Ajouter");
         addButton.setOnAction(event -> addArticle());
     }

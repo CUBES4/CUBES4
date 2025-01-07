@@ -3,17 +3,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cubes4.CUBES4.controllers.ArticleFXController"
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cubes4.CUBES4.controllers.ArticleFXController"
       spacing="10" alignment="CENTER" prefWidth="800" prefHeight="600">
     <Label text="Gestion des Articles" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
 
-    <!-- Barre de recherche -->
     <HBox spacing="10" alignment="CENTER_LEFT">
         <TextField fx:id="searchField" promptText="Rechercher par nom" />
         <Button fx:id="searchButton" text="Rechercher" />
     </HBox>
 
-    <TableView fx:id="articleTable" prefHeight="400" prefWidth="700">
+    <TableView fx:id="articleTable" prefHeight="400" prefWidth="750">
         <columns>
             <TableColumn fx:id="nameColumn" text="Nom" prefWidth="200" />
             <TableColumn fx:id="unitPriceColumn" text="Prix (€)" prefWidth="150" />
@@ -25,8 +24,11 @@
 
     <HBox spacing="10">
         <TextField fx:id="nameField" promptText="Nom de l'article" />
-        <TextField fx:id="unitPriceField" promptText="Prix (€)" />
+        <TextField fx:id="descriptionField" promptText="Description" />
         <TextField fx:id="stockField" promptText="Quantité" />
+        <TextField fx:id="stockMinField" promptText="Quantité minimale" />
+        <TextField fx:id="unitPriceField" promptText="Prix (€)" />
+        <ComboBox fx:id="familyComboBox" promptText="Sélectionnez une famille" prefWidth="200" />
         <Button fx:id="addButton" text="Ajouter" />
     </HBox>
 

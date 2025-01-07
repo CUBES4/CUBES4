@@ -88,11 +88,11 @@ public class ArticleDTO {
         this.stockMin.set(stockMin);
     }
 
-    public long getFamilyId() {
-        return familyId.get();
+    public Long getFamilyId() {
+        return familyId.get() == 0 ? null : familyId.get();
     }
 
-    public void setFamilyId(long familyId) {
-        this.familyId.set(familyId);
+    public void setFamilyId(Long familyId) {
+        this.familyId.set(familyId == null ? 0 : familyId);
     }
 }

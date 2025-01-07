@@ -4,7 +4,9 @@ import com.cubes4.CUBES4.dto.ArticleDTO;
 import com.cubes4.CUBES4.exceptions.ResourceNotFoundException;
 import com.cubes4.CUBES4.mapper.ArticleMapper;
 import com.cubes4.CUBES4.models.Article;
+import com.cubes4.CUBES4.models.Family;
 import com.cubes4.CUBES4.repositories.ArticleRepository;
+import com.cubes4.CUBES4.repositories.FamilyRepository;
 import com.cubes4.CUBES4.services.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,9 @@ public class RemoteArticleService implements ArticleService {
     private ArticleRepository articleRepository;
 
     @Autowired
+    private FamilyRepository familyRepository;
+
+    @Autowired
     private ArticleMapper articleMapper;
 
     @Override
@@ -31,7 +36,7 @@ public class RemoteArticleService implements ArticleService {
     @Override
     public ArticleDTO getArticleById(Long id) {
         Article article = articleRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Article not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Article introuvable avec id: " + id));
         return articleMapper.toDTO(article);
     }
 
@@ -41,13 +46,13 @@ public class RemoteArticleService implements ArticleService {
                 .map(articleMapper::toDTO)
                 .collect(Collectors.toList());
     }
+
     @Override
     public List<ArticleDTO> getArticlesByFamily(Long familyId) {
         return articleRepository.findByFamilyId(familyId).stream()
                 .map(articleMapper::toDTO)
                 .collect(Collectors.toList());
     }
-
 
     @Override
     public List<ArticleDTO> getArticleByPriceLessThan(double unitPrice) {
@@ -80,6 +85,15 @@ public class RemoteArticleService implements ArticleService {
     @Override
     public ArticleDTO createArticle(ArticleDTO articleDTO) {
         Article article = articleMapper.toEntity(articleDTO, null);
+
+        // Vérification et affectation de la famille
+        if (articleDTO.getFamilyId() != null) {
+            Family family = familyRepository.findById(articleDTO.getFamilyId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Famille introuvable avec id: " + articleDTO.getFamilyId()));
+            article.setFamily(family);
+        }
+
+        // Enregistrement de l'article
         articleRepository.saveAndFlush(article);
         return articleMapper.toDTO(article);
     }
@@ -87,8 +101,19 @@ public class RemoteArticleService implements ArticleService {
     @Override
     public ArticleDTO updateArticle(Long id, ArticleDTO updatedArticleDTO) {
         Article article = articleRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Article not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Article introuvable avec id: " + id));
+
+        // Mise à jour des champs de l'article
         article = articleMapper.toEntity(updatedArticleDTO, article);
+
+        // Mise à jour de la famille si applicable
+        if (updatedArticleDTO.getFamilyId() != null) {
+            Family family = familyRepository.findById(updatedArticleDTO.getFamilyId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Famille introuvable avec id: " + updatedArticleDTO.getFamilyId()));
+            article.setFamily(family);
+        }
+
+        // Enregistrement de l'article mis à jour
         articleRepository.saveAndFlush(article);
         return articleMapper.toDTO(article);
     }
@@ -96,7 +121,7 @@ public class RemoteArticleService implements ArticleService {
     @Override
     public void deleteArticle(Long id) {
         Article article = articleRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Article not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Article introuvable avec id: " + id));
         articleRepository.delete(article);
     }
 }
