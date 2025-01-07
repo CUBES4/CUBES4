@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.cubes4.CUBES4.controllers.FamilyFXController"
+      spacing="10" alignment="CENTER" prefWidth="600" prefHeight="400">
+
+    <Label text="Gestion des Familles" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+    <TableView fx:id="familyTable" prefWidth="600">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID" />
+            <TableColumn fx:id="nameColumn" text="Nom" />
+        </columns>
+    </TableView>
+
+    <Label text="Double-cliquez sur une famille pour afficher ses articles." />
+
+    <HBox spacing="10">
+        <TextField fx:id="nameField" promptText="Nom de la famille" />
+        <Button fx:id="addButton" text="Ajouter" />
+        <Button fx:id="refreshButton" text="Rafraîchir" />
+    </HBox>
+
+    <Button fx:id="backButton" text="Retour" />
+</VBox>

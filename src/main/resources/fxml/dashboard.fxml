@@ -19,26 +19,32 @@
             <Button fx:id="manageArticlesButton" text="Gérer les Articles" styleClass="dashboard-button" />
         </VBox>
 
-        <!-- Gérer les Clients -->
+        <!-- Gérer les Familles -->
         <VBox spacing="10" alignment="CENTER" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="dashboard-card">
+            <ImageView fx:id="familiesIcon" fitWidth="50" fitHeight="50" preserveRatio="true" />
+            <Button fx:id="manageFamiliesButton" text="Gérer les Familles" styleClass="dashboard-button" />
+        </VBox>
+
+        <!-- Gérer les Clients -->
+        <VBox spacing="10" alignment="CENTER" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="dashboard-card">
             <ImageView fx:id="customersIcon" fitWidth="50" fitHeight="50" preserveRatio="true" />
             <Button fx:id="manageCustomersButton" text="Gérer les Clients" styleClass="dashboard-button" />
         </VBox>
 
         <!-- Gérer les Commandes -->
-        <VBox spacing="10" alignment="CENTER" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="dashboard-card">
+        <VBox spacing="10" alignment="CENTER" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="dashboard-card">
             <ImageView fx:id="ordersIcon" fitWidth="50" fitHeight="50" preserveRatio="true" />
             <Button fx:id="manageOrdersButton" text="Gérer les Commandes" styleClass="dashboard-button" />
         </VBox>
 
         <!-- Gérer les Fournisseurs -->
-        <VBox spacing="10" alignment="CENTER" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="dashboard-card">
+        <VBox spacing="10" alignment="CENTER" GridPane.rowIndex="2" GridPane.columnIndex="0" styleClass="dashboard-card">
             <ImageView fx:id="suppliersIcon" fitWidth="50" fitHeight="50" preserveRatio="true" />
             <Button fx:id="manageSuppliersButton" text="Gérer les Fournisseurs" styleClass="dashboard-button" />
         </VBox>
 
         <!-- Paramètres -->
-        <VBox spacing="10" alignment="CENTER" GridPane.rowIndex="2" GridPane.columnIndex="0" styleClass="dashboard-card">
+        <VBox spacing="10" alignment="CENTER" GridPane.rowIndex="2" GridPane.columnIndex="1" styleClass="dashboard-card">
             <ImageView fx:id="settingsIcon" fitWidth="50" fitHeight="50" preserveRatio="true" />
             <Button fx:id="settingsButton" text="Paramètres" styleClass="dashboard-button" />
         </VBox>

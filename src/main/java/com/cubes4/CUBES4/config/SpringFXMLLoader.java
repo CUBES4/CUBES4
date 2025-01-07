@@ -12,6 +12,7 @@ import java.io.InputStream;
 public class SpringFXMLLoader {
 
     private final ApplicationContext applicationContext;
+    private FXMLLoader currentLoader; // Pour stocker le dernier FXMLLoader utilisé
 
     public SpringFXMLLoader(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
@@ -19,10 +20,17 @@ public class SpringFXMLLoader {
 
     public Parent load(String fxmlPath) throws IOException {
         try (InputStream fxmlStream = getClass().getResourceAsStream(fxmlPath)) {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setControllerFactory(applicationContext::getBean);
-            loader.setLocation(getClass().getResource(fxmlPath));
-            return loader.load(fxmlStream);
+            currentLoader = new FXMLLoader();
+            currentLoader.setControllerFactory(applicationContext::getBean);
+            currentLoader.setLocation(getClass().getResource(fxmlPath));
+            return currentLoader.load(fxmlStream);
         }
+    }
+
+    public Object getController() {
+        if (currentLoader == null) {
+            throw new IllegalStateException("FXMLLoader has not been initialized. Load an FXML file first.");
+        }
+        return currentLoader.getController();
     }
 }

@@ -78,12 +78,10 @@ public class ArticleFXController {
         backButton.setOnAction(event -> sceneManager.switchScene(SceneType.DASHBOARD));
         searchButton.setOnAction(event -> searchArticles());
 
-        // Appliquer une RowFactory pour personnaliser les lignes en fonction du stock
         articleTable.setRowFactory(tv -> new TableRow<>() {
             @Override
             protected void updateItem(ArticleDTO article, boolean empty) {
                 super.updateItem(article, empty);
-
                 if (article == null || empty) {
                     setStyle("");
                 } else if (article.getStock() == 0) {
@@ -97,6 +95,11 @@ public class ArticleFXController {
         });
 
         loadArticles();
+    }
+
+    public void loadArticlesByFamily(Long familyId) {
+        List<ArticleDTO> articles = articleService.getArticlesByFamily(familyId);
+        articleTable.getItems().setAll(articles);
     }
 
     private void loadArticles() {

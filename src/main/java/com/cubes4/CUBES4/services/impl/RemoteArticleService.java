@@ -41,6 +41,13 @@ public class RemoteArticleService implements ArticleService {
                 .map(articleMapper::toDTO)
                 .collect(Collectors.toList());
     }
+    @Override
+    public List<ArticleDTO> getArticlesByFamily(Long familyId) {
+        return articleRepository.findByFamilyId(familyId).stream()
+                .map(articleMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
 
     @Override
     public List<ArticleDTO> getArticleByPriceLessThan(double unitPrice) {

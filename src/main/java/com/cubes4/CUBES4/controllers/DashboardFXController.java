@@ -27,6 +27,9 @@ public class DashboardFXController {
     private ImageView settingsIcon;
 
     @FXML
+    private ImageView familiesIcon; // Nouvelle icône pour les familles
+
+    @FXML
     private Button manageArticlesButton;
 
     @FXML
@@ -36,10 +39,13 @@ public class DashboardFXController {
     private Button manageOrdersButton;
 
     @FXML
-    private Button settingsButton;
+    private Button manageSuppliersButton;
 
     @FXML
-    private Button manageSuppliersButton;
+    private Button manageFamiliesButton; // Nouveau bouton pour gérer les familles
+
+    @FXML
+    private Button settingsButton;
 
     private final SceneManager sceneManager;
 
@@ -54,6 +60,7 @@ public class DashboardFXController {
         customersIcon.setImage(new Image(getClass().getResourceAsStream("/images/icon-customers.png")));
         ordersIcon.setImage(new Image(getClass().getResourceAsStream("/images/icon-orders.png")));
         suppliersIcon.setImage(new Image(getClass().getResourceAsStream("/images/icon-suppliers.png")));
+        familiesIcon.setImage(new Image(getClass().getResourceAsStream("/images/icon-settings.png"))); // Nouvelle icône
         settingsIcon.setImage(new Image(getClass().getResourceAsStream("/images/icon-settings.png")));
 
         // Actions des boutons
@@ -61,6 +68,7 @@ public class DashboardFXController {
         manageCustomersButton.setOnAction(event -> sceneManager.switchScene(SceneType.MANAGE_CUSTOMERS));
         manageOrdersButton.setOnAction(event -> sceneManager.switchScene(SceneType.MANAGE_ORDERS));
         manageSuppliersButton.setOnAction(event -> sceneManager.switchScene(SceneType.MANAGE_SUPPLIERS));
+        manageFamiliesButton.setOnAction(event -> sceneManager.switchScene(SceneType.MANAGE_FAMILIES)); // Action pour familles
         settingsButton.setOnAction(event -> sceneManager.switchScene(SceneType.SETTINGS));
     }
 }

@@ -2,6 +2,8 @@ package com.cubes4.CUBES4.repositories;
 
 import com.cubes4.CUBES4.models.Article;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -19,4 +21,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     List<Article> findByStockLessThanEqual(Integer stock);
 
     List<Article> findByStockBetween(Integer stockMin, Integer stockMax);
+
+    @Query("SELECT a FROM Article a WHERE a.family.id = :familyId")
+    List<Article> findByFamilyId(@Param("familyId") Long familyId);
 }

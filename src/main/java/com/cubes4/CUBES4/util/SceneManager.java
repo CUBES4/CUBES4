@@ -16,6 +16,7 @@ public class SceneManager {
     private final SpringFXMLLoader fxmlLoader;
     private Stage primaryStage;
     private final Map<SceneType, Scene> scenes = new HashMap<>();
+    private final Map<SceneType, Object> controllers = new HashMap<>();
 
     // Tailles prédéfinies
     private static final double SMALL_WIDTH = 600;
@@ -94,6 +95,7 @@ public class SceneManager {
                 scene.getStylesheets().add(getClass().getResource("/styles/styles.css").toExternalForm());
                 root.setStyle("-fx-background-color: " + backgroundColor);
                 scenes.put(sceneType, scene);
+                controllers.put(sceneType, fxmlLoader.getController());
             } catch (IOException e) {
                 e.printStackTrace();
                 return;
@@ -112,5 +114,9 @@ public class SceneManager {
 
     public void registerScene(SceneType sceneType, Scene scene) {
         scenes.put(sceneType, scene);
+    }
+
+    public Object getController(SceneType sceneType) {
+        return controllers.get(sceneType);
     }
 }

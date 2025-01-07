@@ -10,6 +10,8 @@ import java.util.List;
  **/
 public interface ArticleService {
     List<ArticleDTO> getAllArticles();
+    List<ArticleDTO> getArticlesByFamily(Long familyId);
+
 
     ArticleDTO getArticleById(Long id);
 
