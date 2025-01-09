@@ -82,3 +82,10 @@ VALUES
     (2, 9, 14),
     (3, 9, 15),
     (5, 6, 12);
+
+-- Ajout d'un utilisateur admin pour les tests
+INSERT INTO users (username, password, role)
+VALUES ('admin', '$2a$10$0/j.yNem1SkV.cSeTc4V9eDwSsbXxXb76jMEedvPyWBacg1JYJGt6', 'ADMIN');
+-- Mot de passe : "admin123"
+-- Pour ajouter des nouveaux utilisateurs utiliser le fichier BCryptTest.java dans dossier test et créer les mots de passes hasher
+

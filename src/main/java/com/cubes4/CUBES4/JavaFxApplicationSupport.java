@@ -4,8 +4,6 @@ import com.cubes4.CUBES4.config.SpringFXMLLoader;
 import com.cubes4.CUBES4.util.SceneManager;
 import com.cubes4.CUBES4.util.SceneType;
 import javafx.application.Application;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -19,6 +17,7 @@ public class JavaFxApplicationSupport extends Application {
 
     @Override
     public void init() {
+        // Initialisation du contexte Spring
         springContext = new SpringApplicationBuilder(JavaFxApplicationSupport.class)
                 .run(getParameters().getRaw().toArray(new String[0]));
         springFXMLLoader = springContext.getBean(SpringFXMLLoader.class);
@@ -27,16 +26,14 @@ public class JavaFxApplicationSupport extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
+            // Récupération du SceneManager depuis le contexte Spring
             SceneManager sceneManager = springContext.getBean(SceneManager.class);
             sceneManager.setPrimaryStage(primaryStage);
 
-            Parent root = springFXMLLoader.load("/fxml/dashboard.fxml");
-            Scene scene = new Scene(root, 800, 600);
-            scene.getStylesheets().add(getClass().getResource("/styles/styles.css").toExternalForm());
-            sceneManager.registerScene(SceneType.DASHBOARD, scene);
+            // Démarrage sur la scène de connexion
+            sceneManager.switchScene(SceneType.LOGIN);
 
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("CUBES4 - Dashboard");
+            primaryStage.setTitle("CUBES4 - Connexion");
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -45,6 +42,7 @@ public class JavaFxApplicationSupport extends Application {
 
     @Override
     public void stop() {
+        // Arrêt du contexte Spring
         springContext.stop();
     }
 

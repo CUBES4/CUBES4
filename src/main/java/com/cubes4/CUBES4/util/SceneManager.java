@@ -44,6 +44,9 @@ public class SceneManager {
         this.primaryStage = stage;
         primaryStage.setWidth(appWidth);
         primaryStage.setHeight(appHeight);
+
+        // Définir la scène initiale (connexion)
+        switchScene(SceneType.LOGIN);
     }
 
     public Stage getPrimaryStage() {
