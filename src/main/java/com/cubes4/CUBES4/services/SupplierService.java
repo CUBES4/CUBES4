@@ -14,4 +14,6 @@ public interface SupplierService {
     SupplierDTO updateSupplier(Long id, SupplierDTO updatedSupplierDTO);
 
     void deleteSupplier(Long id);
+
+    List<String> getAllSupplierNames();
 }

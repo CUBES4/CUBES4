@@ -69,4 +69,8 @@ public class Supplier {
     public void setArticles(List<Article> articles) {
         this.articles = articles;
     }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 }

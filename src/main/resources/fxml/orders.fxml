@@ -3,28 +3,36 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cubes4.CUBES4.controllers.OrderFXController"
-      spacing="10" alignment="CENTER" prefWidth="800" prefHeight="600">
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.cubes4.CUBES4.controllers.OrderFXController"
+      alignment="CENTER" spacing="10" prefWidth="800" prefHeight="600">
 
-    <!-- Titre -->
     <Label text="Gestion des Commandes" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
 
     <!-- Tableau des commandes -->
-    <TableView fx:id="orderTable" prefWidth="750" prefHeight="400">
+    <TableView fx:id="orderTable" prefHeight="400" prefWidth="750">
         <columns>
-            <TableColumn fx:id="orderDateColumn" text="Date et Heure" />
-            <TableColumn fx:id="supplierOrderColumn" text="Type (Client/Fournisseur)" />
-            <TableColumn fx:id="statusColumn" text="Statut" />
-            <TableColumn fx:id="productColumn" text="Produit" />
-            <TableColumn fx:id="quantityColumn" text="Quantité" />
-            <TableColumn fx:id="priceColumn" text="Prix Total" />
-            <TableColumn fx:id="paymentStatusColumn" text="État (À payer/Crédité)" />
+            <TableColumn fx:id="orderDateColumn" text="Date" prefWidth="150" />
+            <TableColumn fx:id="statusColumn" text="Statut" prefWidth="150" />
+            <TableColumn fx:id="totalPriceColumn" text="Prix Total" prefWidth="150" />
         </columns>
     </TableView>
 
-    <!-- Boutons d'action -->
+    <!-- Tableau des lignes de commande -->
+    <TableView fx:id="orderLineTable" prefHeight="200" prefWidth="750">
+        <columns>
+            <TableColumn fx:id="productColumn" text="Produit" prefWidth="250" />
+            <TableColumn fx:id="quantityColumn" text="Quantité" prefWidth="150" />
+            <TableColumn fx:id="priceColumn" text="Prix Unitaire" prefWidth="150" />
+        </columns>
+    </TableView>
+
+    <!-- Formulaire et boutons -->
     <HBox spacing="10">
+        <ComboBox fx:id="customerComboBox" promptText="Sélectionner un client" />
+        <ComboBox fx:id="supplierComboBox" promptText="Sélectionner un fournisseur" />
         <Button fx:id="refreshButton" text="Rafraîchir" />
         <Button fx:id="backButton" text="Retour au Dashboard" />
     </HBox>
+
 </VBox>

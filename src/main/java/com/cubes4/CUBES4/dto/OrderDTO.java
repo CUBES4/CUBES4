@@ -1,24 +1,21 @@
 package com.cubes4.CUBES4.dto;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 public class OrderDTO {
+
     private Long id;
-    private String orderDate; // Date et heure
-    private String orderType; // Type : Client/Fournisseur
-    private String status; // Statut de la commande
-    private String productName; // Nom des produits commandés
-    private Integer quantity; // Quantité totale
-    private Double totalPrice; // Prix total
-    private String paymentStatus; // État du paiement (À payer/Crédité)
-    private List<String> items; // Liste des items formatés
+    private String orderDate;
+    private boolean supplierOrder;
+    private String status;
+    private Long customerId;
+    private Long supplierId;
+    private String customerName;
+    private String supplierName;
+    private List<OrderLineDTO> items; // Lignes de commande
+    private Double totalPrice;
 
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-    // Getters et setters
+    // Getters et Setters
     public Long getId() {
         return id;
     }
@@ -35,12 +32,12 @@ public class OrderDTO {
         this.orderDate = orderDate;
     }
 
-    public String getOrderType() {
-        return orderType;
+    public boolean isSupplierOrder() {
+        return supplierOrder;
     }
 
-    public void setOrderType(String orderType) {
-        this.orderType = orderType;
+    public void setSupplierOrder(boolean supplierOrder) {
+        this.supplierOrder = supplierOrder;
     }
 
     public String getStatus() {
@@ -51,20 +48,44 @@ public class OrderDTO {
         this.status = status;
     }
 
-    public String getProductName() {
-        return productName;
+    public Long getCustomerId() {
+        return customerId;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public Long getSupplierId() {
+        return supplierId;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setSupplierId(Long supplierId) {
+        this.supplierId = supplierId;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
+    }
+
+    public List<OrderLineDTO> getItems() {
+        return items;
+    }
+
+    public void setItems(List<OrderLineDTO> items) {
+        this.items = items;
     }
 
     public Double getTotalPrice() {
@@ -73,29 +94,5 @@ public class OrderDTO {
 
     public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
-    }
-
-    public String getPaymentStatus() {
-        return paymentStatus;
-    }
-
-    public void setPaymentStatus(String paymentStatus) {
-        this.paymentStatus = paymentStatus;
-    }
-
-    public List<String> getItems() {
-        return items;
-    }
-
-    public void setItems(List<String> items) {
-        this.items = items;
-    }
-
-    public Date getOrderDateAsDate() {
-        try {
-            return DATE_FORMAT.parse(orderDate);
-        } catch (ParseException e) {
-            throw new RuntimeException("Invalid date format: " + orderDate, e);
-        }
     }
 }

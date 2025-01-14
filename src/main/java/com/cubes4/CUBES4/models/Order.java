@@ -30,8 +30,16 @@ public class Order {
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<OrderItem> items;
+
+    // Méthode pour calculer le prix total
+    public double calculateTotalPrice() {
+        if (items != null) {
+            return items.stream().mapToDouble(item -> item.getQuantity() * item.getArticle().getUnitPrice()).sum();
+        }
+        return 0.0;
+    }
 
     // Getters et setters
     public Long getId() {

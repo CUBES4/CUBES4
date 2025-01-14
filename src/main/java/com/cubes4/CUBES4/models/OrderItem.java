@@ -2,10 +2,6 @@ package com.cubes4.CUBES4.models;
 
 import jakarta.persistence.*;
 
-/**
- * @author Maël NOUVEL <br>
- * 12/2024
- **/
 @Entity
 @Table(name = "order_lines")
 public class OrderItem {
@@ -14,7 +10,7 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer quantity;
+    private int quantity;
 
     @ManyToOne
     @JoinColumn(name = "order_id")
@@ -24,15 +20,20 @@ public class OrderItem {
     @JoinColumn(name = "article_id")
     private Article article;
 
+    // Getters et setters
     public Long getId() {
         return id;
     }
 
-    public Integer getQuantity() {
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
@@ -50,10 +51,5 @@ public class OrderItem {
 
     public void setArticle(Article article) {
         this.article = article;
-    }
-
-    // Méthode pour obtenir le prix unitaire depuis l'article
-    public double getUnitPrice() {
-        return this.article.getUnitPrice(); // Assurez-vous que la classe Article a bien une méthode getUnitPrice().
     }
 }

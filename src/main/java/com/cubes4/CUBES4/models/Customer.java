@@ -77,4 +77,8 @@ public class Customer {
     public void setOrders(List<Order> orders) {
         this.orders = orders;
     }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 }
