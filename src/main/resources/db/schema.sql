@@ -35,7 +35,7 @@ CREATE TABLE suppliers (
 
 CREATE TABLE orders (
                         id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                        order_date TIMESTAMP NOT NULL,
+                        order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, -- Ajout de DEFAULT CURRENT_TIMESTAMP
                         is_supplier_order BOOLEAN NOT NULL,
                         status VARCHAR(50) NOT NULL,
                         customer_id BIGINT,
@@ -43,6 +43,7 @@ CREATE TABLE orders (
                         FOREIGN KEY (customer_id) REFERENCES customers(id),
                         FOREIGN KEY (supplier_id) REFERENCES suppliers(id)
 );
+
 
 CREATE TABLE order_lines (
                              id BIGINT AUTO_INCREMENT PRIMARY KEY,

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Maël NOUVEL <br>
@@ -13,6 +14,8 @@ import java.util.List;
  **/
 public interface ArticleRepository extends JpaRepository<Article, Long> {
     List<Article> findByNameContainingIgnoreCase(String nom);
+    Optional<Article> findByName(String name);
+
 
     List<Article> findByUnitPriceLessThan(double unitPrice);
 

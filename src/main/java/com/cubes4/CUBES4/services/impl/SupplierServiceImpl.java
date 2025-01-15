@@ -57,4 +57,12 @@ public class SupplierServiceImpl implements SupplierService {
                 .orElseThrow(() -> new ResourceNotFoundException("Supplier not found with id: " + id));
         supplierRepository.delete(supplier);
     }
+    public List<String> getAllSupplierNames() {
+        // Implémentez ici la logique pour retourner la liste des noms des fournisseurs
+        return supplierRepository.findAll()
+                .stream()
+                .map(Supplier::getSupplierName)
+                .collect(Collectors.toList());
+    }
+
 }

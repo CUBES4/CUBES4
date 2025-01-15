@@ -31,33 +31,32 @@ public class FamilyServiceImpl implements FamilyService {
     @Override
     public FamilyDTO getFamilyById(Long id) {
         Family family = familyRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Family not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Famille introuvable avec l'ID : " + id));
         return familyMapper.toDTO(family);
     }
 
     @Override
     public FamilyDTO createFamily(FamilyDTO familyDTO) {
-        if (familyRepository.existsByName(familyDTO.getName())) {
-            throw new IllegalArgumentException("Une famille avec ce nom existe déjà.");
-        }
-        Family family = new Family();
-        family.setName(familyDTO.getName());
+        Family family = familyMapper.toEntity(familyDTO);
         Family savedFamily = familyRepository.save(family);
         return familyMapper.toDTO(savedFamily);
     }
 
-
-
     @Override
-    public FamilyDTO updateFamily(Long id, FamilyDTO familyDTO) {
-        Family family = familyRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Family not found with id: " + id));
-        family.setName(familyDTO.getName());
-        return familyMapper.toDTO(familyRepository.save(family));
+    public FamilyDTO updateFamily(Long id, FamilyDTO updatedFamilyDTO) {
+        Family existingFamily = familyRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Famille introuvable avec l'ID : " + id));
+
+        existingFamily.setName(updatedFamilyDTO.getName());
+        Family updatedFamily = familyRepository.save(existingFamily);
+        return familyMapper.toDTO(updatedFamily);
     }
 
     @Override
     public void deleteFamily(Long id) {
-        familyRepository.deleteById(id);
+        Family existingFamily = familyRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Famille introuvable avec l'ID : " + id));
+
+        familyRepository.delete(existingFamily);
     }
 }

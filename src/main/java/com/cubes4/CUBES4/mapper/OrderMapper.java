@@ -29,16 +29,10 @@ public class OrderMapper {
                 .mapToDouble(item -> item.getQuantity() * item.getArticle().getUnitPrice())
                 .sum() : 0.0);
 
-        // Mapping des items
         if (order.getItems() != null) {
-            orderDTO.setItems(order.getItems().stream().map(item -> {
-                OrderLineDTO lineDTO = new OrderLineDTO();
-                lineDTO.setId(item.getId());
-                lineDTO.setArticleName(item.getArticle().getName());
-                lineDTO.setQuantity(item.getQuantity());
-                lineDTO.setUnitPrice(item.getArticle().getUnitPrice());
-                return lineDTO;
-            }).collect(Collectors.toList()));
+            orderDTO.setItems(order.getItems().stream()
+                    .map(this::toOrderLineDTO)
+                    .collect(Collectors.toList()));
         }
 
         return orderDTO;
@@ -61,7 +55,13 @@ public class OrderMapper {
     public Order toEntity(OrderDTO orderDTO, Order existingOrder) {
         Order order = (existingOrder != null) ? existingOrder : new Order();
 
-        order.setOrderDate(java.sql.Timestamp.valueOf(orderDTO.getOrderDate()));
+        // Valider et convertir la date
+        if (orderDTO.getOrderDate() != null) {
+            order.setOrderDate(java.sql.Timestamp.valueOf(orderDTO.getOrderDate()));
+        } else {
+            order.setOrderDate(new java.sql.Timestamp(System.currentTimeMillis())); // Timestamp actuel par défaut
+        }
+
         order.setSupplierOrder(orderDTO.isSupplierOrder());
         order.setStatus(Order.OrderStatus.valueOf(orderDTO.getStatus()));
 
@@ -81,7 +81,6 @@ public class OrderMapper {
             order.setSupplier(null);
         }
 
-        // Lignes de commande
         if (orderDTO.getItems() != null) {
             order.setItems(orderDTO.getItems().stream()
                     .map(this::toOrderItem)
@@ -90,6 +89,8 @@ public class OrderMapper {
 
         return order;
     }
+
+
 
     public OrderItem toOrderItem(OrderLineDTO orderLineDTO) {
         if (orderLineDTO == null) {

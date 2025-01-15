@@ -26,6 +26,13 @@ public class RemoteArticleService implements ArticleService {
     @Autowired
     private ArticleMapper articleMapper;
 
+
+    public List<String> getAllArticleNames() {
+        return articleRepository.findAll().stream()
+                .map(Article::getName)
+                .collect(Collectors.toList());
+    }
+
     @Override
     public List<ArticleDTO> getAllArticles() {
         return articleRepository.findAll().stream()

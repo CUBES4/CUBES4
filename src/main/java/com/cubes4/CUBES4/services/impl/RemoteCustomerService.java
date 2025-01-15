@@ -57,4 +57,12 @@ public class RemoteCustomerService implements CustomerService {
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not found with id: " + id));
         customerRepository.delete(customer);
     }
+    @Override
+    public List<String> getAllCustomerNames() {
+        return customerRepository.findAll().stream()
+                .map(customer -> customer.getFirstName() + " " + customer.getLastName())
+                .collect(Collectors.toList());
+    }
+
+
 }
