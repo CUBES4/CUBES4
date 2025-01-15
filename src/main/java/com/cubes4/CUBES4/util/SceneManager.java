@@ -38,8 +38,8 @@ public class SceneManager {
     private static final double LARGE_HEIGHT = 768;
 
     // Champs pour gérer la taille globale de l'application
-    private double appWidth = LARGE_WIDTH;  // Taille par défaut
-    private double appHeight = LARGE_HEIGHT; // Taille par défaut
+    private double appWidth = MEDIUM_WIDTH;  // Taille par défaut
+    private double appHeight = MEDIUM_HEIGHT; // Taille par défaut
 
     // Champ pour la couleur de fond globale
     private String backgroundColor = "rgb(255, 255, 255)"; // Blanc par défaut
@@ -77,7 +77,6 @@ public class SceneManager {
         this.mainContentArea = mainContentArea;
     }
 
-    // TODO Remove this
     // Définir la taille de l'application par préréglage
     public void setAppSize(String sizePreset) {
         switch (sizePreset.toLowerCase()) {
@@ -155,11 +154,6 @@ public class SceneManager {
             if (headerTitleLabel != null) headerTitleLabel.setText(sceneType.getTitle());
 
             mainContentArea.getChildren().setAll(view);
-
-            AnchorPane.setTopAnchor(view, 0.0);
-            AnchorPane.setBottomAnchor(view, 0.0);
-            AnchorPane.setLeftAnchor(view, 0.0);
-            AnchorPane.setRightAnchor(view, 0.0);
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException("Failed to load view: " + sceneType.getTitle(), e);

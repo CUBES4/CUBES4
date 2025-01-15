@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import org.kordamp.ikonli.javafx.*?>
@@ -9,33 +8,43 @@
             fx:controller="com.cubes4.CUBES4.controllers.MenuFXController">
     <!-- Sidebar (Drawer) -->
     <left>
-        <AnchorPane fx:id="sidebarContainer" onMouseEntered="#expandSidebar" onMouseExited="#collapseSidebar"
-                    prefHeight="200.0" prefWidth="45.0" style="-fx-border-color: black; -fx-border-width: 0 0.2 0 0;"
+        <AnchorPane prefHeight="200.0" prefWidth="45.0" style="-fx-border-color: black; -fx-border-width: 0 0.2 0 0;"
                     styleClass="sidebar" stylesheets="@../styles/styles.css">
-            <VBox fx:id="sidebarVBox" prefHeight="456.0" prefWidth="48.0" stylesheets="@../styles/styles.css"
-                  AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="3.0" AnchorPane.topAnchor="80.0">
+            <Button fx:id="sidebarControl" layoutX="2.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="44.0"
+                    style="-fx-background-color: none; -fx-border-color: none;">
+                <graphic>
+                    <FontIcon iconLiteral="bi-layout-sidebar-inset" iconSize="30" translateX="-9.0"
+                              wrappingWidth="11.0"/>
+                </graphic>
+            </Button>
+            <VBox layoutX="2.0" layoutY="82.0" prefHeight="456.0" prefWidth="48.0"
+                  stylesheets="@../styles/styles.css">
                 <Button fx:id="sidebarArticle" layoutX="10.0" layoutY="56.0" mnemonicParsing="false"
                         onAction="#loadArticles" style="-fx-background-color: none; -fx-border-color: none;">
                     <graphic>
-                        <FontIcon iconLiteral="bi-tags-fill" iconSize="30" translateX="-7.0" wrappingWidth="11.0"/>
+                        <FontIcon iconLiteral="bi-tags-fill" iconSize="30" translateX="-7.0"
+                                  wrappingWidth="11.0"/>
                     </graphic>
                 </Button>
                 <Button fx:id="sidebarFamilies" layoutX="10.0" layoutY="102.0" mnemonicParsing="false"
                         onAction="#loadFamilies" style="-fx-background-color: none; -fx-border-color: none;">
                     <graphic>
-                        <FontIcon iconLiteral="bi-people-fill" iconSize="30" translateX="-7.0" wrappingWidth="11.0"/>
+                        <FontIcon iconLiteral="bi-people-fill" iconSize="30" translateX="-7.0"
+                                  wrappingWidth="11.0"/>
                     </graphic>
                 </Button>
                 <Button fx:id="sidebarCustomers" layoutX="10.0" layoutY="148.0" mnemonicParsing="false"
                         onAction="#loadCustomers" style="-fx-background-color: none; -fx-border-color: none;">
                     <graphic>
-                        <FontIcon iconLiteral="bi-person-badge" iconSize="30" translateX="-7.0" wrappingWidth="11.0"/>
+                        <FontIcon iconLiteral="bi-person-badge" iconSize="30" translateX="-7.0"
+                                  wrappingWidth="11.0"/>
                     </graphic>
                 </Button>
                 <Button fx:id="sidebarOrder" mnemonicParsing="false" onAction="#loadOrders"
                         style="-fx-background-color: none; -fx-border-color: none;">
                     <graphic>
-                        <FontIcon iconLiteral="bi-box-seam" iconSize="30" translateX="-7.0" wrappingWidth="11.0"/>
+                        <FontIcon iconLiteral="bi-box-seam" iconSize="30" translateX="-7.0"
+                                  wrappingWidth="11.0"/>
                     </graphic>
                 </Button>
                 <Button fx:id="sidebarSupplier" mnemonicParsing="false" onAction="#loadSuppliers"
@@ -44,11 +53,7 @@
                         <FontIcon iconLiteral="bi-truck" iconSize="30" translateX="-7.0" wrappingWidth="11.0"/>
                     </graphic>
                 </Button>
-                <Separator prefHeight="12.0" prefWidth="48.0">
-                    <padding>
-                        <Insets left="-5.0"/>
-                    </padding>
-                </Separator>
+                <Separator prefHeight="12.0" prefWidth="48.0"/>
                 <Button fx:id="sidebarSettings" alignment="BASELINE_CENTER" layoutX="10.0" layoutY="194.0"
                         mnemonicParsing="false" onAction="#loadSettings"
                         style="-fx-background-color: none; -fx-border-color: none;">
@@ -57,32 +62,23 @@
                                   wrappingWidth="11.0"/>
                     </graphic>
                 </Button>
-                <padding>
-                    <Insets left="5.0"/>
-                </padding>
             </VBox>
         </AnchorPane>
     </left>
     <top>
-        <AnchorPane style="-fx-border-color: black; -fx-border-width: 0 0 0.2 0;" stylesheets="@../styles/styles.css"
-                    BorderPane.alignment="CENTER">
-            <HBox layoutY="3.0" maxWidth="1.7976931348623157E308">
-                <Button mnemonicParsing="false" onAction="#loadHome"
-                        style="-fx-background-color: none; -fx-border-color: none;">
+        <AnchorPane prefHeight="45.0" prefWidth="1024.0" style="-fx-border-color: black; -fx-border-width: 0 0 0.2 0;"
+                    stylesheets="@../styles/styles.css" BorderPane.alignment="CENTER">
+            <HBox layoutY="3.0" maxWidth="1.7976931348623157E308" prefHeight="46.0" prefWidth="1000.0">
+                <Button mnemonicParsing="false" style="-fx-background-color: none; -fx-border-color: none;">
                     <graphic>
-                        <FontIcon iconLiteral="bi-house-fill" iconSize="30" translateX="-6.0" wrappingWidth="10.0"/>
+                        <FontIcon iconLiteral="bi-house-fill" iconSize="30" translateX="-6.0"
+                                  wrappingWidth="10.0"/>
                     </graphic>
                 </Button>
-                <Label fx:id="headerTitleLabel" maxHeight="1.7976931348623157E308" maxWidth="-Infinity"
-                       prefHeight="46.0" prefWidth="500.0" style="-fx-font-size: 24px; -fx-font-weight: bold;"
-                       HBox.hgrow="NEVER">
-                    <HBox.margin>
-                        <Insets left="35.0"/>
-                    </HBox.margin>
-                </Label>
-                <padding>
-                    <Insets left="5.0"/>
-                </padding>
+                <Separator orientation="VERTICAL" prefHeight="46.0" prefWidth="21.0"/>
+                <Label maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="46.0"
+                       prefWidth="150.0" HBox.hgrow="NEVER"/>
+                <Separator maxHeight="1.7976931348623157E308" orientation="VERTICAL"/>
             </HBox>
         </AnchorPane>
     </top>
