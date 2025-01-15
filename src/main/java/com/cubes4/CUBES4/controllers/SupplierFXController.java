@@ -83,7 +83,7 @@ public class SupplierFXController {
         refreshButton.setOnAction(event -> loadSuppliers());
         addButton.setOnAction(event -> addSupplier());
         searchButton.setOnAction(event -> searchSuppliers());
-        backButton.setOnAction(event -> sceneManager.switchScene(SceneType.DASHBOARD));
+        backButton.setOnAction(event -> sceneManager.loadView(SceneType.DASHBOARD));
 
         loadSuppliers();
     }

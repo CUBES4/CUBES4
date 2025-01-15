@@ -36,7 +36,7 @@ public class SettingFXController {
         sizeComboBox.setValue("Moyen"); // Par défaut à "Moyen"
 
         applyButton.setOnAction(event -> applySettings());
-        backButton.setOnAction(event -> sceneManager.switchScene(SceneType.DASHBOARD));
+        backButton.setOnAction(event -> sceneManager.loadView(SceneType.DASHBOARD));
     }
 
     private void applySettings() {

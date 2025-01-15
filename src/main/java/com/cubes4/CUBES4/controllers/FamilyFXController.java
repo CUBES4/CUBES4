@@ -19,6 +19,9 @@ public class FamilyFXController {
     private TableView<FamilyDTO> familyTable;
 
     @FXML
+    private TableColumn<FamilyDTO, Long> idColumn;
+
+    @FXML
     private TableColumn<FamilyDTO, String> nameColumn;
 
     @FXML

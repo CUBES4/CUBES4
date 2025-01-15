@@ -10,8 +10,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 
 @FXMLController
+@Scope("prototype")
 public class LoginFXController {
 
     @FXML
@@ -40,7 +42,7 @@ public class LoginFXController {
         }
 
         if (userService.authenticate(username, password)) {
-            sceneManager.switchScene(SceneType.DASHBOARD);
+            sceneManager.switchScene(SceneType.BASELAYOUT);
         } else {
             showAlert("Erreur", "Nom d'utilisateur ou mot de passe incorrect.");
         }

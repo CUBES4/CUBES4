@@ -70,7 +70,7 @@ public class OrderFXController {
         addOrderButton.setOnAction(event -> handleAddOrder());
         addLineButton.setOnAction(event -> handleAddLine());
         refreshButton.setOnAction(event -> loadOrders());
-        backButton.setOnAction(event -> sceneManager.switchScene(SceneType.DASHBOARD));
+        backButton.setOnAction(event -> sceneManager.loadView(SceneType.DASHBOARD));
 
         loadOrders();
         clearForm();
