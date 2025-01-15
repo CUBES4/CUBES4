@@ -3,11 +3,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1"
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.cubes4.CUBES4.controllers.FamilyFXController"
       alignment="CENTER" spacing="10" prefWidth="800" prefHeight="600">
 
-    <Label text="Gestion des Familles" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
 
     <!-- Formulaire pour ajouter ou modifier une famille -->
     <HBox spacing="10">
