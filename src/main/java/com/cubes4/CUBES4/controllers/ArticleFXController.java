@@ -88,12 +88,18 @@ public class ArticleFXController {
         addDeleteColumn();
         loadFamilies();
 
-        refreshButton.setOnAction(event -> loadArticles());
+        refreshButton.setOnAction(event -> refreshData());
         addButton.setOnAction(event -> addArticle());
         backButton.setOnAction(event -> sceneManager.switchScene(SceneType.DASHBOARD));
         searchButton.setOnAction(event -> searchArticles());
 
         loadArticles();
+    }
+
+    private void refreshData() {
+        // Recharger les articles et les familles
+        loadArticles();
+        loadFamilies();
     }
 
     public void loadArticlesByFamily(Long familyId) {
@@ -164,6 +170,7 @@ public class ArticleFXController {
 
         articleService.createArticle(article);
         loadArticles();
+        loadFamilies(); // Recharger les familles après ajout
     }
 
     private boolean areFieldsValid() {
@@ -240,6 +247,7 @@ public class ArticleFXController {
 
         articleService.updateArticle(article.getId(), article);
         loadArticles();
+        loadFamilies(); // Recharger les familles après modification
     }
 
     private void handleDeleteArticle(ArticleDTO article) {
