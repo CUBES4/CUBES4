@@ -90,7 +90,8 @@ public class OrderFXController {
         isSupplierOrderColumn.setCellValueFactory(data ->
                 new SimpleStringProperty(data.getValue().isSupplierOrder() ? "Fournisseur" : "Client"));
         customerOrSupplierNameColumn.setCellValueFactory(data ->
-                new SimpleStringProperty(data.getValue().isSupplierOrder() ? data.getValue().getSupplierName() : data.getValue().getCustomerName()));
+                new SimpleStringProperty(data.getValue().isSupplierOrder() ?
+                        data.getValue().getSupplierName() : data.getValue().getCustomerName()));
         totalPriceColumn.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
     }
 
@@ -125,8 +126,11 @@ public class OrderFXController {
     }
 
     private void loadOrders() {
-        List<OrderDTO> orders = orderService.getAllOrders();
+        List<OrderDTO> orders = orderService.getAllOrdersWithNames();
         orderTable.setItems(FXCollections.observableArrayList(orders));
+
+        loadArticlesIntoComboBox();
+        updateNameComboBox();
     }
 
     private void loadOrderLines(List<OrderLineDTO> items) {
