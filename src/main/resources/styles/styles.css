@@ -2,7 +2,12 @@
 .root {
     -fx-font-family: "Arial";
     -fx-background-color: #F7F9FB;
-    -fx-padding: 20;
+    /*-fx-padding: 20;*/
+}
+
+/* BASE LAYOUT STYLING */
+.sidebar {
+
 }
 
 /* Title styling */

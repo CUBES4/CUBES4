@@ -80,6 +80,12 @@ public class ArticleFXController {
 
     @FXML
     public void initialize() {
+        nameColumn.prefWidthProperty().bind(articleTable.widthProperty().multiply(0.5)); // 40% of the table width
+        unitPriceColumn.prefWidthProperty().bind(articleTable.widthProperty().multiply(0.1)); // 20%
+        stockColumn.prefWidthProperty().bind(articleTable.widthProperty().multiply(0.05)); // 20%
+        editColumn.prefWidthProperty().bind(articleTable.widthProperty().multiply(0.15)); // 10%
+        deleteColumn.prefWidthProperty().bind(articleTable.widthProperty().multiply(0.1)); // 10%
+
         nameColumn.setCellValueFactory(data -> data.getValue().nameProperty());
         unitPriceColumn.setCellValueFactory(data -> data.getValue().unitPriceProperty().asObject());
         stockColumn.setCellValueFactory(data -> data.getValue().stockProperty().asObject());
@@ -90,7 +96,7 @@ public class ArticleFXController {
 
         refreshButton.setOnAction(event -> loadArticles());
         addButton.setOnAction(event -> addArticle());
-        backButton.setOnAction(event -> sceneManager.switchScene(SceneType.DASHBOARD));
+        backButton.setOnAction(event -> sceneManager.loadView(SceneType.DASHBOARD));
         searchButton.setOnAction(event -> searchArticles());
 
         loadArticles();

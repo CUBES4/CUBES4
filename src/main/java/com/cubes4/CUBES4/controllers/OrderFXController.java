@@ -63,7 +63,7 @@ public class OrderFXController {
         paymentStatusColumn.setCellValueFactory(new PropertyValueFactory<>("paymentStatus"));
 
         refreshButton.setOnAction(event -> loadOrders());
-        backButton.setOnAction(event -> sceneManager.switchScene(SceneType.DASHBOARD));
+        backButton.setOnAction(event -> sceneManager.loadView(SceneType.DASHBOARD));
 
         loadOrders();
     }

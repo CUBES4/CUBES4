@@ -4,9 +4,9 @@ import com.cubes4.CUBES4.annotation.FXMLController;
 import com.cubes4.CUBES4.util.SceneManager;
 import com.cubes4.CUBES4.util.SceneType;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.control.Button;
 
 @FXMLController
 public class DashboardFXController {
@@ -60,15 +60,15 @@ public class DashboardFXController {
         customersIcon.setImage(new Image(getClass().getResourceAsStream("/images/icon-customers.png")));
         ordersIcon.setImage(new Image(getClass().getResourceAsStream("/images/icon-orders.png")));
         suppliersIcon.setImage(new Image(getClass().getResourceAsStream("/images/icon-suppliers.png")));
-        familiesIcon.setImage(new Image(getClass().getResourceAsStream("/images/icon-settings.png"))); // Nouvelle icône
+        familiesIcon.setImage(new Image(getClass().getResourceAsStream("/images/icon-settings.png")));
         settingsIcon.setImage(new Image(getClass().getResourceAsStream("/images/icon-settings.png")));
 
         // Actions des boutons
-        manageArticlesButton.setOnAction(event -> sceneManager.switchScene(SceneType.MANAGE_ARTICLES));
-        manageCustomersButton.setOnAction(event -> sceneManager.switchScene(SceneType.MANAGE_CUSTOMERS));
-        manageOrdersButton.setOnAction(event -> sceneManager.switchScene(SceneType.MANAGE_ORDERS));
-        manageSuppliersButton.setOnAction(event -> sceneManager.switchScene(SceneType.MANAGE_SUPPLIERS));
-        manageFamiliesButton.setOnAction(event -> sceneManager.switchScene(SceneType.MANAGE_FAMILIES)); // Action pour familles
-        settingsButton.setOnAction(event -> sceneManager.switchScene(SceneType.SETTINGS));
+        manageArticlesButton.setOnAction(event -> sceneManager.loadView(SceneType.MANAGE_ARTICLES));
+        manageCustomersButton.setOnAction(event -> sceneManager.loadView(SceneType.MANAGE_CUSTOMERS));
+        manageOrdersButton.setOnAction(event -> sceneManager.loadView(SceneType.MANAGE_ORDERS));
+        manageSuppliersButton.setOnAction(event -> sceneManager.loadView(SceneType.MANAGE_SUPPLIERS));
+        manageFamiliesButton.setOnAction(event -> sceneManager.loadView(SceneType.MANAGE_FAMILIES));
+        settingsButton.setOnAction(event -> sceneManager.loadView(SceneType.SETTINGS));
     }
 }

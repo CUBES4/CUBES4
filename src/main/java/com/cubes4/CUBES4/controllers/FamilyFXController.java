@@ -51,7 +51,7 @@ public class FamilyFXController {
 
         refreshButton.setOnAction(event -> loadFamilies());
         addButton.setOnAction(event -> addFamily());
-        backButton.setOnAction(event -> sceneManager.switchScene(SceneType.DASHBOARD));
+        backButton.setOnAction(event -> sceneManager.loadView(SceneType.DASHBOARD));
 
         familyTable.setRowFactory(tv -> {
             TableRow<FamilyDTO> row = new TableRow<>();
@@ -94,7 +94,7 @@ public class FamilyFXController {
         if (articleController != null) {
             articleController.loadArticlesByFamily(familyId);
         }
-        sceneManager.switchScene(SceneType.MANAGE_ARTICLES);
+        sceneManager.loadView(SceneType.MANAGE_ARTICLES);
     }
 
     private void showAlert(String title, String message) {

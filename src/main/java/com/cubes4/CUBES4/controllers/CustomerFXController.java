@@ -91,7 +91,7 @@ public class CustomerFXController {
         refreshButton.setOnAction(event -> loadCustomers());
         addButton.setOnAction(event -> addCustomer());
         searchButton.setOnAction(event -> searchCustomers());
-        backButton.setOnAction(event -> sceneManager.switchScene(SceneType.DASHBOARD));
+        backButton.setOnAction(event -> sceneManager.loadView(SceneType.DASHBOARD));
 
         loadCustomers();
     }
