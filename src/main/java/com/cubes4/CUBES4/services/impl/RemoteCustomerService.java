@@ -63,6 +63,10 @@ public class RemoteCustomerService implements CustomerService {
                 .map(customer -> customer.getFirstName() + " " + customer.getLastName())
                 .collect(Collectors.toList());
     }
-
+    public Long getCustomerIdByFullName(String firstName, String lastName) {
+        return customerRepository.findByFirstNameAndLastName(firstName, lastName)
+                .map(Customer::getId)
+                .orElseThrow(() -> new ResourceNotFoundException("Client introuvable : " + firstName + " " + lastName));
+    }
 
 }

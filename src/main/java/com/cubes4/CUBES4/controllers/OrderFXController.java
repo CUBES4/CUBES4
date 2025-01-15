@@ -14,7 +14,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @FXMLController
@@ -62,41 +62,19 @@ public class OrderFXController {
 
     @FXML
     public void initialize() {
-        // Configurer les colonnes de la table des commandes
-        orderDateColumn.setCellValueFactory(new PropertyValueFactory<>("orderDate"));
-        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
-        isSupplierOrderColumn.setCellValueFactory(data ->
-                new SimpleStringProperty(data.getValue().isSupplierOrder() ? "Fournisseur" : "Client"));
-        customerOrSupplierNameColumn.setCellValueFactory(data ->
-                new SimpleStringProperty(data.getValue().isSupplierOrder() ? data.getValue().getSupplierName() : data.getValue().getCustomerName()));
-        totalPriceColumn.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
+        configureOrderTableColumns();
+        configureOrderLineTableColumns();
+        setupDynamicButtons();
+        initializeComboBoxes();
 
-        // Configurer les colonnes de la table des lignes de commande
-        productColumn.setCellValueFactory(new PropertyValueFactory<>("articleName"));
-        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        priceColumn.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
-
-        // Boutons dynamiques dans les colonnes
-        setupLineModifyButtons();
-        setupActionButtons();
-
-        // Initialisation des ComboBox
-        statusComboBox.setItems(FXCollections.observableArrayList("PENDING", "CONFIRMED", "SHIPPED", "DELIVERED", "CANCELLED"));
-        typeComboBox.setItems(FXCollections.observableArrayList("Client", "Fournisseur"));
-        typeComboBox.setOnAction(event -> updateNameComboBox());
-        loadArticlesIntoComboBox();
-
-        // Configuration des boutons
         addOrderButton.setOnAction(event -> handleAddOrder());
         addLineButton.setOnAction(event -> handleAddLine());
         refreshButton.setOnAction(event -> loadOrders());
         backButton.setOnAction(event -> sceneManager.switchScene(SceneType.DASHBOARD));
 
-        // Charger les commandes et initialiser
         loadOrders();
         clearForm();
 
-        // Gestion de la sélection d'une commande
         orderTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 currentOrder = newValue;
@@ -104,6 +82,34 @@ public class OrderFXController {
                 loadOrderDetailsInForm(newValue);
             }
         });
+    }
+
+    private void configureOrderTableColumns() {
+        orderDateColumn.setCellValueFactory(new PropertyValueFactory<>("orderDate"));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+        isSupplierOrderColumn.setCellValueFactory(data ->
+                new SimpleStringProperty(data.getValue().isSupplierOrder() ? "Fournisseur" : "Client"));
+        customerOrSupplierNameColumn.setCellValueFactory(data ->
+                new SimpleStringProperty(data.getValue().isSupplierOrder() ? data.getValue().getSupplierName() : data.getValue().getCustomerName()));
+        totalPriceColumn.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
+    }
+
+    private void configureOrderLineTableColumns() {
+        productColumn.setCellValueFactory(new PropertyValueFactory<>("articleName"));
+        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
+    }
+
+    private void setupDynamicButtons() {
+        setupLineModifyButtons();
+        setupActionButtons();
+    }
+
+    private void initializeComboBoxes() {
+        statusComboBox.setItems(FXCollections.observableArrayList("PENDING", "CONFIRMED", "SHIPPED", "DELIVERED", "CANCELLED"));
+        typeComboBox.setItems(FXCollections.observableArrayList("Client", "Fournisseur"));
+        typeComboBox.setOnAction(event -> updateNameComboBox());
+        loadArticlesIntoComboBox();
     }
 
     private void updateNameComboBox() {
@@ -148,7 +154,7 @@ public class OrderFXController {
                 showAlert("Veuillez sélectionner le type (Client ou Fournisseur) !");
                 return;
             }
-            if (nameComboBox.getValue() == null) {
+            if (nameComboBox.getValue() == null || nameComboBox.getValue().trim().isEmpty()) {
                 System.out.println("Nom du Client ou Fournisseur non sélectionné !");
                 showAlert("Veuillez sélectionner un nom pour le client ou le fournisseur !");
                 return;
@@ -168,15 +174,35 @@ public class OrderFXController {
 
             newOrder.setStatus(statusComboBox.getValue());
 
-            // Attribution du type (Client/Fournisseur) et log
+            // Attribution du type (Client/Fournisseur) et récupération de l'ID
             if ("Client".equals(typeComboBox.getValue())) {
-                newOrder.setCustomerName(nameComboBox.getValue());
+                // Récupération du prénom et du nom
+                String[] fullName = nameComboBox.getValue().split(" ", 2); // Sépare prénom et nom
+                if (fullName.length < 2) {
+                    System.out.println("Nom incomplet fourni : " + nameComboBox.getValue());
+                    showAlert("Veuillez fournir un prénom et un nom pour le client !");
+                    return;
+                }
+                // Récupération de l'ID du client
+                Long customerId = customerService.getCustomerIdByFullName(fullName[0], fullName[1]);
+                if (customerId == null) {
+                    System.out.println("Client introuvable pour le nom : " + nameComboBox.getValue());
+                    showAlert("Client introuvable !");
+                    return;
+                }
+                newOrder.setCustomerId(customerId);
                 newOrder.setSupplierOrder(false);
-                System.out.println("Type : Client, Nom : " + nameComboBox.getValue());
+                System.out.println("Type : Client, ID : " + customerId);
             } else if ("Fournisseur".equals(typeComboBox.getValue())) {
-                newOrder.setSupplierName(nameComboBox.getValue());
+                Long supplierId = supplierService.getSupplierIdByName(nameComboBox.getValue());
+                if (supplierId == null) {
+                    System.out.println("Fournisseur introuvable pour le nom : " + nameComboBox.getValue());
+                    showAlert("Fournisseur introuvable !");
+                    return;
+                }
+                newOrder.setSupplierId(supplierId);
                 newOrder.setSupplierOrder(true);
-                System.out.println("Type : Fournisseur, Nom : " + nameComboBox.getValue());
+                System.out.println("Type : Fournisseur, ID : " + supplierId);
             }
 
             // Appel au service et log
@@ -196,7 +222,46 @@ public class OrderFXController {
         }
     }
 
+    private void validateOrderForm() {
+        if (statusComboBox.getValue() == null) {
+            throw new IllegalArgumentException("Veuillez sélectionner un statut !");
+        }
+        if (typeComboBox.getValue() == null) {
+            throw new IllegalArgumentException("Veuillez sélectionner le type (Client ou Fournisseur) !");
+        }
+        if (nameComboBox.getValue() == null) {
+            throw new IllegalArgumentException("Veuillez sélectionner un nom pour le client ou le fournisseur !");
+        }
+    }
 
+    private OrderDTO prepareOrderDTO() {
+        OrderDTO newOrder = new OrderDTO();
+        newOrder.setOrderDate(LocalDateTime.now().toString().replace("T", " "));
+        newOrder.setStatus(statusComboBox.getValue());
+
+        if ("Client".equals(typeComboBox.getValue())) {
+            // Récupération du prénom et du nom
+            String[] fullName = nameComboBox.getValue().split(" ", 2); // Sépare prénom et nom
+            if (fullName.length < 2) {
+                throw new IllegalArgumentException("Veuillez fournir un prénom et un nom pour le client !");
+            }
+            Long customerId = customerService.getCustomerIdByFullName(fullName[0], fullName[1]);
+            if (customerId == null) {
+                throw new IllegalArgumentException("Client introuvable !");
+            }
+            newOrder.setCustomerId(customerId);
+            newOrder.setSupplierOrder(false);
+        } else if ("Fournisseur".equals(typeComboBox.getValue())) {
+            Long supplierId = supplierService.getSupplierIdByName(nameComboBox.getValue());
+            if (supplierId == null) {
+                throw new IllegalArgumentException("Fournisseur introuvable !");
+            }
+            newOrder.setSupplierId(supplierId);
+            newOrder.setSupplierOrder(true);
+        }
+
+        return newOrder;
+    }
 
 
     private void handleAddLine() {
@@ -237,7 +302,6 @@ public class OrderFXController {
             }
         });
     }
-
 
     private void setupActionButtons() {
         editColumn.setCellFactory(param -> new TableCell<>() {
@@ -282,6 +346,7 @@ public class OrderFXController {
             }
         });
     }
+
     private void handleDeleteOrder(OrderDTO order) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Confirmez la suppression de la commande ?", ButtonType.YES, ButtonType.NO);
         alert.showAndWait().ifPresent(response -> {
@@ -295,7 +360,6 @@ public class OrderFXController {
             }
         });
     }
-
 
     private void handleModifyLine(OrderLineDTO line) {
         TextInputDialog dialog = new TextInputDialog(String.valueOf(line.getQuantity()));

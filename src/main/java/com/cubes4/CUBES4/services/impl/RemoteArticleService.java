@@ -26,6 +26,11 @@ public class RemoteArticleService implements ArticleService {
     @Autowired
     private ArticleMapper articleMapper;
 
+    @Override
+    public List<Article> findArticlesBelowStockMin() {
+        return articleRepository.findArticlesBelowStockMin();
+    }
+
 
     public List<String> getAllArticleNames() {
         return articleRepository.findAll().stream()

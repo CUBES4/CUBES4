@@ -64,5 +64,11 @@ public class SupplierServiceImpl implements SupplierService {
                 .map(Supplier::getSupplierName)
                 .collect(Collectors.toList());
     }
+    public Long getSupplierIdByName(String name) {
+        return supplierRepository.findBySupplierName(name)
+                .map(Supplier::getId)
+                .orElse(null);
+    }
+
 
 }

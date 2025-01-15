@@ -1,6 +1,7 @@
 package com.cubes4.CUBES4.services;
 
 import com.cubes4.CUBES4.dto.ArticleDTO;
+import com.cubes4.CUBES4.models.Article;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public interface ArticleService {
     List<ArticleDTO> getAllArticles();
     List<ArticleDTO> getArticlesByFamily(Long familyId);
 
-
+    List<Article> findArticlesBelowStockMin();
     ArticleDTO getArticleById(Long id);
 
     List<ArticleDTO> getArticleByName(String name);

@@ -27,4 +27,6 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     @Query("SELECT a FROM Article a WHERE a.family.id = :familyId")
     List<Article> findByFamilyId(@Param("familyId") Long familyId);
+    @Query("SELECT a FROM Article a WHERE a.stock < a.stockMin")
+    List<Article> findArticlesBelowStockMin();
 }

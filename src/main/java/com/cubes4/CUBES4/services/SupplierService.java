@@ -16,4 +16,6 @@ public interface SupplierService {
     void deleteSupplier(Long id);
 
     List<String> getAllSupplierNames();
+
+    Long getSupplierIdByName(String value);
 }

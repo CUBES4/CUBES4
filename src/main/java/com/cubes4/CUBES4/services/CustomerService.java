@@ -16,4 +16,7 @@ public interface CustomerService {
     void deleteCustomer(Long id);
 
     List<String> getAllCustomerNames();
+
+    Long getCustomerIdByFullName(String firstName, String lastName);
+
 }
