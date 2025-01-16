@@ -59,15 +59,10 @@ public class SupplierFXController {
     @FXML
     private Button refreshButton;
 
-    @FXML
-    private Button backButton;
-
     private final SupplierService supplierService;
-    private final SceneManager sceneManager;
 
-    public SupplierFXController(SupplierService supplierService, SceneManager sceneManager) {
+    public SupplierFXController(SupplierService supplierService) {
         this.supplierService = supplierService;
-        this.sceneManager = sceneManager;
     }
 
     @FXML
@@ -83,7 +78,6 @@ public class SupplierFXController {
         refreshButton.setOnAction(event -> loadSuppliers());
         addButton.setOnAction(event -> addSupplier());
         searchButton.setOnAction(event -> searchSuppliers());
-        backButton.setOnAction(event -> sceneManager.loadView(SceneType.DASHBOARD));
 
         loadSuppliers();
     }

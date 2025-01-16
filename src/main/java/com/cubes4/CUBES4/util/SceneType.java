@@ -11,8 +11,6 @@ public enum SceneType {
     MANAGE_FAMILIES("/fxml/families.fxml", "Gérer les Familles"),
     SETTINGS("/fxml/settings.fxml", "Paramètres");
 
-
-
     private final String fxmlPath;
     private final String title;
 

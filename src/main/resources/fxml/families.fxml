@@ -26,6 +26,5 @@
     <!-- Boutons supplémentaires -->
     <HBox spacing="10">
         <Button fx:id="refreshButton" text="Rafraîchir" />
-        <Button fx:id="backButton" text="Retour au Dashboard" />
     </HBox>
 </VBox>

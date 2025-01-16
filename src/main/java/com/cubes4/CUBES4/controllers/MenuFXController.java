@@ -8,44 +8,25 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Screen;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @FXMLController
 public class MenuFXController {
 
-    private static final Logger log = LoggerFactory.getLogger(MenuFXController.class);
     private final SceneManager sceneManager;
 
-    private boolean sidebarExpanded = false;
+    @FXML
+    private Button sidebarArticles, sidebarFamilies,
+            sidebarCustomers, sidebarOrders,
+            sidebarSuppliers, sidebarSettings,
+            sidebarDashboard;
+    @FXML
+    private Label headerTitleLabel, sidebarDashboardText,
+            sidebarArticlesText, sidebarFamiliesText,
+            sidebarCustomersText, sidebarOrdersText,
+            sidebarSuppliersText, sidebarSettingsText;
 
     @FXML
-    private Button sidebarArticle;
-
-    @FXML
-    private Button sidebarFamilies;
-
-    @FXML
-    private Button sidebarCustomers;
-
-    @FXML
-    private Button sidebarOrder;
-
-    @FXML
-    private Button sidebarSupplier;
-
-    @FXML
-    private Button sidebarSettings;
-
-    @FXML
-    private AnchorPane mainContentArea;
-
-    @FXML
-    private Label headerTitleLabel;
-
-    @FXML
-    private AnchorPane sidebarContainer;
+    private AnchorPane mainContentArea, sidebarContainer;
 
     @FXML
     private VBox sidebarVBox;
@@ -95,24 +76,6 @@ public class MenuFXController {
     @FXML
     public void loadSettings() {
         sceneManager.loadView(SceneType.SETTINGS);
-    }
-
-    public void expandSidebar() {
-        if (sidebarExpanded) return;
-        sidebarContainer.setPrefWidth(200.0);
-        // sidebarArticle.setText("Articles");
-        sidebarExpanded = true;
-    }
-
-    public void collapseSidebar() {
-        // localToScreen() gets the absolute screen bounds of the AnchorPane
-        var bounds = sidebarContainer.localToScreen(sidebarContainer.getBoundsInLocal());
-        if (bounds == null) return;
-        boolean outside = !bounds.contains(Screen.getPrimary().getOutputScaleX(), Screen.getPrimary().getOutputScaleY());
-        if (outside && sidebarExpanded) {
-            sidebarContainer.setPrefWidth(45.0);
-            sidebarExpanded = false;
-        }
     }
 
 }

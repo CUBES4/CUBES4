@@ -11,7 +11,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -19,30 +18,15 @@ import java.util.WeakHashMap;
 public class SceneManager {
 
     private final ApplicationContext applicationContext;
+
     private Stage primaryStage;
-
-    private Label headerTitleLabel;
-
-    private AnchorPane mainContentArea;
-
     private final Map<SceneType, Node> viewCache = new WeakHashMap<>();
 
-    private final Map<SceneType, Object> controllers = new HashMap<>();
+    private Label headerTitleLabel;
+    private AnchorPane mainContentArea;
 
-    // Tailles prédéfinies
-    private static final double SMALL_WIDTH = 600;
-    private static final double SMALL_HEIGHT = 400;
-    private static final double MEDIUM_WIDTH = 800;
-    private static final double MEDIUM_HEIGHT = 600;
     private static final double LARGE_WIDTH = 1024;
     private static final double LARGE_HEIGHT = 768;
-
-    // Champs pour gérer la taille globale de l'application
-    private double appWidth = LARGE_WIDTH;  // Taille par défaut
-    private double appHeight = LARGE_HEIGHT; // Taille par défaut
-
-    // Champ pour la couleur de fond globale
-    private String backgroundColor = "rgb(255, 255, 255)"; // Blanc par défaut
 
     public SceneManager(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
@@ -50,6 +34,10 @@ public class SceneManager {
 
     public void setHeaderTitleLabel(Label label) {
         this.headerTitleLabel = label;
+    }
+
+    public void setMainContentArea(AnchorPane mainContentArea) {
+        this.mainContentArea = mainContentArea;
     }
 
     /**
@@ -62,8 +50,6 @@ public class SceneManager {
             throw new IllegalArgumentException("Primary stage cannot be null.");
         }
         this.primaryStage = primaryStage;
-        this.primaryStage.setWidth(appWidth);
-        this.primaryStage.setHeight(appHeight);
     }
 
     public Stage getPrimaryStage() {
@@ -71,40 +57,6 @@ public class SceneManager {
             throw new IllegalStateException("Primary stage not set. Call setPrimaryStage() before accessing it.");
         }
         return primaryStage;
-    }
-
-    public void setMainContentArea(AnchorPane mainContentArea) {
-        this.mainContentArea = mainContentArea;
-    }
-
-    // TODO Remove this
-    // Définir la taille de l'application par préréglage
-    public void setAppSize(String sizePreset) {
-        switch (sizePreset.toLowerCase()) {
-            case "petit":
-                this.appWidth = SMALL_WIDTH;
-                this.appHeight = SMALL_HEIGHT;
-                break;
-            case "moyen":
-                this.appWidth = MEDIUM_WIDTH;
-                this.appHeight = MEDIUM_HEIGHT;
-                break;
-            case "grand":
-                this.appWidth = LARGE_WIDTH;
-                this.appHeight = LARGE_HEIGHT;
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid size preset: " + sizePreset);
-        }
-
-        if (primaryStage != null) {
-            primaryStage.setWidth(appWidth);
-            primaryStage.setHeight(appHeight);
-        }
-    }
-
-    public void setBackgroundColor(String color) {
-        this.backgroundColor = color;
     }
 
     /**
@@ -120,19 +72,17 @@ public class SceneManager {
         try {
             FXMLLoader loader = createLoader(sceneType.getFxmlPath());
             Parent root = loader.load();
-            Scene scene = new Scene(root, appWidth, appHeight);
-            scene.getStylesheets().add(getClass().getResource("/styles/styles.css").toExternalForm());
+            Scene scene = new Scene(root);
 
-            root.setStyle("-fx-background-color: " + backgroundColor);
+            String css = getClass().getResource("/css/styles.css").toExternalForm();
+            scene.getStylesheets().add(css);
 
             if (headerTitleLabel != null) headerTitleLabel.setText(sceneType.getTitle());
 
-            controllers.put(sceneType, loader.getController());
-
             primaryStage.setScene(scene);
-            primaryStage.setWidth(appWidth);
-            primaryStage.setHeight(appHeight);
             primaryStage.setTitle(sceneType.getTitle());
+            primaryStage.setMaximized(false);
+            primaryStage.setMaximized(true);
             primaryStage.show();
         } catch (IOException e) {
             throw new RuntimeException("Failed to load scene: " + sceneType.getTitle(), e);
@@ -160,14 +110,20 @@ public class SceneManager {
             AnchorPane.setBottomAnchor(view, 0.0);
             AnchorPane.setLeftAnchor(view, 0.0);
             AnchorPane.setRightAnchor(view, 0.0);
+
+            Scene currentScene = mainContentArea.getScene();
+            if (currentScene != null) {
+                String css = getClass().getResource("/css/styles.css").toExternalForm();
+
+                if (!currentScene.getStylesheets().contains(css)) currentScene.getStylesheets().add(css);
+            }
+
+            primaryStage.setMaximized(true);
+
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException("Failed to load view: " + sceneType.getTitle(), e);
         }
-    }
-
-    public Object getController(SceneType sceneType) {
-        return controllers.get(sceneType);
     }
 
     private FXMLLoader createLoader(String fxmlPath) {

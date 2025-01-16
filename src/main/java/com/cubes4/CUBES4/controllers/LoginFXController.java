@@ -12,8 +12,8 @@ import javafx.scene.control.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
-@FXMLController
 @Scope("prototype")
+@FXMLController
 public class LoginFXController {
 
     @FXML

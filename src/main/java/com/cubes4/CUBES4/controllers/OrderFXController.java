@@ -6,8 +6,6 @@ import com.cubes4.CUBES4.dto.OrderLineDTO;
 import com.cubes4.CUBES4.services.CustomerService;
 import com.cubes4.CUBES4.services.OrderService;
 import com.cubes4.CUBES4.services.SupplierService;
-import com.cubes4.CUBES4.util.SceneManager;
-import com.cubes4.CUBES4.util.SceneType;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -20,44 +18,52 @@ import java.util.List;
 @FXMLController
 public class OrderFXController {
 
-    @FXML private TableView<OrderDTO> orderTable;
-    @FXML private TableColumn<OrderDTO, String> orderDateColumn;
-    @FXML private TableColumn<OrderDTO, String> statusColumn;
-    @FXML private TableColumn<OrderDTO, String> isSupplierOrderColumn;
-    @FXML private TableColumn<OrderDTO, String> customerOrSupplierNameColumn;
-    @FXML private TableColumn<OrderDTO, Double> totalPriceColumn;
-    @FXML private TableColumn<OrderDTO, Void> editColumn;
-    @FXML private TableColumn<OrderDTO, Void> deleteColumn;
+    @FXML
+    private TableView<OrderDTO> orderTable;
+    @FXML
+    private TableColumn<OrderDTO, String> orderDateColumn, statusColumn,
+            isSupplierOrderColumn, customerOrSupplierNameColumn;
 
-    @FXML private TableView<OrderLineDTO> orderLineTable;
-    @FXML private TableColumn<OrderLineDTO, String> productColumn;
-    @FXML private TableColumn<OrderLineDTO, Integer> quantityColumn;
-    @FXML private TableColumn<OrderLineDTO, Double> priceColumn;
-    @FXML private TableColumn<OrderLineDTO, Void> modifyQuantityColumn;
+    @FXML
+    private TableColumn<OrderDTO, Double> totalPriceColumn;
 
-    @FXML private ComboBox<String> articleComboBox;
-    @FXML private TextField quantityField;
-    @FXML private ComboBox<String> statusComboBox;
-    @FXML private ComboBox<String> typeComboBox;
-    @FXML private ComboBox<String> nameComboBox;
+    @FXML
+    private TableColumn<OrderDTO, Void> editColumn, deleteColumn;
 
-    @FXML private Button refreshButton;
-    @FXML private Button addOrderButton;
-    @FXML private Button addLineButton;
-    @FXML private Button backButton;
+    @FXML
+    private TableView<OrderLineDTO> orderLineTable;
+
+    @FXML
+    private TableColumn<OrderLineDTO, String> productColumn;
+
+    @FXML
+    private TableColumn<OrderLineDTO, Integer> quantityColumn;
+
+    @FXML
+    private TableColumn<OrderLineDTO, Double> priceColumn;
+
+    @FXML
+    private TableColumn<OrderLineDTO, Void> modifyQuantityColumn;
+
+    @FXML
+    private ComboBox<String> articleComboBox, statusComboBox, typeComboBox, nameComboBox;
+
+    @FXML
+    private TextField quantityField;
+
+    @FXML
+    private Button refreshButton, addOrderButton, addLineButton;
 
     private final OrderService orderService;
     private final CustomerService customerService;
     private final SupplierService supplierService;
-    private final SceneManager sceneManager;
 
     private OrderDTO currentOrder;
 
-    public OrderFXController(OrderService orderService, CustomerService customerService, SupplierService supplierService, SceneManager sceneManager) {
+    public OrderFXController(OrderService orderService, CustomerService customerService, SupplierService supplierService) {
         this.orderService = orderService;
         this.customerService = customerService;
         this.supplierService = supplierService;
-        this.sceneManager = sceneManager;
     }
 
     @FXML
@@ -70,7 +76,6 @@ public class OrderFXController {
         addOrderButton.setOnAction(event -> handleAddOrder());
         addLineButton.setOnAction(event -> handleAddLine());
         refreshButton.setOnAction(event -> loadOrders());
-        backButton.setOnAction(event -> sceneManager.loadView(SceneType.DASHBOARD));
 
         loadOrders();
         clearForm();

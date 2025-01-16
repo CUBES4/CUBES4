@@ -25,27 +25,18 @@ public class FamilyFXController {
     private TableColumn<FamilyDTO, String> nameColumn;
 
     @FXML
-    private TableColumn<FamilyDTO, Void> editColumn;
-
-    @FXML
-    private TableColumn<FamilyDTO, Void> deleteColumn;
+    private TableColumn<FamilyDTO, Void> editColumn, deleteColumn;
 
     @FXML
     private TextField nameField;
 
     @FXML
-    private Button addButton;
-
-    @FXML
-    private Button refreshButton;
-
-    @FXML
-    private Button backButton;
+    private Button addButton, refreshButton;
 
     private final FamilyService familyService;
     private final SceneManager sceneManager;
 
-    private FamilyDTO selectedFamily; // Pour suivre la famille en cours de modification
+    private FamilyDTO selectedFamily;
 
     public FamilyFXController(FamilyService familyService, SceneManager sceneManager) {
         this.familyService = familyService;
@@ -63,7 +54,6 @@ public class FamilyFXController {
         // Configurer les actions des boutons
         refreshButton.setOnAction(event -> loadFamilies());
         addButton.setOnAction(event -> handleAddOrUpdate());
-        backButton.setOnAction(event -> sceneManager.switchScene(SceneType.DASHBOARD));
 
         // Charger les familles au démarrage
         loadFamilies();

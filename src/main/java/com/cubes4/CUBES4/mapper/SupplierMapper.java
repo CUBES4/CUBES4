@@ -17,19 +17,12 @@ public class SupplierMapper {
         return dto;
     }
 
-    public Supplier toEntity(SupplierDTO dto) {
-        Supplier supplier = new Supplier();
+    public Supplier toEntity(SupplierDTO dto, Supplier existingSupplier) {
+        Supplier supplier = (existingSupplier == null) ? new Supplier() : existingSupplier;
         supplier.setSupplierName(dto.getSupplierName());
         supplier.setEmail(dto.getEmail());
         supplier.setPhoneNumber(dto.getPhoneNumber());
         supplier.setAddress(dto.getAddress());
         return supplier;
-    }
-
-    public void updateEntity(Supplier supplier, SupplierDTO dto) {
-        supplier.setSupplierName(dto.getSupplierName());
-        supplier.setEmail(dto.getEmail());
-        supplier.setPhoneNumber(dto.getPhoneNumber());
-        supplier.setAddress(dto.getAddress());
     }
 }

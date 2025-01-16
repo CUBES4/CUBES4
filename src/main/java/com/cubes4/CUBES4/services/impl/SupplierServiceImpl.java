@@ -12,6 +12,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author Maël NOUVEL <br>
+ * 12/2024
+ **/
 @Service
 public class SupplierServiceImpl implements SupplierService {
 
@@ -28,47 +32,47 @@ public class SupplierServiceImpl implements SupplierService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public SupplierDTO getSupplierById(Long id) {
-        Supplier supplier = supplierRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Supplier not found with id: " + id));
-        return supplierMapper.toDTO(supplier);
-    }
-
-    @Override
-    public SupplierDTO createSupplier(SupplierDTO supplierDTO) {
-        Supplier supplier = supplierMapper.toEntity(supplierDTO);
-        supplier = supplierRepository.saveAndFlush(supplier);
-        return supplierMapper.toDTO(supplier);
-    }
-
-    @Override
-    public SupplierDTO updateSupplier(Long id, SupplierDTO updatedSupplierDTO) {
-        Supplier supplier = supplierRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Supplier not found with id: " + id));
-        supplierMapper.updateEntity(supplier, updatedSupplierDTO);
-        supplier = supplierRepository.saveAndFlush(supplier);
-        return supplierMapper.toDTO(supplier);
-    }
-
-    @Override
-    public void deleteSupplier(Long id) {
-        Supplier supplier = supplierRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Supplier not found with id: " + id));
-        supplierRepository.delete(supplier);
-    }
     public List<String> getAllSupplierNames() {
-        // Implémentez ici la logique pour retourner la liste des noms des fournisseurs
         return supplierRepository.findAll()
                 .stream()
                 .map(Supplier::getSupplierName)
                 .collect(Collectors.toList());
     }
+
     public Long getSupplierIdByName(String name) {
         return supplierRepository.findBySupplierName(name)
                 .map(Supplier::getId)
                 .orElse(null);
     }
 
+    @Override
+    public SupplierDTO getSupplierById(Long id) {
+        Supplier supplier = supplierRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Supplier not found with id:" + id));
+        return supplierMapper.toDTO(supplier);
+    }
 
+    @Override
+    public SupplierDTO createSupplier(SupplierDTO supplierDTO) {
+        Supplier supplier = supplierMapper.toEntity(supplierDTO, null);
+        supplierRepository.saveAndFlush(supplier);
+        return supplierMapper.toDTO(supplier);
+
+    }
+
+    @Override
+    public SupplierDTO updateSupplier(Long id, SupplierDTO updatedSupplier) {
+        Supplier supplier = supplierRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Supplier not found with id:" + id));
+        supplier = supplierMapper.toEntity(updatedSupplier, supplier);
+        supplierRepository.saveAndFlush(supplier);
+        return supplierMapper.toDTO(supplier);
+    }
+
+    @Override
+    public void deleteSupplier(Long id) {
+        Supplier supplier = supplierRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Supplier not found with id:" + id));
+        supplierRepository.delete(supplier);
+    }
 }
