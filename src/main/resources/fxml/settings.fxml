@@ -12,13 +12,7 @@
         <ColorPicker fx:id="colorPicker"/>
     </VBox>
 
-    <VBox spacing="10">
-        <Label text="Choisir une taille"/>
-        <ComboBox fx:id="sizeComboBox"/>
-    </VBox>
-
     <HBox spacing="20" alignment="CENTER">
         <Button fx:id="applyButton" text="Appliquer"/>
-        <Button fx:id="backButton" text="Retour"/>
     </HBox>
 </VBox>

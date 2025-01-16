@@ -30,7 +30,7 @@ public class JavaFxApplicationSupport extends Application {
             // Démarrage sur la scène de connexion
             sceneManager.switchScene(SceneType.LOGIN);
 
-            primaryStage.setTitle("CUBES4 - Connexion");
+            primaryStage.setTitle("Connexion");
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();

@@ -14,6 +14,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author Maël NOUVEL <br>
+ * 12/2024
+ **/
 @Service
 public class OrderServiceImpl implements OrderService {
 
@@ -27,6 +31,7 @@ public class OrderServiceImpl implements OrderService {
     private SupplierRepository supplierRepository;
     @Autowired
     private OrderMapper orderMapper;
+
 
     @Override
     public List<OrderDTO> getAllOrders() {

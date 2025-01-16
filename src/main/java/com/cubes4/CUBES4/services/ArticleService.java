@@ -11,9 +11,11 @@ import java.util.List;
  **/
 public interface ArticleService {
     List<ArticleDTO> getAllArticles();
+
     List<ArticleDTO> getArticlesByFamily(Long familyId);
 
-    List<Article> findArticlesBelowStockMin();
+    List<ArticleDTO> getArticlesBelowStockMin();
+
     ArticleDTO getArticleById(Long id);
 
     List<ArticleDTO> getArticleByName(String name);
