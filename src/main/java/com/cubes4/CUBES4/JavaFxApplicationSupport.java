@@ -1,6 +1,5 @@
 package com.cubes4.CUBES4;
 
-import com.cubes4.CUBES4.config.SpringFXMLLoader;
 import com.cubes4.CUBES4.util.SceneManager;
 import com.cubes4.CUBES4.util.SceneType;
 import javafx.application.Application;
@@ -13,14 +12,12 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class JavaFxApplicationSupport extends Application {
 
     private static ConfigurableApplicationContext springContext;
-    private static SpringFXMLLoader springFXMLLoader;
 
     @Override
     public void init() {
         // Initialisation du contexte Spring
         springContext = new SpringApplicationBuilder(JavaFxApplicationSupport.class)
                 .run(getParameters().getRaw().toArray(new String[0]));
-        springFXMLLoader = springContext.getBean(SpringFXMLLoader.class);
     }
 
     @Override
@@ -33,7 +30,7 @@ public class JavaFxApplicationSupport extends Application {
             // Démarrage sur la scène de connexion
             sceneManager.switchScene(SceneType.LOGIN);
 
-            primaryStage.setTitle("CUBES4 - Connexion");
+            primaryStage.setTitle("Connexion");
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();

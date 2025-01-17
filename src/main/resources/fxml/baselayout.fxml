@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.*?>
+<BorderPane id="borderPane" prefHeight="600.0" prefWidth="1024.0" stylesheets="@../css/styles.css"
+            xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.cubes4.CUBES4.controllers.MenuFXController">
+    <!-- Sidebar (Drawer) -->
+    <left>
+        <AnchorPane fx:id="sidebarContainer" styleClass="sidebar" stylesheets="@../css/styles.css">
+            <VBox fx:id="sidebarVBox" spacing="10" stylesheets="@../css/styles.css">
+                <padding>
+                    <Insets bottom="10" left="5" right="5" top="10"/>
+                </padding>
+
+                <!-- DASHBOARD -->
+                <VBox alignment="CENTER" spacing="3">
+                    <Button fx:id="sidebarDashboard" onAction="#loadHome" styleClass="sidebar-button">
+                        <graphic>
+                            <FontIcon iconLiteral="bi-house-fill" iconSize="30"/>
+                        </graphic>
+                    </Button>
+                    <Label fx:id="sidebarDashboardText" styleClass="sidebar-button-label" text="Accueil"
+                           HBox.hgrow="NEVER"/>
+                </VBox>
+
+                <Separator/>
+
+                <!-- ARTICLES -->
+                <VBox alignment="CENTER" spacing="3">
+                    <Button fx:id="sidebarArticles" onAction="#loadArticles" styleClass="sidebar-button">
+                        <graphic>
+                            <FontIcon iconLiteral="bi-tags-fill" iconSize="30"/>
+                        </graphic>
+                    </Button>
+                    <Label fx:id="sidebarArticlesText" styleClass="sidebar-button-label" text="Articles"
+                           HBox.hgrow="NEVER"/>
+                </VBox>
+
+
+                <!-- FAMILIES -->
+                <VBox alignment="CENTER" spacing="3">
+                    <Button fx:id="sidebarFamilies" onAction="#loadFamilies" styleClass="sidebar-button">
+                        <graphic>
+                            <FontIcon iconLiteral="bi-people-fill" iconSize="30"/>
+                        </graphic>
+                    </Button>
+                    <Label fx:id="sidebarFamiliesText" styleClass="sidebar-button-label" text="Familles"
+                           HBox.hgrow="NEVER"/>
+                </VBox>
+
+
+                <!-- CUSTOMERS -->
+                <VBox alignment="CENTER" spacing="3">
+                    <Button fx:id="sidebarCustomers" onAction="#loadCustomers" styleClass="sidebar-button">
+                        <graphic>
+                            <FontIcon iconLiteral="bi-person-badge" iconSize="30"/>
+                        </graphic>
+                    </Button>
+                    <Label fx:id="sidebarCustomersText" styleClass="sidebar-button-label" text="Clients"
+                           HBox.hgrow="NEVER"/>
+                </VBox>
+
+                <!--ORDERS -->
+                <VBox alignment="CENTER" spacing="3">
+                    <Button fx:id="sidebarOrders" onAction="#loadOrders" styleClass="sidebar-button">
+                        <graphic>
+                            <FontIcon iconLiteral="bi-box-seam" iconSize="30"/>
+                        </graphic>
+                    </Button>
+                    <Label fx:id="sidebarOrdersText" styleClass="sidebar-button-label" text="Commandes"
+                           HBox.hgrow="NEVER"/>
+                </VBox>
+
+                <!-- SUPPLIERS -->
+                <VBox alignment="CENTER" spacing="3">
+                    <Button fx:id="sidebarSuppliers" onAction="#loadSuppliers" styleClass="sidebar-button">
+                        <graphic>
+                            <FontIcon iconLiteral="bi-truck" iconSize="30"/>
+                        </graphic>
+                    </Button>
+                    <Label fx:id="sidebarSuppliersText" styleClass="sidebar-button-label" text="Fournisseurs"
+                           HBox.hgrow="NEVER"/>
+                </VBox>
+
+                <Separator/>
+
+                <!-- SETTINGS -->
+                <VBox alignment="CENTER" spacing="3">
+                    <Button fx:id="sidebarSettings" onAction="#loadSettings" styleClass="sidebar-button">
+                        <graphic>
+                            <FontIcon iconLiteral="bi-gear-fill" iconSize="30"/>
+                        </graphic>
+                    </Button>
+                    <Label fx:id="sidebarSettingsText" styleClass="sidebar-button-label" text="Paramètres"
+                           HBox.hgrow="NEVER"/>
+                </VBox>
+            </VBox>
+        </AnchorPane>
+    </left>
+    <top>
+        <AnchorPane style="-fx-border-color: black; -fx-border-width: 0 0 0.2 0;" stylesheets="@../css/styles.css"
+                    BorderPane.alignment="CENTER">
+            <HBox layoutY="3.0" maxWidth="1.7976931348623157E308">
+                <padding>
+                    <Insets left="5.0"/>
+                </padding>
+
+                <Label fx:id="headerTitleLabel" maxHeight="1.7976931348623157E308" maxWidth="-Infinity"
+                       prefHeight="46.0" prefWidth="500.0" styleClass="header-title"
+                       HBox.hgrow="NEVER">
+                    <HBox.margin>
+                        <Insets left="35.0"/>
+                    </HBox.margin>
+                </Label>
+            </HBox>
+        </AnchorPane>
+    </top>
+    <center>
+        <AnchorPane fx:id="mainContentArea"
+                    maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                    prefHeight="600.0" BorderPane.alignment="CENTER">
+
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10"/>
+            </padding>
+        </AnchorPane>
+    </center>
+</BorderPane>

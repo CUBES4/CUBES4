@@ -1,39 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<VBox alignment="TOP_CENTER" spacing="10" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.cubes4.CUBES4.controllers.ArticleFXController">
 
-<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cubes4.CUBES4.controllers.ArticleFXController"
-      spacing="10" alignment="CENTER" prefWidth="800" prefHeight="600">
-    <Label text="Gestion des Articles" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
-
-    <HBox spacing="10" alignment="CENTER_LEFT">
-        <TextField fx:id="searchField" promptText="Rechercher par nom" />
-        <Button fx:id="searchButton" text="Rechercher" />
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <TextField fx:id="searchField" promptText="Rechercher par nom"/>
+        <Button fx:id="searchButton" text="Rechercher"/>
+        <Button fx:id="refreshButton" text="Rafraîchir"/>
     </HBox>
+    <SplitPane dividerPositions="0.75" VBox.vgrow="ALWAYS">
+        <TableView fx:id="articleTable" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="nameColumn" text="Nom"/>
+                <TableColumn fx:id="unitPriceColumn" text="Prix (€)"/>
+                <TableColumn fx:id="stockColumn" text="Quantité"/>
+                <TableColumn fx:id="editColumn" text="Modifier"/>
+                <TableColumn fx:id="deleteColumn" text="Supprimer"/>
+            </columns>
+        </TableView>
 
-    <TableView fx:id="articleTable" prefHeight="400" prefWidth="750">
-        <columns>
-            <TableColumn fx:id="nameColumn" text="Nom" prefWidth="200" />
-            <TableColumn fx:id="unitPriceColumn" text="Prix (€)" prefWidth="150" />
-            <TableColumn fx:id="stockColumn" text="Quantité" prefWidth="150" />
-            <TableColumn fx:id="editColumn" text="Modifier" prefWidth="100" />
-            <TableColumn fx:id="deleteColumn" text="Supprimer" prefWidth="100" />
-        </columns>
-    </TableView>
-
-    <HBox spacing="10">
-        <TextField fx:id="nameField" promptText="Nom de l'article" />
-        <TextField fx:id="descriptionField" promptText="Description" />
-        <TextField fx:id="stockField" promptText="Quantité" />
-        <TextField fx:id="stockMinField" promptText="Quantité minimale" />
-        <TextField fx:id="unitPriceField" promptText="Prix (€)" />
-        <ComboBox fx:id="familyComboBox" promptText="Sélectionnez une famille" prefWidth="200" />
-        <Button fx:id="addButton" text="Ajouter" />
-    </HBox>
-
-    <HBox spacing="10">
-        <Button fx:id="refreshButton" text="Rafraîchir" />
-        <Button fx:id="backButton" text="Retour au Dashboard" />
-    </HBox>
+        <VBox spacing="10.0">
+            <HBox.margin>
+                <Insets top="15.0"/>
+            </HBox.margin>
+            <VBox>
+                <Label styleClass="form-label" text="Nom"/>
+                <TextField fx:id="nameField" promptText="Nom de l'article"/>
+            </VBox>
+            <VBox>
+                <Label styleClass="form-label" text="Description"/>
+                <TextField fx:id="descriptionField" promptText="Description"/>
+            </VBox>
+            <VBox>
+                <Label styleClass="form-label" text="Quantité"/>
+                <TextField fx:id="stockField" promptText="Quantité"/>
+            </VBox>
+            <VBox>
+                <Label styleClass="form-label" text="Quantité minimale"/>
+                <TextField fx:id="stockMinField" promptText="Quantité minimale"/>
+            </VBox>
+            <VBox>
+                <Label styleClass="form-label" text="Prix (€)"/>
+                <TextField fx:id="unitPriceField" promptText="Prix (€)"/>
+            </VBox>
+            <ComboBox fx:id="familyComboBox" promptText="Famille"/>
+            <Button fx:id="addButton" onAction="#addArticle" text="Ajouter"/>
+        </VBox>
+    </SplitPane>
 </VBox>

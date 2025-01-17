@@ -1,26 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <VBox xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.cubes4.CUBES4.controllers.SettingFXController"
       alignment="CENTER" spacing="20" prefWidth="800" prefHeight="600">
 
-    <Label text="Paramètres" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
-
     <VBox spacing="10">
-        <Label text="Choisir une couleur de fond" />
-        <ColorPicker fx:id="colorPicker" />
-    </VBox>
-
-    <VBox spacing="10">
-        <Label text="Choisir une taille" />
-        <ComboBox fx:id="sizeComboBox" />
+        <Label text="Choisir une couleur de fond"/>
+        <ColorPicker fx:id="colorPicker"/>
     </VBox>
 
     <HBox spacing="20" alignment="CENTER">
-        <Button fx:id="applyButton" text="Appliquer" />
-        <Button fx:id="backButton" text="Retour" />
+        <Button fx:id="applyButton" text="Appliquer"/>
     </HBox>
 </VBox>

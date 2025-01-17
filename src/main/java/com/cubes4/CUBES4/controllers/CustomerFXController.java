@@ -7,6 +7,7 @@ import com.cubes4.CUBES4.util.SceneManager;
 import com.cubes4.CUBES4.util.SceneType;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,55 +19,18 @@ public class CustomerFXController {
     private TableView<CustomerDTO> customerTable;
 
     @FXML
-    private TableColumn<CustomerDTO, String> firstNameColumn;
+    private TableColumn<CustomerDTO, String> firstNameColumn, lastNameColumn,
+            emailColumn, addressColumn, phoneNumberColumn;
 
     @FXML
-    private TableColumn<CustomerDTO, String> lastNameColumn;
+    private TableColumn<CustomerDTO, Void> editColumn, deleteColumn;
 
     @FXML
-    private TableColumn<CustomerDTO, String> emailColumn;
+    private TextField firstNameField, lastNameField,
+            emailField, addressField, phoneNumberField, searchField;
 
     @FXML
-    private TableColumn<CustomerDTO, String> addressColumn;
-
-    @FXML
-    private TableColumn<CustomerDTO, String> phoneNumberColumn;
-
-    @FXML
-    private TableColumn<CustomerDTO, Void> editColumn;
-
-    @FXML
-    private TableColumn<CustomerDTO, Void> deleteColumn;
-
-    @FXML
-    private TextField firstNameField;
-
-    @FXML
-    private TextField lastNameField;
-
-    @FXML
-    private TextField emailField;
-
-    @FXML
-    private TextField addressField;
-
-    @FXML
-    private TextField phoneNumberField;
-
-    @FXML
-    private TextField searchField;
-
-    @FXML
-    private Button addButton;
-
-    @FXML
-    private Button searchButton;
-
-    @FXML
-    private Button refreshButton;
-
-    @FXML
-    private Button backButton;
+    private Button addButton, searchButton, refreshButton;
 
     private final CustomerService customerService;
     private final SceneManager sceneManager;
@@ -78,11 +42,11 @@ public class CustomerFXController {
 
     @FXML
     public void initialize() {
-        firstNameColumn.setCellValueFactory(data -> data.getValue().firstNameProperty());
-        lastNameColumn.setCellValueFactory(data -> data.getValue().lastNameProperty());
-        emailColumn.setCellValueFactory(data -> data.getValue().emailProperty());
-        addressColumn.setCellValueFactory(data -> data.getValue().addressProperty());
-        phoneNumberColumn.setCellValueFactory(data -> data.getValue().phoneNumberProperty());
+        firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+        addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
+        phoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
 
         // Ajouter les colonnes Modifier et Supprimer
         addEditColumn();
@@ -91,7 +55,6 @@ public class CustomerFXController {
         refreshButton.setOnAction(event -> loadCustomers());
         addButton.setOnAction(event -> addCustomer());
         searchButton.setOnAction(event -> searchCustomers());
-        backButton.setOnAction(event -> sceneManager.switchScene(SceneType.DASHBOARD));
 
         loadCustomers();
     }

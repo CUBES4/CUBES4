@@ -1,7 +1,7 @@
 package com.cubes4.CUBES4.controllers;
 
 import com.cubes4.CUBES4.annotation.FXMLController;
-import com.cubes4.CUBES4.models.Article;
+import com.cubes4.CUBES4.dto.ArticleDTO;
 import com.cubes4.CUBES4.services.ArticleService;
 import com.cubes4.CUBES4.util.SceneManager;
 import com.cubes4.CUBES4.util.SceneType;
@@ -18,43 +18,16 @@ import java.util.List;
 public class DashboardFXController {
 
     @FXML
-    private ImageView articlesIcon;
+    private ImageView articlesIcon, customersIcon,
+            ordersIcon, suppliersIcon, settingsIcon,
+            familiesIcon;
 
     @FXML
-    private ImageView customersIcon;
-
-    @FXML
-    private ImageView ordersIcon;
-
-    @FXML
-    private ImageView suppliersIcon;
-
-    @FXML
-    private ImageView settingsIcon;
-
-    @FXML
-    private ImageView familiesIcon;
-
-    @FXML
-    private Button manageArticlesButton;
-
-    @FXML
-    private Button manageCustomersButton;
-
-    @FXML
-    private Button manageOrdersButton;
-
-    @FXML
-    private Button manageSuppliersButton;
-
-    @FXML
-    private Button manageFamiliesButton;
-
-    @FXML
-    private Button settingsButton;
+    private Button manageArticlesButton, manageCustomersButton,
+            manageOrdersButton, manageSuppliersButton, manageFamiliesButton;
 
     private final SceneManager sceneManager;
-    private final ArticleService articleService; // Service pour les articles
+    private final ArticleService articleService;
 
     public DashboardFXController(SceneManager sceneManager, ArticleService articleService) {
         this.sceneManager = sceneManager;
@@ -72,12 +45,11 @@ public class DashboardFXController {
         settingsIcon.setImage(new Image(getClass().getResourceAsStream("/images/icon-settings.png")));
 
         // Actions des boutons
-        manageArticlesButton.setOnAction(event -> sceneManager.switchScene(SceneType.MANAGE_ARTICLES));
-        manageCustomersButton.setOnAction(event -> sceneManager.switchScene(SceneType.MANAGE_CUSTOMERS));
-        manageOrdersButton.setOnAction(event -> sceneManager.switchScene(SceneType.MANAGE_ORDERS));
-        manageSuppliersButton.setOnAction(event -> sceneManager.switchScene(SceneType.MANAGE_SUPPLIERS));
-        manageFamiliesButton.setOnAction(event -> sceneManager.switchScene(SceneType.MANAGE_FAMILIES));
-        settingsButton.setOnAction(event -> sceneManager.switchScene(SceneType.SETTINGS));
+        manageArticlesButton.setOnAction(event -> sceneManager.loadView(SceneType.MANAGE_ARTICLES));
+        manageCustomersButton.setOnAction(event -> sceneManager.loadView(SceneType.MANAGE_CUSTOMERS));
+        manageOrdersButton.setOnAction(event -> sceneManager.loadView(SceneType.MANAGE_ORDERS));
+        manageSuppliersButton.setOnAction(event -> sceneManager.loadView(SceneType.MANAGE_SUPPLIERS));
+        manageFamiliesButton.setOnAction(event -> sceneManager.loadView(SceneType.MANAGE_FAMILIES));
 
         // Vérifier les articles sous le stock minimum
         checkLowStockArticles();
@@ -88,7 +60,7 @@ public class DashboardFXController {
      */
     private void checkLowStockArticles() {
         try {
-            List<Article> lowStockArticles = articleService.findArticlesBelowStockMin();
+            List<ArticleDTO> lowStockArticles = articleService.getArticlesBelowStockMin();
 
             if (lowStockArticles.isEmpty()) {
                 // Aucun article sous le stock minimum
@@ -98,7 +70,7 @@ public class DashboardFXController {
             if (lowStockArticles.size() <= 3) {
                 // Si 3 articles ou moins, afficher leurs noms
                 StringBuilder alertMessage = new StringBuilder("Attention, les articles suivants sont en dessous du stock minimum :\n");
-                for (Article article : lowStockArticles) {
+                for (ArticleDTO article : lowStockArticles) {
                     alertMessage.append("- ").append(article.getName()).append("\n");
                 }
                 showAlert(alertMessage.toString());

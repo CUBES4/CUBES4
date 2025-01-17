@@ -2,50 +2,64 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<VBox alignment="TOP_CENTER" spacing="10" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.cubes4.CUBES4.controllers.OrderFXController">
 
-<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.cubes4.CUBES4.controllers.OrderFXController"
-      alignment="CENTER" spacing="10" prefWidth="800" prefHeight="600">
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <Button fx:id="refreshButton" text="Rafraîchir"/>
+        <Button fx:id="addOrderButton" text="Ajouter Commande"/>
+    </HBox>
 
-    <Label text="Gestion des Commandes" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+    <SplitPane dividerPositions="0.5">
+        <!-- Tableau des commandes -->
+        <TableView fx:id="orderTable">
+            <columns>
+                <TableColumn fx:id="orderDateColumn" text="Date"/>
+                <TableColumn fx:id="statusColumn" text="Statut"/>
+                <TableColumn fx:id="isSupplierOrderColumn" text="Type (Client/Fournisseur)"/>
+                <TableColumn fx:id="customerOrSupplierNameColumn" text="Nom (Client/Fournisseur)"/>
+                <TableColumn fx:id="totalPriceColumn" text="Prix Total"/>
+                <TableColumn fx:id="editColumn" text="Modifier"/>
+                <TableColumn fx:id="deleteColumn" text="Supprimer"/>
+            </columns>
+        </TableView>
 
-    <!-- Tableau des commandes -->
-    <TableView fx:id="orderTable" prefHeight="300" prefWidth="750">
-        <columns>
-            <TableColumn fx:id="orderDateColumn" text="Date" prefWidth="120" />
-            <TableColumn fx:id="statusColumn" text="Statut" prefWidth="100" />
-            <TableColumn fx:id="isSupplierOrderColumn" text="Type (Client/Fournisseur)" prefWidth="150" />
-            <TableColumn fx:id="customerOrSupplierNameColumn" text="Nom (Client/Fournisseur)" prefWidth="150" />
-            <TableColumn fx:id="totalPriceColumn" text="Prix Total" prefWidth="100" />
-            <TableColumn fx:id="editColumn" text="Modifier" prefWidth="100" />
-            <TableColumn fx:id="deleteColumn" text="Supprimer" prefWidth="100" />
-        </columns>
-    </TableView>
+        <!-- Formulaire pour ajouter une ligne de commande -->
+        <VBox spacing="10">
+            <VBox>
+                <Label styleClass="form-label" text="Status de la commande"/>
+                <ComboBox fx:id="statusComboBox" maxWidth="1.7976931348623157E308" promptText="Statut"/>
+            </VBox>
+            <VBox>
+                <Label styleClass="form-label" text="Type de commande"/>
+                <ComboBox fx:id="typeComboBox" maxWidth="1.7976931348623157E308"
+                          promptText="Type (Client/Fournisseur)"/>
+            </VBox>
+            <VBox>
+                <Label styleClass="form-label" text="Nom"/>
+                <ComboBox fx:id="nameComboBox" maxWidth="1.7976931348623157E308" promptText="Nom (Client/Fournisseur)"/>
+            </VBox>
+            <VBox>
+                <Label styleClass="form-label" text="Article"/>
+                <ComboBox fx:id="articleComboBox" maxWidth="1.7976931348623157E308"
+                          promptText="Sélectionner un article"/>
+            </VBox>
+            <VBox>
+                <Label styleClass="form-label" text="Quantité"/>
+                <TextField fx:id="quantityField" promptText="Quantité"/>
+            </VBox>
+            <Button fx:id="addLineButton" text="Ajouter Ligne"/>
+        </VBox>
+    </SplitPane>
 
     <!-- Détails des lignes de commande -->
-    <TableView fx:id="orderLineTable" prefHeight="200" prefWidth="750">
+    <TableView fx:id="orderLineTable">
         <columns>
-            <TableColumn fx:id="modifyQuantityColumn" text="Modifier Quantité" prefWidth="120" />
-            <TableColumn fx:id="productColumn" text="Produit" prefWidth="250" />
-            <TableColumn fx:id="quantityColumn" text="Quantité" prefWidth="100" />
-            <TableColumn fx:id="priceColumn" text="Prix Unitaire" prefWidth="100" />
+            <TableColumn fx:id="modifyQuantityColumn" text="Modifier Quantité"/>
+            <TableColumn fx:id="productColumn" text="Produit"/>
+            <TableColumn fx:id="quantityColumn" text="Quantité"/>
+            <TableColumn fx:id="priceColumn" text="Prix Unitaire"/>
         </columns>
     </TableView>
 
-    <!-- Formulaire pour ajouter une ligne de commande -->
-    <HBox spacing="10" alignment="CENTER_LEFT" prefWidth="750">
-        <ComboBox fx:id="statusComboBox" promptText="Statut" prefWidth="150" />
-        <ComboBox fx:id="typeComboBox" promptText="Type (Client/Fournisseur)" prefWidth="150" />
-        <ComboBox fx:id="nameComboBox" promptText="Nom (Client/Fournisseur)" prefWidth="250" />
-        <ComboBox fx:id="articleComboBox" promptText="Sélectionner un article" prefWidth="250" />
-        <TextField fx:id="quantityField" promptText="Quantité" prefWidth="100" />
-        <Button fx:id="addLineButton" text="Ajouter Ligne" />
-    </HBox>
-
-    <!-- Boutons en dehors des colonnes -->
-    <HBox spacing="10">
-        <Button fx:id="refreshButton" text="Rafraîchir" />
-        <Button fx:id="addOrderButton" text="Ajouter Commande" />
-        <Button fx:id="backButton" text="Retour au Dashboard" />
-    </HBox>
 </VBox>

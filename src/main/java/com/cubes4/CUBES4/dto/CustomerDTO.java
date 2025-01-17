@@ -1,85 +1,80 @@
 package com.cubes4.CUBES4.dto;
 
-import javafx.beans.property.*;
+import com.cubes4.CUBES4.models.Order;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+import java.util.List;
 
 public class CustomerDTO {
 
-    private final LongProperty id = new SimpleLongProperty();
-    private final StringProperty firstName = new SimpleStringProperty();
-    private final StringProperty lastName = new SimpleStringProperty();
-    private final StringProperty email = new SimpleStringProperty();
-    private final StringProperty address = new SimpleStringProperty();
-    private final StringProperty phoneNumber = new SimpleStringProperty();
+    private Long id;
 
-    public LongProperty idProperty() {
+    @NotNull(message = "Le nom ne peut pas être nul")
+    @Size(min = 1, max = 100, message = "Le nom doit contenir entre 1 et 100 caractères")
+    private String lastName;
+
+    @NotNull(message = "Le prénom ne peut pas être nul")
+    @Size(min = 1, max = 100, message = "Le prénom doit contenir entre 1 et 100 caractères")
+    private String firstName;
+
+    @NotNull(message = "L'adresse e-mail est obligatoire")
+    @Email(message = "L'adresse e-mail doit être valide")
+    private String email;
+
+    @Size(max = 255, message = "L'adresse ne doit pas dépasser 255 caractères")
+    private String address;
+
+    @Size(max = 15, message = "Le numéro de téléphone ne doit pas dépasser 15 caractères")
+    private String phoneNumber;
+
+    // Getters et Setters
+    public Long getId() {
         return id;
     }
 
-    public StringProperty firstNameProperty() {
-        return firstName;
-    }
-
-    public StringProperty lastNameProperty() {
-        return lastName;
-    }
-
-    public StringProperty emailProperty() {
-        return email;
-    }
-
-    public StringProperty addressProperty() {
-        return address;
-    }
-
-    public StringProperty phoneNumberProperty() {
-        return phoneNumber;
-    }
-
-    public long getId() {
-        return id.get();
-    }
-
-    public void setId(long id) {
-        this.id.set(id);
-    }
-
-    public String getFirstName() {
-        return firstName.get();
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName.set(firstName);
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getLastName() {
-        return lastName.get();
+        return lastName;
     }
 
     public void setLastName(String lastName) {
-        this.lastName.set(lastName);
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getEmail() {
-        return email.get();
+        return email;
     }
 
     public void setEmail(String email) {
-        this.email.set(email);
+        this.email = email;
     }
 
     public String getAddress() {
-        return address.get();
+        return address;
     }
 
     public void setAddress(String address) {
-        this.address.set(address);
+        this.address = address;
     }
 
     public String getPhoneNumber() {
-        return phoneNumber.get();
+        return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber.set(phoneNumber);
+        this.phoneNumber = phoneNumber;
     }
 }

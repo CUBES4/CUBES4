@@ -30,43 +30,19 @@ public class ArticleFXController {
     private TableColumn<ArticleDTO, Integer> stockColumn;
 
     @FXML
-    private TableColumn<ArticleDTO, Void> editColumn;
+    private TableColumn<ArticleDTO, Void> editColumn, deleteColumn;
 
     @FXML
-    private TableColumn<ArticleDTO, Void> deleteColumn;
-
-    @FXML
-    private TextField nameField;
-
-    @FXML
-    private TextField descriptionField;
-
-    @FXML
-    private TextField stockField;
-
-    @FXML
-    private TextField stockMinField;
-
-    @FXML
-    private TextField unitPriceField;
+    private TextField nameField, descriptionField,
+            stockField, stockMinField, unitPriceField,
+            searchField;
 
     @FXML
     private ComboBox<FamilyDTO> familyComboBox;
 
     @FXML
-    private Button searchButton;
-
-    @FXML
-    private Button addButton;
-
-    @FXML
-    private Button refreshButton;
-
-    @FXML
-    private Button backButton;
-
-    @FXML
-    private TextField searchField;
+    private Button searchButton, addButton,
+            refreshButton;
 
     private final ArticleService articleService;
     private final FamilyService familyService;
@@ -80,6 +56,12 @@ public class ArticleFXController {
 
     @FXML
     public void initialize() {
+        nameColumn.prefWidthProperty().bind(articleTable.widthProperty().multiply(0.5)); // 40% of the table width
+        unitPriceColumn.prefWidthProperty().bind(articleTable.widthProperty().multiply(0.1)); // 20%
+        stockColumn.prefWidthProperty().bind(articleTable.widthProperty().multiply(0.05)); // 20%
+        editColumn.prefWidthProperty().bind(articleTable.widthProperty().multiply(0.15)); // 10%
+        deleteColumn.prefWidthProperty().bind(articleTable.widthProperty().multiply(0.1)); // 10%
+
         nameColumn.setCellValueFactory(data -> data.getValue().nameProperty());
         unitPriceColumn.setCellValueFactory(data -> data.getValue().unitPriceProperty().asObject());
         stockColumn.setCellValueFactory(data -> data.getValue().stockProperty().asObject());
@@ -89,8 +71,6 @@ public class ArticleFXController {
         loadFamilies();
 
         refreshButton.setOnAction(event -> refreshData());
-        addButton.setOnAction(event -> addArticle());
-        backButton.setOnAction(event -> sceneManager.switchScene(SceneType.DASHBOARD));
         searchButton.setOnAction(event -> searchArticles());
 
         loadArticles();
@@ -148,7 +128,7 @@ public class ArticleFXController {
         }
     }
 
-    private void addArticle() {
+    public void addArticle() {
         if (!areFieldsValid()) {
             showAlert("Erreur", "Tous les champs doivent être remplis !");
             return;
@@ -170,7 +150,7 @@ public class ArticleFXController {
 
         articleService.createArticle(article);
         loadArticles();
-        loadFamilies(); // Recharger les familles après ajout
+        loadFamilies();
     }
 
     private boolean areFieldsValid() {
