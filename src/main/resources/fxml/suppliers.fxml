@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cubes4.CUBES4.controllers.SupplierFXController"
       spacing="10" alignment="CENTER" prefWidth="800" prefHeight="600">
 
@@ -10,31 +9,41 @@
     <HBox spacing="10">
         <TextField fx:id="searchField" promptText="Rechercher par nom"/>
         <Button fx:id="searchButton" text="Rechercher"/>
-    </HBox>
-
-    <!-- Tableau des fournisseurs -->
-    <TableView fx:id="supplierTable" prefWidth="600" prefHeight="400">
-        <columns>
-            <TableColumn fx:id="supplierNameColumn" text="Nom du Fournisseur"/>
-            <TableColumn fx:id="emailColumn" text="Email"/>
-            <TableColumn fx:id="phoneNumberColumn" text="Téléphone"/>
-            <TableColumn fx:id="addressColumn" text="Adresse"/>
-            <TableColumn fx:id="editColumn" text="Modifier"/>
-            <TableColumn fx:id="deleteColumn" text="Supprimer"/>
-        </columns>
-    </TableView>
-
-    <!-- Formulaire pour ajouter/modifier -->
-    <HBox spacing="10">
-        <TextField fx:id="supplierNameField" promptText="Nom Fournisseur"/>
-        <TextField fx:id="emailField" promptText="Email"/>
-        <TextField fx:id="phoneNumberField" promptText="Téléphone"/>
-        <TextField fx:id="addressField" promptText="Adresse"/>
-        <Button fx:id="addButton" text="Ajouter"/>
-    </HBox>
-
-    <!-- Boutons d'action -->
-    <HBox spacing="10">
         <Button fx:id="refreshButton" text="Rafraîchir"/>
     </HBox>
+
+    <SplitPane dividerPositions="0.75" VBox.vgrow="ALWAYS">
+        <!-- Tableau des fournisseurs -->
+        <TableView fx:id="supplierTable" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="supplierNameColumn" text="Nom du Fournisseur"/>
+                <TableColumn fx:id="emailColumn" text="Email"/>
+                <TableColumn fx:id="phoneNumberColumn" text="Téléphone"/>
+                <TableColumn fx:id="addressColumn" text="Adresse"/>
+                <TableColumn fx:id="editColumn" text="Modifier"/>
+                <TableColumn fx:id="deleteColumn" text="Supprimer"/>
+            </columns>
+        </TableView>
+
+        <!-- Formulaire pour ajouter/modifier -->
+        <VBox spacing="10">
+            <VBox>
+                <Label styleClass="form-label" text="Nom du fournisseur"/>
+                <TextField fx:id="supplierNameField" promptText="Nom Fournisseur"/>
+            </VBox>
+            <VBox>
+                <Label styleClass="form-label" text="Adresse e-mail"/>
+                <TextField fx:id="emailField" promptText="Email"/>
+            </VBox>
+            <VBox>
+                <Label styleClass="form-label" text="Adresse physique"/>
+                <TextField fx:id="addressField" promptText="Adresse"/>
+            </VBox>
+            <VBox>
+                <Label styleClass="form-label" text="Numéro de téléphone"/>
+                <TextField fx:id="phoneNumberField" promptText="Téléphone"/>
+            </VBox>
+            <Button fx:id="addButton" text="Ajouter"/>
+        </VBox>
+    </SplitPane>
 </VBox>
