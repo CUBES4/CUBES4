@@ -1,9 +1,12 @@
+.header-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
 .sidebar {
     -fx-padding: 5;
     -fx-border-color: black;
     -fx-border-width: 0 0.2 0 0;
-
-
 }
 
 .sidebar-button {
@@ -19,6 +22,10 @@
 .sidebar-button-label {
     -fx-font-size: 9px;
     -fx-font-weight: bold;
+}
+
+.form-label {
+    -fx-font-size: 12px;
 }
 
 

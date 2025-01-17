@@ -47,7 +47,7 @@
                             <FontIcon iconLiteral="bi-people-fill" iconSize="30"/>
                         </graphic>
                     </Button>
-                    <Label fx:id="sidebarFamiliesText" styleClass="sidebar-button-label" text="Families"
+                    <Label fx:id="sidebarFamiliesText" styleClass="sidebar-button-label" text="Familles"
                            HBox.hgrow="NEVER"/>
                 </VBox>
 
@@ -59,7 +59,7 @@
                             <FontIcon iconLiteral="bi-person-badge" iconSize="30"/>
                         </graphic>
                     </Button>
-                    <Label fx:id="sidebarCustomersText" styleClass="sidebar-button-label" text="Customers"
+                    <Label fx:id="sidebarCustomersText" styleClass="sidebar-button-label" text="Clients"
                            HBox.hgrow="NEVER"/>
                 </VBox>
 
@@ -70,7 +70,7 @@
                             <FontIcon iconLiteral="bi-box-seam" iconSize="30"/>
                         </graphic>
                     </Button>
-                    <Label fx:id="sidebarOrdersText" styleClass="sidebar-button-label" text="Orders"
+                    <Label fx:id="sidebarOrdersText" styleClass="sidebar-button-label" text="Commandes"
                            HBox.hgrow="NEVER"/>
                 </VBox>
 
@@ -81,7 +81,7 @@
                             <FontIcon iconLiteral="bi-truck" iconSize="30"/>
                         </graphic>
                     </Button>
-                    <Label fx:id="sidebarSuppliersText" styleClass="sidebar-button-label" text="Suppliers"
+                    <Label fx:id="sidebarSuppliersText" styleClass="sidebar-button-label" text="Fournisseurs"
                            HBox.hgrow="NEVER"/>
                 </VBox>
 
@@ -94,7 +94,7 @@
                             <FontIcon iconLiteral="bi-gear-fill" iconSize="30"/>
                         </graphic>
                     </Button>
-                    <Label fx:id="sidebarSettingsText" styleClass="sidebar-button-label" text="Settings"
+                    <Label fx:id="sidebarSettingsText" styleClass="sidebar-button-label" text="Paramètres"
                            HBox.hgrow="NEVER"/>
                 </VBox>
             </VBox>
@@ -109,7 +109,7 @@
                 </padding>
 
                 <Label fx:id="headerTitleLabel" maxHeight="1.7976931348623157E308" maxWidth="-Infinity"
-                       prefHeight="46.0" prefWidth="500.0" style="-fx-font-size: 24px; -fx-font-weight: bold;"
+                       prefHeight="46.0" prefWidth="500.0" styleClass="header-title"
                        HBox.hgrow="NEVER">
                     <HBox.margin>
                         <Insets left="35.0"/>

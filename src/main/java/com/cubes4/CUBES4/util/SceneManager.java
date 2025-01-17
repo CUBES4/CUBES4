@@ -25,9 +25,6 @@ public class SceneManager {
     private Label headerTitleLabel;
     private AnchorPane mainContentArea;
 
-    private static final double LARGE_WIDTH = 1024;
-    private static final double LARGE_HEIGHT = 768;
-
     public SceneManager(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
