@@ -1,55 +1,25 @@
 package com.cubes4.CUBES4.services;
 
-import com.cubes4.CUBES4.exceptions.ResourceNotFoundException;
+import com.cubes4.CUBES4.dto.OrderDTO;
 import com.cubes4.CUBES4.models.Order;
-import com.cubes4.CUBES4.repositories.OrderRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * @author Maël NOUVEL <br>
- * 12/2024
+ * 02/2025
  **/
-@Service
-public class OrderService {
+public interface OrderService {
 
-    @Autowired
-    private OrderRepository orderRepository;
+    List<OrderDTO> getAllOrders();
 
-    public List<Order> getAllOrders() {
-        return orderRepository.findAll();
-    }
+    OrderDTO getOrderById(Long id);
 
-    public Order getOrderById(Long id) {
-        return orderRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Order not found with id: " + id));
-    }
+    List<OrderDTO> getOrdersByStatus(Order.OrderStatus status);
 
-    public List<Order> getOrdersByStatus(Order.OrderStatus status) {
-        return orderRepository.findByStatus(status);
-    }
+    OrderDTO createOrder(OrderDTO order);
 
-    public Order createOrder(Order order) {
-        return orderRepository.saveAndFlush(order);
-    }
+    OrderDTO updateOrder(Long id, OrderDTO updatedOrder);
 
-    public Order updateOrder(Long id, Order updatedOrder) {
-        return orderRepository.findById(id)
-                .map(order -> {
-                    order.setOrderDate(updatedOrder.getOrderDate());
-                    order.setSupplierOrder(updatedOrder.getSupplier() != null);
-                    order.setSupplier(updatedOrder.getSupplier());
-                    order.setOrderItems(updatedOrder.getOrderItems());
-                    order.setCustomer(updatedOrder.getCustomer());
-                    order.setStatus(updatedOrder.getStatus());
-                    return orderRepository.saveAndFlush(order);
-                }).orElseThrow(() -> new ResourceNotFoundException("Order not found with id: " + id));
-    }
-
-    public void deleteOrder(Long id) {
-        Order order = getOrderById(id);
-        orderRepository.delete(order);
-    }
+    void deleteOrder(Long id);
 }

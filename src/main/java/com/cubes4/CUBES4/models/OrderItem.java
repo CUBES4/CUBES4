@@ -4,24 +4,27 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 /**
  * @author Maël NOUVEL <br>
  * 12/2024
  **/
 @Entity
-@Table(name = "families")
+@Table(name = "order_lines")
 @Getter
 @Setter
-public class Family {
+public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private Integer quantity;
 
-    @OneToMany(mappedBy = "family")
-    private List<Article> articles;
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+
+    @ManyToOne
+    @JoinColumn(name = "article_id")
+    private Article article;
 }

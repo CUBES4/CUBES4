@@ -1,7 +1,8 @@
 package com.cubes4.CUBES4.controllers;
 
+import com.cubes4.CUBES4.dto.OrderDTO;
 import com.cubes4.CUBES4.models.Order;
-import com.cubes4.CUBES4.services.OrderService;
+import com.cubes4.CUBES4.services.impl.OrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,39 +18,35 @@ import java.util.List;
 public class OrderController {
 
     @Autowired
-    private OrderService orderService;
+    private OrderServiceImpl orderService;
 
     @GetMapping
-    public List<Order> getAllOrders() {
-        return orderService.getAllOrders();
+    public ResponseEntity<List<OrderDTO>> getAllOrders() {
+        return ResponseEntity.ok(orderService.getAllOrders());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Order> getOrderById(@PathVariable Long id) {
-        Order order = orderService.getOrderById(id);
-        return ResponseEntity.ok(order);
+    public ResponseEntity<OrderDTO> getOrderById(@PathVariable Long id) {
+        return ResponseEntity.ok(orderService.getOrderById(id));
     }
 
     @GetMapping("/statut")
-    public ResponseEntity<List<Order>> getOrderByStatus(@RequestParam Order.OrderStatus status) {
-        List<Order> orders = orderService.getOrdersByStatus(status);
-        return ResponseEntity.ok(orders);
+    public ResponseEntity<List<OrderDTO>> getOrderByStatus(@RequestParam Order.OrderStatus status) {
+        return ResponseEntity.ok(orderService.getOrdersByStatus(status));
     }
 
     @PostMapping
-    public ResponseEntity<Order> createOrder(@RequestBody Order order) {
-        Order savedOrder = orderService.createOrder(order);
-        return ResponseEntity.ok(savedOrder);
+    public ResponseEntity<OrderDTO> createOrder(@RequestBody OrderDTO order) {
+        return ResponseEntity.ok(orderService.createOrder(order));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Order> updateOrder(@PathVariable Long id, @RequestBody Order updatedOrder) {
-        Order savedOrder = orderService.updateOrder(id, updatedOrder);
-        return ResponseEntity.ok(savedOrder);
+    public ResponseEntity<OrderDTO> updateOrder(@PathVariable Long id, @RequestBody OrderDTO updatedOrder) {
+        return ResponseEntity.ok(orderService.updateOrder(id, updatedOrder));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteOrder(@PathVariable Long id) {
+    public ResponseEntity<OrderDTO> deleteOrder(@PathVariable Long id) {
         orderService.deleteOrder(id);
         return ResponseEntity.noContent().build();
     }

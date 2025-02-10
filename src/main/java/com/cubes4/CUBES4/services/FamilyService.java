@@ -1,47 +1,22 @@
 package com.cubes4.CUBES4.services;
 
-import com.cubes4.CUBES4.exceptions.ResourceNotFoundException;
-import com.cubes4.CUBES4.models.Family;
-import com.cubes4.CUBES4.repositories.FamilyRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.cubes4.CUBES4.dto.FamilyDTO;
 
 import java.util.List;
 
 /**
  * @author Maël NOUVEL <br>
- * 12/2024
+ * 02/2025
  **/
-@Service
-public class FamilyService {
+public interface FamilyService {
 
-    @Autowired
-    private FamilyRepository familyRepository;
+    List<FamilyDTO> getAllFamily();
 
-    public List<Family> getAllFamily() {
-        return familyRepository.findAll();
-    }
+    FamilyDTO getFamilyById(Long id);
 
-    public Family getFamilyById(Long id) {
-        return familyRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Family not found with id:" + id));
-    }
+    FamilyDTO createFamily(FamilyDTO familyDTO);
 
-    public Family createFamily(Family family) {
-        return familyRepository.saveAndFlush(family);
-    }
+    FamilyDTO updateFamily(Long id, FamilyDTO updatedFamily);
 
-    public Family updateFamily(Long id, Family updatedFamily) {
-        return familyRepository.findById(id)
-                .map(family -> {
-                    family.setName(updatedFamily.getName());
-                    family.setArticles(updatedFamily.getArticles());
-                    return familyRepository.saveAndFlush(family);
-                }).orElseThrow(() -> new ResourceNotFoundException("Family not found with id:" + id));
-    }
-
-    public void deleteFamily(Long id) {
-        Family family = getFamilyById(id);
-        familyRepository.delete(family);
-    }
+    void deleteFamily(Long id);
 }

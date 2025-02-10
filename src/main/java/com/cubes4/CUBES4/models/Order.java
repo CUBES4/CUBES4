@@ -1,6 +1,8 @@
 package com.cubes4.CUBES4.models;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
@@ -11,6 +13,8 @@ import java.util.List;
  **/
 @Entity
 @Table(name = "orders")
+@Getter
+@Setter
 public class Order {
 
     @Id
@@ -40,58 +44,6 @@ public class Order {
     private Supplier supplier;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderItems> orderItems;
-
-    public Long getId() {
-        return id;
-    }
-
-    public Date getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(Date dateCommande) {
-        this.orderDate = dateCommande;
-    }
-
-    public boolean isSupplierOrder() {
-        return isSupplierOrder;
-    }
-
-    public void setSupplierOrder(boolean supplierOrder) {
-        isSupplierOrder = supplierOrder;
-    }
-
-    public OrderStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(OrderStatus statut) {
-        this.status = statut;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public Supplier getSupplier() {
-        return supplier;
-    }
-
-    public void setSupplier(Supplier supplier) {
-        this.supplier = supplier;
-    }
-
-    public List<OrderItems> getOrderItems() {
-        return orderItems;
-    }
-
-    public void setOrderItems(List<OrderItems> orderItems) {
-        this.orderItems = orderItems;
-    }
+    private List<OrderItem> orderItems;
 }
 

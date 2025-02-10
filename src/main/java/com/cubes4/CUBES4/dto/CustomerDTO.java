@@ -1,9 +1,9 @@
 package com.cubes4.CUBES4.dto;
 
-import com.cubes4.CUBES4.models.Order;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.*;
 
 import java.util.List;
 
@@ -11,6 +11,11 @@ import java.util.List;
  * Data Transfer Object pour la classe Customer.
  * Permet de limiter les données échangées via l'API.
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class CustomerDTO {
 
     private Long id;
@@ -33,6 +38,5 @@ public class CustomerDTO {
     @Size(max = 15, message = "Le numéro de téléphone ne doit pas dépasser 15 caractères")
     private String phoneNumber;
 
-    // Liste des identifiants des commandes associées
     private List<OrderDTO> orders;
 }

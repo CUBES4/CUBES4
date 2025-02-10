@@ -1,5 +1,6 @@
 package com.cubes4.CUBES4.repositories;
 
+import com.cubes4.CUBES4.dto.OrderDTO;
 import com.cubes4.CUBES4.models.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 

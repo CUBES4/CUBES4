@@ -1,7 +1,7 @@
 package com.cubes4.CUBES4.controllers;
 
-import com.cubes4.CUBES4.models.Family;
-import com.cubes4.CUBES4.services.FamilyService;
+import com.cubes4.CUBES4.dto.FamilyDTO;
+import com.cubes4.CUBES4.services.impl.FamilyServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,30 +17,26 @@ import java.util.List;
 public class FamilyController {
 
     @Autowired
-    private FamilyService familyService;
+    private FamilyServiceImpl familyService;
 
     @GetMapping
-    public ResponseEntity<List<Family>> getAllFamily() {
-        List<Family> family = familyService.getAllFamily();
-        return ResponseEntity.ok(family);
+    public ResponseEntity<List<FamilyDTO>> getAllFamily() {
+        return ResponseEntity.ok(familyService.getAllFamily());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Family> getFamilyById(@PathVariable Long id) {
-        Family family = familyService.getFamilyById(id);
-        return ResponseEntity.ok(family);
+    public ResponseEntity<FamilyDTO> getFamilyById(@PathVariable Long id) {
+        return ResponseEntity.ok(familyService.getFamilyById(id));
     }
 
     @PostMapping
-    public ResponseEntity<Family> createFamily(@RequestBody Family family) {
-        Family savedFamily = familyService.createFamily(family);
-        return ResponseEntity.ok(savedFamily);
+    public ResponseEntity<FamilyDTO> createFamily(@RequestBody FamilyDTO family) {
+        return ResponseEntity.ok(familyService.createFamily(family));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Family> updateFamily(@PathVariable Long id, @RequestBody Family updatedFamily) {
-        Family savedFamily = familyService.updateFamily(id, updatedFamily);
-        return ResponseEntity.ok(savedFamily);
+    public ResponseEntity<FamilyDTO> updateFamily(@PathVariable Long id, @RequestBody FamilyDTO updatedFamily) {
+        return ResponseEntity.ok(familyService.updateFamily(id, updatedFamily));
     }
 
     @DeleteMapping("/{id}")
