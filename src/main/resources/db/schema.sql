@@ -1,3 +1,12 @@
+-- Suppression des tables existantes dans l'ordre pour éviter les erreurs de clés étrangères
+DROP TABLE IF EXISTS order_lines;
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS articles;
+DROP TABLE IF EXISTS families;
+DROP TABLE IF EXISTS customers;
+DROP TABLE IF EXISTS suppliers;
+DROP TABLE IF EXISTS users;
+
 -- Création des tables
 
 CREATE TABLE families (
